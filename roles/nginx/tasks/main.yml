@@ -8,7 +8,7 @@
 - name: add templ
   template:
     src: "{{ item.src }}"
-    dest: "/home/centos/carrier/{{ item.dest }}"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
     mode: 0644
   with_items:
     - { src: "value.yaml.j2", dest: "nginx-values.yaml" }
