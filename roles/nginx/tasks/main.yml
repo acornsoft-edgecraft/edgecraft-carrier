@@ -1,0 +1,17 @@
+---
+# tasks file for nginx
+- name: Add helm repo
+  kubernetes.core.helm_repository:
+    name: bitnami
+    repo_url: "{{ helm_chart_url }}"
+
+- name: Install Nginx Chart
+  kubernetes.core.helm:
+    name: nginx-server
+    namespace: testing2
+    chart_ref: bitnami/nginx
+
+- name: Gather information about nginx-server
+  kubernetes.core.helm_info:
+    name: nginx-server
+    release_namespace: testing2

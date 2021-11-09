@@ -1,0 +1,5 @@
+---
+- hosts: masters[0]
+  remote_user: centos
+  roles:
+    - nginx

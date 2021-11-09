@@ -1,0 +1,11 @@
+# Inventory sample
+
+[all]
+master-01   ansible_ssh_host=192.168.77.121  ip=192.168.77.121
+master-02   ansible_ssh_host=192.168.77.122  ip=192.168.77.122
+master-03   ansible_ssh_host=192.168.77.123  ip=192.168.77.223
+
+[masters]
+master-01
+master-02
+master-03
