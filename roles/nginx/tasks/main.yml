@@ -5,6 +5,9 @@
     name: bitnami
     repo_url: "{{ helm_chart_url }}"
 
+- name: Add carrier directory
+  command: "mkdir {{ ansible_env.HOME }}/carrier"
+
 - name: add templ
   template:
     src: "{{ item.src }}"
