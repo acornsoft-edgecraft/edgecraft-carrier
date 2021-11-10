@@ -1,12 +1,13 @@
 # common
 remote_user: centos
 monitoring_namespace: monitoring
-addon_namespace: addon
 kubeconfig: /etc/kubernetes/acloud/acloud-client-kubeconfig
 
 # helm configuration
 helm_repository_name: "edge"
 helm_value_dir: "{{ ansible_env.HOME}}/carrier"
 
-# application value name
+# prometheus configuration
+prometheus_namespace: monitoring
 prometheus_value_name: "prometheus-value.yaml"
+prometheus_nfs-storageclass: "nfs-storageclass"

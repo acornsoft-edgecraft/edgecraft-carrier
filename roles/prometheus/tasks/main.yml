@@ -22,12 +22,13 @@
     name: prometheus
     kubeconfig: "{{kubeconfig}}"
     chart_ref: "{{helm_repository_name}}/prometheus"
-    release_namespace: "{{release_namespace}}"
+    release_namespace: "{{prometheus_namespace}}"
     create_namespace: true
     values_files:
       - "{{ helm_value_dir }}/{{prometheus_value_name}}"
 
-# - name: Gather information about prometheus
-#   kubernetes.core.helm_info:
-#     name: prometheus
-#     release_namespace: "{{release_namespace}}"
+- name: Gather information about prometheus
+  kubernetes.core.helm_info:
+    name: prometheus
+    kubeconfig: "{{kubeconfig}}"
+    release_namespace: "{{prometheus_namespace}}"
