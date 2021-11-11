@@ -1,0 +1,6 @@
+---
+# defaults file for tmp
+helm_chart_url: "https://192.168.77.126/chartrepo/edge-charts"
+
+install: false
+remove: true

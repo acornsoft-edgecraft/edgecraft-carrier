@@ -1,0 +1,10 @@
+---
+- name: Remove Nexus
+  kubernetes.core.helm:
+    name: nexus
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "addon"
+    state: absent
+    wait: true
+    values_files:
+      - "{{ helm_value_dir }}/nexus-values.yaml"
