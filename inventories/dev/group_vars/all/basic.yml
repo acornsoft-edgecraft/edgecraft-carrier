@@ -4,7 +4,7 @@ monitoring_namespace: monitoring
 kubeconfig: /etc/kubernetes/acloud/acloud-client-kubeconfig
 
 # helm configuration
-helm_repository_name: "edge"
+helm_repository_name: "edge-charts"
 helm_value_dir: "{{ansible_env.HOME}}/carrier"
 
 # prometheus configuration
