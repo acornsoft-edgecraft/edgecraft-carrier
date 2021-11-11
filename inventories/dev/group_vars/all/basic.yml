@@ -10,4 +10,4 @@ helm_value_dir: "{{ansible_env.HOME}}/carrier"
 # prometheus configuration
 prometheus_namespace: monitoring
 prometheus_value_name: "prometheus-value.yaml"
-prometheus_nfs-storageclass: "nfs-storageclass"
+prometheus_nfs_storageclass: "nfs-storageclass"
