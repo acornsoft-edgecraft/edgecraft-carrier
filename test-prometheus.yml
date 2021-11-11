@@ -1,6 +1,0 @@
----
-- hosts: masters[0]
-  remote_user: "{{remote_user}}"
-  # become: true
-  roles:
-    - prometheus

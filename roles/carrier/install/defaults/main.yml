@@ -1,0 +1,6 @@
+---
+# defaults file for tmp
+
+nexus_install: true
+prometheous_install: true
+

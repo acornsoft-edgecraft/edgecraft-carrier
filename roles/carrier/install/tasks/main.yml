@@ -1,0 +1,56 @@
+---
+# tasks file for tmp
+
+- name: Nexus Template add in Master[0]
+  template:
+    when: 
+    src: "{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
+    mode: 0644
+  with_items:
+    - { src: "{{ argocd }}.yaml.j2", dest: "{{ argocd }}.yaml" }
+    - { src: "{{ cert_manager }}.yaml.j2", dest: "{{ cert_manager }}.yaml" }
+    - { src: "{{ consul }}.yaml.j2", dest: "{{ consul }}.yaml" }
+    - { src: "{{ elasticsearch }}.yaml.j2", dest: "{{ elasticsearch }}.yaml" }
+    - { src: "{{ fluentbit }}.yaml.j2", dest: "{{ fluentbit }}.yaml" }
+    - { src: "{{ gitlab }}.yaml.j2", dest: "{{ gitlab }}.yaml" }
+    - { src: "{{ grafana }}.yaml.j2", dest: "{{ grafana }}.yaml" }
+    - { src: "{{ istio }}.yaml.j2", dest: "{{ istio }}.yaml" }
+    - { src: "{{ jaeger }}.yaml.j2", dest: "{{ jaeger }}.yaml" }
+    - { src: "{{ jupyterhub }}.yaml.j2", dest: "{{ jupyterhub }}.yaml" }
+    - { src: "{{ kiali }}.yaml.j2", dest: "{{ kiali }}.yaml" }
+    - { src: "{{ kibana }}.yaml.j2", dest: "{{ kibana }}.yaml" }
+    - { src: "{{ kong }}.yaml.j2", dest: "{{ kong }}.yaml" }
+    - { src: "{{ koreboard }}.yaml.j2", dest: "{{ koreboard }}.yaml" }
+    - { src: "{{ kubesphere }}.yaml.j2", dest: "{{ kubesphere }}.yaml" }
+    - { src: "{{ nexus }}.yaml.j2", dest: "{{ nexus }}.yaml" }
+    - { src: "{{ prometheus }}.yaml.j2", dest: "{{ prometheus }}.yaml" }
+    - { src: "{{ spark }}.yaml.j2", dest: "{{ spark }}.yaml" }
+    - { src: "{{ velero }}.yaml.j2", dest: "{{ velero }}.yaml" }
+    - { src: "{{ zabbix }}.yaml.j2", dest: "{{ zabbix }}.yaml" }
+
+
+- name: Install Nexus
+  when: nexus_install == true
+  kubernetes.core.helm:
+    name: nexus
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/nexus-repository-manager"
+    #chart_version: "29.0.2"
+    release_namespace: "addon"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/nexus-values.yaml"    
+
+- name: Install Prometheus from Helm Charts
+  when: prometheus_install == true
+  kubernetes.core.helm:
+    name: prometheus
+    kubeconfig: "{{kubeconfig}}"
+    chart_ref: "{{helm_repository_name}}/prometheus"
+    chart_version: "14.1.1"
+    release_namespace: "{{prometheus_namespace}}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{prometheus_value_name}}"

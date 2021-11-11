@@ -1,0 +1,7 @@
+---
+- hosts: masters[0]
+  remote_user: "{{ remote_user }}"
+  # become: true 
+  roles:
+  - { role: carrier/install, tags: carrier_install }
+

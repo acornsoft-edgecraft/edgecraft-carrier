@@ -1,13 +1,36 @@
 # common
 remote_user: centos
 monitoring_namespace: monitoring
+addon_namespace: addon
 kubeconfig: /etc/kubernetes/acloud/acloud-client-kubeconfig
 
 # helm configuration
 helm_repository_name: "edge"
 helm_value_dir: "{{ansible_env.HOME}}/carrier"
 
+# template configuration
+argocd: "argocd"
+cert_manager: "cert_manager"
+consul: "consul"
+elasticsearch: "elasticsearch"
+fluentbit: "fluentbit"
+gitlab: "gitlab"
+grafana: "grafana"
+istio: "istio"
+jaeger: "jaeger"
+jupyterhub: "jupyterhub"
+keycloak: "keycloak"
+kiali: "kiali"
+kibana: "kibana"
+kong: "kong"
+koreboard: "koreboard"
+kubesphere: "kubesphere"
+nexus: "nexus"
+prometheus: "prometheus"
+spark: "spark"
+velero: "velero"
+zabbix: "argocd"
+
 # prometheus configuration
 prometheus_namespace: monitoring
 prometheus_value_name: "prometheus-value.yaml"
-prometheus_nfs_storageclass: "nfs-storageclass"
