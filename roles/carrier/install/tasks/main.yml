@@ -1,5 +1,5 @@
 ---
-- include_tasks: jaeger-task.yml
+- include_tasks: grafana-task.yml
 
 # kore-board include task
-- include_tasks: koreboard-task.yml
+# - include_tasks: koreboard-task.yml
