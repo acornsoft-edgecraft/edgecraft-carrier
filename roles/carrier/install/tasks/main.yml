@@ -53,15 +53,3 @@
 #     create_namespace: true
 #     values_files:
 #       - "{{ helm_value_dir }}/{{ prometheus }}.yaml"
-
-- name: Install jaeger from Helm Charts
-  when: jaeger_install == true
-  kubernetes.core.helm:
-    name: jaeger
-    kubeconfig: "{{ kubeconfig }}"
-    chart_ref: "{{ helm_repository_name }}/jaeger-operator"
-    # chart_version: "2.21.3"
-    release_namespace: "{{ monitoring_namespace }}"
-    create_namespace: true
-    values_files:
-      - "{{ helm_value_dir }}/{{ jaeger }}.yaml"
