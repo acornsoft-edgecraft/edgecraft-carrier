@@ -54,4 +54,5 @@
 #     values_files:
 #       - "{{ helm_value_dir }}/{{ prometheus_value_name }}"
 
-- include_tasks: jaeger-task.yml
+# - include_tasks: jaeger-task.yml
+- include_tasks: grafana-task.yml

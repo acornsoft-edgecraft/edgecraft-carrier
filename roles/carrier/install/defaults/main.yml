@@ -12,6 +12,10 @@ prometheous:
 - namespace: monitoring
 
 grafana_install: true
+grafana:
+  install: true
+  chart_version: "6.11.0"
+
 kiali_install: true
 istio_install: true
 jaeger:

@@ -1,0 +1,22 @@
+---
+# tasks file for tmp
+
+- name: Template add in Master[0]
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
+    mode: 0644
+  with_items:
+    - { src: "{{ prometheus }}.yaml.j2", dest: "{{ prometheus }}.yaml" }
+
+- name: Install Prometheus from Helm Charts
+  when: prometheous.install == true
+  kubernetes.core.helm:
+    name: prometheus
+    kubeconfig: "{{ kubeconfig }}"
+    chart_ref: "{{ helm_repository_name }}/prometheus"
+    chart_version: "14.1.1"
+    release_namespace: "{{ prometheus[namespace] }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ prometheus }}.yaml"
