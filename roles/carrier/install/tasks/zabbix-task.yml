@@ -1,0 +1,13 @@
+---
+# tasks file for tmp
+- name: Install Zabbix in Cluster
+  kubernetes.core.helm:
+    name: zabbix
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/zabbix"
+    chart_version: "0.4.0"
+    release_namespace: "{{ prometheus_namespace }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ koreboard }}.yaml"
