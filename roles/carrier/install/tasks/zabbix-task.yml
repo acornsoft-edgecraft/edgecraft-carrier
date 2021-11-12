@@ -1,4 +1,11 @@
 ---
+
+- name: Zabbix Template add in Cluster
+  template:
+    src: "{{ zabbix }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ zabbix }}.yaml"
+    mode: 0644
+
 # tasks file for tmp
 - name: Install Zabbix in Cluster
   kubernetes.core.helm:
