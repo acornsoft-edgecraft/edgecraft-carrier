@@ -1,12 +1,19 @@
 ---
+
+- name: KoreBoard Template add in Cluster
+  template:
+    src: "{{ koreboard }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ koreboard }}.yaml"
+    mode: 0644
+
 - name: Install KoreBoard in Cluster
   kubernetes.core.helm:
-    name: koreboard
+    name: "{{ koreboard }}"
     kubeconfig: "{{ kubeconfig }}"
     atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/kore-board"
     chart_version: "0.4.0"
-    release_namespace: "{{ prometheus_namespace }}"
+    release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:
       - "{{ helm_value_dir }}/{{ koreboard }}.yaml"

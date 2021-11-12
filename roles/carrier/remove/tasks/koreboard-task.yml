@@ -1,0 +1,10 @@
+---
+- name: Koreboard remove in cluster
+  kubernetes.core.helm:
+    name: "{{ koreboard }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    state: absent
+    wait: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ koreboard }}.yaml"
