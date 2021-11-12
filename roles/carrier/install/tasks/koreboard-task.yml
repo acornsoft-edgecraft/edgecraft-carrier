@@ -12,7 +12,7 @@
     kubeconfig: "{{ kubeconfig }}"
     atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/kore-board"
-    chart_version: "0.4.0"
+    chart_version: "{{ chart_version['koreboard'] }}"
     release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:

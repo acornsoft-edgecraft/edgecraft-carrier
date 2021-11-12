@@ -21,3 +21,7 @@ removed:
   kiali: true
   istio: true
   prometheous: true
+
+chart_version:
+  zabbix: "0.4.0"
+  koreboard: "0.4.0"
