@@ -3,6 +3,9 @@
 
 # kore-board include task
 - include_tasks: koreboard-task.yml
+<<<<<<< HEAD
 
 # zabbix include task
 - include_tasks: zabbix-task.yml
+=======
+>>>>>>> d7569ed2884c9c568d602961a252a32290f404ba
