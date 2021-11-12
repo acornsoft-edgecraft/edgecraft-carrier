@@ -1,0 +1,18 @@
+---
+
+- name: Nexus Template add in Cluster
+  template:
+    src: "{{ nexus }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ nexus }}.yaml"
+    mode: 0644
+
+- name: Install Nexus in Cluster
+  kubernetes.core.helm:
+    name: "{{ nexus }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true
+    chart_ref: "{{ helm_repository_name }}/nexus-repository-manager"
+    release_namespace: "{{ addon_namespace }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ nexus }}.yaml"
