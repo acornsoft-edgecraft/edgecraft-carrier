@@ -1,29 +1,23 @@
----
-# defaults file for tmp
+installed:
+  koreboard: true
+  kong: true
+  gitlab: true
+  argocd: true
+  nexus: false
+  jaeger: true
+  grafana: true
+  kiali: true
+  istio: true
+  prometheous: true
 
-nexus_install: false
-
-
-jaeger_install: true
-prometheous_install: true
-
-prometheous:
-- install: false
-- namespace: monitoring
-
-grafana_install: true
-grafana:
-  install: true
-  chart_version: "6.11.0"
-
-kiali_install: true
-istio_install: true
-jaeger:
-- install: true
-- namespace: monitoring
-
-koreboard_install: true
-kong_install: true
-gitlab_install: true
-argocd_install: true
-
+removed:
+  koreboard: true
+  kong: true
+  gitlab: true
+  argocd: true
+  nexus: false
+  jaeger: true
+  grafana: true
+  kiali: true
+  istio: true
+  prometheous: true
