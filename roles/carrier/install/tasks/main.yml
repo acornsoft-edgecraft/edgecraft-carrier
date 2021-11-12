@@ -1,9 +1,8 @@
 ---
 # tasks file for tmp
 
-- name: Nexus Template add in Master[0]
+- name: Template add in Master[0]
   template:
-    when: 
     src: "{{ item.src }}"
     dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
     mode: 0644
@@ -30,27 +29,39 @@
     - { src: "{{ zabbix }}.yaml.j2", dest: "{{ zabbix }}.yaml" }
 
 
-- name: Install Nexus
-  when: nexus_install == true
-  kubernetes.core.helm:
-    name: nexus
-    kubeconfig: "{{ kubeconfig }}"
-    atomic: true    # 설치 실패시 삭제 처리
-    chart_ref: "{{ helm_repository_name }}/nexus-repository-manager"
-    #chart_version: "29.0.2"
-    release_namespace: "addon"
-    create_namespace: true
-    values_files:
-      - "{{ helm_value_dir }}/nexus-values.yaml"    
+# - name: Install Nexus
+#   when: nexus_install == true
+#   kubernetes.core.helm:
+#     name: nexus
+#     kubeconfig: "{{ kubeconfig }}"
+#     atomic: true    # 설치 실패시 삭제 처리
+#     chart_ref: "{{ helm_repository_name }}/nexus-repository-manager"
+#     #chart_version: "29.0.2"
+#     release_namespace: "addon"
+#     create_namespace: true
+#     values_files:
+#       - "{{ helm_value_dir }}/nexus-values.yaml"    
 
-- name: Install Prometheus from Helm Charts
-  when: prometheus_install == true
+# - name: Install Prometheus from Helm Charts
+#   when: prometheous.install == true
+#   kubernetes.core.helm:
+#     name: prometheus
+#     kubeconfig: "{{ kubeconfig }}"
+#     chart_ref: "{{ helm_repository_name }}/prometheus"
+#     chart_version: "14.1.1"
+#     release_namespace: "{{ prometheus[namespace] }}"
+#     create_namespace: true
+#     values_files:
+#       - "{{ helm_value_dir }}/{{ prometheus }}.yaml"
+
+- name: Install jaeger from Helm Charts
+  when: jaeger_install == true
   kubernetes.core.helm:
-    name: prometheus
-    kubeconfig: "{{kubeconfig}}"
-    chart_ref: "{{helm_repository_name}}/prometheus"
-    chart_version: "14.1.1"
-    release_namespace: "{{prometheus_namespace}}"
+    name: jaeger
+    kubeconfig: "{{ kubeconfig }}"
+    chart_ref: "{{ helm_repository_name }}/jaeger-operator"
+    # chart_version: "2.21.3"
+    release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:
-      - "{{ helm_value_dir }}/{{prometheus_value_name}}"
+      - "{{ helm_value_dir }}/{{ jaeger }}.yaml"

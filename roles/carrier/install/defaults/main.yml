@@ -1,6 +1,25 @@
 ---
 # defaults file for tmp
 
-nexus_install: true
+nexus_install: false
+
+
+jaeger_install: true
 prometheous_install: true
+
+prometheous:
+- install: false
+- namespace: monitoring
+
+grafana_install: true
+kiali_install: true
+istio_install: true
+jaeger:
+- install: true
+- namespace: monitoring
+
+koreboard_install: true
+kong_install: true
+gitlab_install: true
+argocd_install: true
 
