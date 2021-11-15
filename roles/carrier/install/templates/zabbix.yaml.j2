@@ -29,7 +29,7 @@ zabbixServer:
   POSTGRES_DB: "zabbix"
   service:
     # -- Type of service in Kubernetes cluster
-    type: NodePort
+    type: ClusterIP
     # -- Port of service in Kubernetes cluster
     port: 10051
 
@@ -134,7 +134,7 @@ zabbixagent:
   # The variable is list of comma separated loadable Zabbix modules. It works with volume /var/lib/zabbix/modules.
   # ZBX_LOADMODULE: dummy1.so,dummy2.so
   # The variable is used to specify debug level, from 0 to 5
-  ZBX_DEBUGLEVEL: 3
+  #ZBX_DEBUGLEVEL: 3
   # The variable is used to specify timeout for processing checks. By default, value is 4.
   #ZBX_TIMEOUT: 4
 

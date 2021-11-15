@@ -6,7 +6,6 @@
     dest: "{{ ansible_env.HOME }}/carrier/{{ zabbix }}.yaml"
     mode: 0644
 
-# tasks file for tmp
 - name: Install Zabbix in Cluster
   kubernetes.core.helm:
     name: "{{ zabbix }}"
@@ -14,7 +13,7 @@
     atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/zabbix"
     chart_version: "{{ chart_version['zabbix'] }}"
-    release_namespace: "{{ monitoring_namespace }}"
+    release_namespace: "{{ zabbix }}"
     create_namespace: true
     values_files:
       - "{{ helm_value_dir }}/{{ zabbix }}.yaml"

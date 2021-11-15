@@ -1,5 +1,8 @@
 ---
-- include_tasks: grafana-task.yml
+#- include_tasks: grafana-task.yml
+
+# nexus include task
+- include_tasks: nexus-task.yml
 
 # kore-board include task
 - include_tasks: koreboard-task.yml

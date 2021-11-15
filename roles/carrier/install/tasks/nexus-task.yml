@@ -12,6 +12,7 @@
     kubeconfig: "{{ kubeconfig }}"
     atomic: true
     chart_ref: "{{ helm_repository_name }}/nexus-repository-manager"
+    chart_version: "{{ chart_version['nexus'] }}"
     release_namespace: "{{ addon_namespace }}"
     create_namespace: true
     values_files:

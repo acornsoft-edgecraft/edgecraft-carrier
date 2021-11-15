@@ -3,7 +3,7 @@
   kubernetes.core.helm:
     name: "{{ zabbix }}"
     kubeconfig: "{{ kubeconfig }}"
-    release_namespace: "{{ monitoring_namespace }}"
+    release_namespace: "{{ zabbix }}"
     state: absent
     wait: true
     values_files:

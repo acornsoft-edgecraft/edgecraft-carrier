@@ -29,4 +29,8 @@ nexus: "nexus"
 prometheus: "prometheus"
 spark: "spark"
 velero: "velero"
-zabbix: "argocd"
+zabbix: "zabbix"
+
+# prometheus configuration
+prometheus_namespace: monitoring
+prometheus_value_name: "prometheus-value.yaml"

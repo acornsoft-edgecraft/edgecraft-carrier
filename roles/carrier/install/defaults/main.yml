@@ -23,5 +23,6 @@ removed:
   prometheous: true
 
 chart_version:
-  zabbix: "0.4.0"
+  zabbix: "0.3.2"
   koreboard: "0.4.0"
+  nexus: "29.0.2"

@@ -4,3 +4,6 @@
 
 # nexus include remove task
 - include_tasks: nexus-task.yml
+
+# zabbix include remove task
+- include_tasks: zabbix-task.yml
