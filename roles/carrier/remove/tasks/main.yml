@@ -1,9 +1,12 @@
 ---
 # kore-board include remove task
-# - include_tasks: koreboard-task.yml
+#- include_tasks: koreboard-task.yml
 
 # nexus include remove task
-# - include_tasks: nexus-task.yml
+#- include_tasks: nexus-task.yml
 
 # zabbix include remove task
-# - include_tasks: zabbix-task.yml
+#- include_tasks: zabbix-task.yml
+
+# argocd include remove task
+- include_tasks: argocd-task.yml

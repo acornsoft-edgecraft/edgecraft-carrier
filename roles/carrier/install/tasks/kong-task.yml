@@ -1,0 +1,34 @@
+---
+
+- name: Kong Template add in Cluster
+  template:
+    src: "{{ item.src }}"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
+    mode: 0644
+  loop:
+      - { src: '{{ kong }}.yaml.j2', dest: '{{ kong }}.yaml' }
+      - { src: '{{ konga }}.yaml.j2', dest: '{{ konga }}.yaml' }
+
+- name: Install Kong in Cluster
+  kubernetes.core.helm:
+    name: "{{ kong }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/kong"
+    chart_version: "{{ chart_version['kong'] }}"
+    release_namespace: "{{ kong }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ kong }}.yaml"
+
+- name: Install Konga in Cluster
+  kubernetes.core.helm:
+    name: "{{ konga }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/konga"
+    chart_version: "{{ chart_version['konga'] }}"
+    release_namespace: "{{ kong }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ konga }}.yaml"

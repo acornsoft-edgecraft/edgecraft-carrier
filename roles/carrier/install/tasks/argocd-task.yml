@@ -1,0 +1,19 @@
+---
+
+- name: ArgoCD Template add in Cluster
+  template:
+    src: "{{ argocd }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ argocd }}.yaml"
+    mode: 0644
+
+- name: Install ArgoCD in Cluster
+  kubernetes.core.helm:
+    name: "{{ argocd }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/argo-cd"
+    chart_version: "{{ chart_version['argocd'] }}"
+    release_namespace: "{{ argocd }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ argocd }}.yaml"
