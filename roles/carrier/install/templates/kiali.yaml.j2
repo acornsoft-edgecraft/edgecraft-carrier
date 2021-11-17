@@ -52,12 +52,12 @@ allowAdHocKialiNamespace: true
 # to the image the operator will install by default. In other words, it will allow the
 # Kiali CR spec.deployment.image_name and spec.deployment.image_version to be configured by the user.
 # You may want to disable this if you do not want users to install their own Kiali images.
-allowAdHocKialiImage: false
+allowAdHocKialiImage: true
 
 # For what a Kiali CR spec can look like, see:
 # https://github.com/kiali/kiali-operator/blob/master/deploy/kiali/kiali_cr.yaml
 cr:
-  create: false
+  create: true
   name: kiali
   # If you elect to create a Kiali CR (--set cr.create=true)
   # and the operator is watching all namespaces (--set watchNamespace="")
@@ -66,6 +66,8 @@ cr:
 
   spec:
     deployment:
+      image_name: "quay.io/kiali/kiali"
+      image_version: "v1.36"
       accessible_namespaces:
       - '**'
       ingress_enabled: false

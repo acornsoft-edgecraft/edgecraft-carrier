@@ -1,0 +1,27 @@
+apiVersion: install.istio.io/v1alpha1
+kind: IstioOperator
+metadata:
+  name: istiocontrolplane
+  namespace: monitoring
+spec:
+  profile: default
+  components:
+    ingressGateways:
+    - name: istio-ingressgateway
+      enabled: true
+      k8s:
+        service:
+          type: NodePort
+  values:
+    global:
+      # namespqce 변경 - default: istio-system
+      istioNamespace: monitoring
+  meshConfig:
+    accessLogFile: /dev/stdout
+    enableTracing: true
+    defaultConfig:
+      tracing:
+        sampling: 100.0
+        max_path_tag_length: 256
+        zipkin:
+          address: 'jaeger-operator-jaeger-collector.monitoring.svc:9411'

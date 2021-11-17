@@ -1,0 +1,9 @@
+---
+- name: istio k8s remove in cluster
+  when: "{{ removed.istio }}"
+  command: >-
+    istioctl x uninstall 
+    --kubeconfig='{{kubeconfig}}' 
+    -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml 
+    --purge 
+    --skip-confirmation

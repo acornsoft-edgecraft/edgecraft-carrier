@@ -1,0 +1,34 @@
+---
+- hosts: masters[0]
+  remote_user: "{{ remote_user }}"
+  vars:
+    installed:  
+      koreboard: false
+      kong: false
+      gitlab: false
+      argocd: false
+      nexus: false
+      jaeger: false
+      grafana: false
+      kiali: false
+      istio: true
+      prometheus: false
+    
+    chart_version:
+      kiali-operator: "1.30.0"
+
+  tasks:
+  - name: Template add in Master[0]
+    template:
+      # src: "{{ istio }}.yaml.j2"
+      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
+      dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
+      mode: 0644
+
+  - name: Install Istio
+    when: "{{ installed.istio }}"
+    command: >-
+      istioctl install 
+      --kubeconfig='{{kubeconfig}}' 
+      --skip-confirmation 
+      -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml

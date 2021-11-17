@@ -1,4 +1,14 @@
 ---
+# kiali include task
+#- include_tasks: kiali-task.yml
+
+# jaeger include task
+#- include_tasks: jaeger-task.yml
+
+# prometheus include task
+#- include_tasks: prometheus-task.yml
+
+# grafana include task
 #- include_tasks: grafana-task.yml
 
 # # nexus include task
@@ -15,3 +25,11 @@
 
 # kong/konga include task
 - include_tasks: argocd-task.yml
+# nexus include task
+# - include_tasks: nexus-task.yml
+
+# kore-board include task
+# - include_tasks: koreboard-task.yml
+
+# zabbix include task
+# - include_tasks: zabbix-task.yml

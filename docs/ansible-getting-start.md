@@ -117,3 +117,10 @@ bitnami    https://charts.bitnami.com/bitnami
     	   namespace: testing
     	   chart_ref: bitnami/nginx
 ```
+
+## 필수 패지 목록
+- python3
+  - pip3 insatll kubernetes
+
+- istioctl
+  - curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.0 TARGET_ARCH=x86_64 sh -

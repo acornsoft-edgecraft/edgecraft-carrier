@@ -1,0 +1,20 @@
+---
+- name: kiali k8s remove in cluster
+  when: "{{ removed.kiali }}"
+  kubernetes.core.k8s:
+    name: "{{ kiali }}"
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ monitoring_namespace }}"
+    kind: Kiali
+    api_version: kiali.io/v1alpha1
+    state: absent
+    wait: true
+
+- name: kiali helm remove in cluster
+  when: "{{ removed.kiali }}"
+  kubernetes.core.helm:
+    name: "{{ kiali }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    state: absent
+    wait: true
