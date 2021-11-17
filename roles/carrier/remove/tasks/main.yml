@@ -9,4 +9,7 @@
 #- include_tasks: zabbix-task.yml
 
 # argocd include remove task
-- include_tasks: argocd-task.yml
+# - include_tasks: argocd-task.yml
+
+# jupyterhub include remove task
+- include_tasks: jupyterhub-task.yml

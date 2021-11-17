@@ -9,6 +9,7 @@ installed:
   kiali: false
   istio: false
   prometheus: false
+  jupyterhub: false
 
 chart_version:
   zabbix: "0.3.2"
@@ -22,3 +23,4 @@ chart_version:
   jaeger-operator: "2.21.30"
   grafana: "6.11.0"
   ks-installer: "0.2.2"
+  jupyterhub: "0.11.1"

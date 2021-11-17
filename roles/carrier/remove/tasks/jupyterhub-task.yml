@@ -1,0 +1,10 @@
+---
+- name: Jupyterhub remove in cluster
+  kubernetes.core.helm:
+    name: "{{ jupyterhub }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ jupyterhub }}"
+    state: absent
+    wait: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ jupyterhub }}.yaml"
