@@ -1,21 +1,21 @@
 ---
 # tasks file for kiali
 
-  - name: Template add in Master[0]
-    template:
-      src: "{{ kiali }}.yaml.j2"
-      dest: "{{ ansible_env.HOME }}/carrier/{{ kiali }}.yaml"
-      mode: 0644
+- name: Template add in Master[0]
+  template:
+    src: "{{ kiali }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ kiali }}.yaml"
+    mode: 0644
 
-  - name: Install kiali from Helm Charts
-    when: "{{ installed.kiali }}"
-    kubernetes.core.helm:
-      name: "{{ kiali }}"
-      kubeconfig: "{{ kubeconfig }}"
-      atomic: true    # 설치 실패시 삭제 처리
-      chart_ref: "{{ helm_repository_name }}/kiali-operator"
-      chart_version: "{{ chart_version['kiali-operator'] }}"
-      release_namespace: "{{ monitoring_namespace }}"
-      create_namespace: true
-      values_files:
-        - "{{ helm_value_dir }}/{{ kiali }}.yaml"
+- name: Install kiali from Helm Charts
+  when: "{{ installed.kiali }}"
+  kubernetes.core.helm:
+    name: "{{ kiali }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/kiali-operator"
+    chart_version: "{{ chart_version['kiali-operator'] }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ kiali }}.yaml"

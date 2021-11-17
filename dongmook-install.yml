@@ -11,24 +11,46 @@
       jaeger: false
       grafana: false
       kiali: false
-      istio: true
+      istio: false
       prometheus: false
+      kubesphere: true
     
     chart_version:
       kiali-operator: "1.30.0"
+      ks-installer: "0.2.2"
 
   tasks:
+  # - name: Template add in Master[0]
+  #   template:
+  #     # src: "{{ istio }}.yaml.j2"
+  #     src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
+  #     dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
+  #     mode: 0644
+
+  # - name: Install Istio
+  #   when: "{{ installed.istio }}"
+  #   command: >-
+  #     istioctl install 
+  #     --kubeconfig='{{kubeconfig}}' 
+  #     --skip-confirmation 
+  #     -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml
+
   - name: Template add in Master[0]
     template:
-      # src: "{{ istio }}.yaml.j2"
-      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
-      dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
+      # src: "{{ kubesphere }}.yaml.j2"
+      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ kubesphere }}.yaml.j2"
+      dest: "{{ ansible_env.HOME }}/carrier/{{ kubesphere }}.yaml"
       mode: 0644
 
-  - name: Install Istio
-    when: "{{ installed.istio }}"
-    command: >-
-      istioctl install 
-      --kubeconfig='{{kubeconfig}}' 
-      --skip-confirmation 
-      -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml
+  - name: Install kubesphere from Helm Charts
+    when: "{{ installed.kubesphere }}"
+    kubernetes.core.helm:
+      name: "{{ kubesphere }}"
+      kubeconfig: "{{ kubeconfig }}"
+      atomic: true    # 설치 실패시 삭제 처리
+      chart_ref: "{{ helm_repository_name }}/ks-installer"
+      chart_version: "{{ chart_version['ks-installer'] }}"
+      release_namespace: "{{ kubesphere_namespace }}"
+      create_namespace: true
+      values_files:
+        - "{{ helm_value_dir }}/{{ kubesphere }}.yaml"

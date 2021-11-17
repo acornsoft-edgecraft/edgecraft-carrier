@@ -18,3 +18,4 @@ chart_version:
   kiali-operator: "1.30.0"
   jaeger-operator: "2.21.30"
   grafana: "6.11.0"
+  ks-installer: "0.2.2"

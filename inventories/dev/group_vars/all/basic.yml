@@ -2,6 +2,7 @@
 remote_user: centos
 monitoring_namespace: monitoring
 addon_namespace: addon
+kubesphere_namespace: kubesphere-system
 kubeconfig: /etc/kubernetes/acloud/acloud-client-kubeconfig
 
 # helm configuration
