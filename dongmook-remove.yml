@@ -10,29 +10,38 @@
       nexus: false
       jaeger: false
       grafana: false
-      kiali: true
-      istio: false
+      kiali: false
+      istio: true
       prometheus: false
     chart_version:
       kiali-operator: "1.30.0"
 
   tasks:
-  - name: kiali k8s remove in cluster
-    when: "{{ removed.kiali }}"
-    kubernetes.core.k8s:
-      name: "{{ kiali }}"
-      kubeconfig: "{{ kubeconfig }}"
-      namespace: "{{ monitoring_namespace }}"
-      kind: Kiali
-      api_version: kiali.io/v1alpha1
-      state: absent
-      wait: true
+  # - name: kiali k8s remove in cluster
+  #   when: "{{ removed.kiali }}"
+  #   kubernetes.core.k8s:
+  #     name: "{{ kiali }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "{{ monitoring_namespace }}"
+  #     kind: Kiali
+  #     api_version: kiali.io/v1alpha1
+  #     state: absent
+  #     wait: true
 
-  - name: kiali helm remove in cluster
-    when: "{{ removed.kiali }}"
-    kubernetes.core.helm:
-      name: "{{ kiali }}"
-      kubeconfig: "{{ kubeconfig }}"
-      release_namespace: "{{ monitoring_namespace }}"
-      state: absent
-      wait: true
+  # - name: kiali helm remove in cluster
+  #   when: "{{ removed.kiali }}"
+  #   kubernetes.core.helm:
+  #     name: "{{ kiali }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     release_namespace: "{{ monitoring_namespace }}"
+  #     state: absent
+  #     wait: true
+
+  - name: istio k8s remove in cluster
+    when: "{{ removed.istio }}"
+    command: >-
+      istioctl x uninstall 
+      --kubeconfig='{{kubeconfig}}' 
+      -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml 
+      --purge 
+      --skip-confirmation

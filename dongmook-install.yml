@@ -10,29 +10,25 @@
       nexus: false
       jaeger: false
       grafana: false
-      kiali: true
-      istio: false
+      kiali: false
+      istio: true
       prometheus: false
+    
     chart_version:
       kiali-operator: "1.30.0"
 
   tasks:
   - name: Template add in Master[0]
     template:
-      # src: "{{ kiali }}.yaml.j2"
-      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ kiali }}.yaml.j2"
-      dest: "{{ ansible_env.HOME }}/carrier/{{ kiali }}.yaml"
+      # src: "{{ istio }}.yaml.j2"
+      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
+      dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
       mode: 0644
 
-  - name: Install kiali from Helm Charts
-    when: "{{ installed.kiali }}"
-    kubernetes.core.helm:
-      name: "{{ kiali }}"
-      kubeconfig: "{{ kubeconfig }}"
-      atomic: true    # 설치 실패시 삭제 처리
-      chart_ref: "{{ helm_repository_name }}/kiali-operator"
-      chart_version: "{{ chart_version['kiali-operator'] }}"
-      release_namespace: "{{ monitoring_namespace }}"
-      create_namespace: true
-      values_files:
-        - "{{ helm_value_dir }}/{{ kiali }}.yaml"
+  - name: Install Istio
+    when: "{{ installed.istio }}"
+    command: >-
+      istioctl install 
+      --kubeconfig='{{kubeconfig}}' 
+      --skip-confirmation 
+      -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml
