@@ -8,12 +8,13 @@
     mode: 0644
 
 - name: Install jaeger from Helm Charts
-  when: jaeger_install
+  when: {{ installed.jaeger  }}
   kubernetes.core.helm:
-    name: {{ jaeger }}
+    name: "{{ jaeger }}"
     kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/jaeger-operator"
-    # chart_version: "2.21.3"
+    chart_version: "{{ chart_version['jaeger-operator'] }}"
     release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:

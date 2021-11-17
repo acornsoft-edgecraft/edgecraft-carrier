@@ -3,20 +3,19 @@
 
 - name: Template add in Master[0]
   template:
-    src: "{{ item.src }}"
-    dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
+    src: "{{ prometheus }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ prometheus }}.yaml"
     mode: 0644
-  with_items:
-    - { src: "{{ prometheus }}.yaml.j2", dest: "{{ prometheus }}.yaml" }
 
 - name: Install Prometheus from Helm Charts
-  when: prometheous.install == true
+  when: {{ installed.prometheus }}
   kubernetes.core.helm:
-    name: prometheus
+    name: "{{ prometheus }}"
     kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/prometheus"
-    chart_version: "14.1.1"
-    release_namespace: "{{ prometheus[namespace] }}"
+    chart_version: "{{ chart_version['prometheus'] }}"
+    release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:
       - "{{ helm_value_dir }}/{{ prometheus }}.yaml"

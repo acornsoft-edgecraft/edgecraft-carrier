@@ -3,17 +3,18 @@
 
 - name: Template add in Master[0]
   template:
-    src: "{{ grafana }}.haml.j2"
+    src: "{{ grafana }}.yaml.j2"
     dest: "{{ ansible_env.HOME }}/carrier/{{ grafana }}.yaml"
     mode: 0644
 
 - name: Install grafana from Helm Charts
-  when: {{ grafana.install }}
+  when: {{ installed.grafana }}
   kubernetes.core.helm:
     name: "{{ grafana }}"
     kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
     chart_ref: "{{ helm_repository_name }}/grafana"
-    chart_version: "{{ grafana.chart_version }}"
+    chart_version: "{{ chart_version['grafana'] }}"
     release_namespace: "{{ monitoring_namespace }}"
     create_namespace: true
     values_files:

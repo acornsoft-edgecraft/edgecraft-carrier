@@ -31,6 +31,3 @@ spark: "spark"
 velero: "velero"
 zabbix: "zabbix"
 
-# prometheus configuration
-prometheus_namespace: monitoring
-prometheus_value_name: "prometheus-value.yaml"
