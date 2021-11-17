@@ -3,8 +3,7 @@
 
 - name: Template add in Master[0]
   template:
-    # src: "{{ istio }}.yaml.j2"
-    src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
+    src: "{{ istio }}.yaml.j2"
     dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
     mode: 0644
 
