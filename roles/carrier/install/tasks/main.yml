@@ -36,4 +36,7 @@
 # - include_tasks: zabbix-task.yml
 
 # jupyterhub include task
-- include_tasks: jupyterhub-task.yml
+# - include_tasks: jupyterhub-task.yml
+
+# gitlab include task
+- include_tasks: gitlab-task.yml

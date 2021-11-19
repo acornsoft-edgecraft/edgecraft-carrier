@@ -1,0 +1,8 @@
+---
+- name: Remove GitLab in Cluster
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ gitlab }}"
+    state: absent
+    src: "{{ ansible_env.HOME }}/carrier/{{ gitlab }}.yaml"
+    wait: true

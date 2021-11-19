@@ -27,3 +27,4 @@ chart_version:
   ks-installer: "0.2.2"
   jupyterhub: "0.11.1"
   consul: "0.37.0"
+  gitlab: "5.4.2"
