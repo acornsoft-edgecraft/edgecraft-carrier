@@ -1,0 +1,19 @@
+---
+
+- name: Jupyterhub Template add in Cluster
+  template:
+    src: "{{ jupyterhub }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ jupyterhub }}.yaml"
+    mode: 0644
+
+- name: Install Jupyter in Cluster
+  kubernetes.core.helm:
+    name: "{{ jupyterhub }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/jupyterhub"
+    chart_version: "{{ chart_version['jupyterhub'] }}"
+    release_namespace: "{{ jupyterhub }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ jupyterhub }}.yaml"

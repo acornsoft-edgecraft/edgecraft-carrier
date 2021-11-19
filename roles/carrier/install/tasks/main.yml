@@ -24,7 +24,8 @@
 # - include_tasks: kong-task.yml
 
 # kong/konga include task
-- include_tasks: argocd-task.yml
+# - include_tasks: argocd-task.yml
+
 # nexus include task
 # - include_tasks: nexus-task.yml
 
@@ -33,3 +34,6 @@
 
 # zabbix include task
 # - include_tasks: zabbix-task.yml
+
+# jupyterhub include task
+- include_tasks: jupyterhub-task.yml
