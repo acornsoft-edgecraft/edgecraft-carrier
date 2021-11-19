@@ -1,0 +1,9 @@
+---
+- name: grafana helm remove in cluster
+  when: "{{ removed.grafana }}"
+  kubernetes.core.helm:
+    name: "{{ grafana }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    state: absent
+    wait: true

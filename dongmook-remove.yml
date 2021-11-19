@@ -11,37 +11,45 @@
       jaeger: false
       grafana: false
       kiali: false
-      istio: true
+      istio: false
       prometheus: false
+      kubesphere: false
+
     chart_version:
       kiali-operator: "1.30.0"
 
   tasks:
-  # - name: kiali k8s remove in cluster
-  #   when: "{{ removed.kiali }}"
-  #   kubernetes.core.k8s:
-  #     name: "{{ kiali }}"
-  #     kubeconfig: "{{ kubeconfig }}"
-  #     namespace: "{{ monitoring_namespace }}"
-  #     kind: Kiali
-  #     api_version: kiali.io/v1alpha1
-  #     state: absent
-  #     wait: true
 
-  # - name: kiali helm remove in cluster
-  #   when: "{{ removed.kiali }}"
+  # - name: grafana helm remove in cluster
+  #   when: "{{ removed.grafana }}"
   #   kubernetes.core.helm:
-  #     name: "{{ kiali }}"
+  #     name: "{{ grafana }}"
   #     kubeconfig: "{{ kubeconfig }}"
   #     release_namespace: "{{ monitoring_namespace }}"
   #     state: absent
   #     wait: true
 
-  - name: istio k8s remove in cluster
-    when: "{{ removed.istio }}"
-    command: >-
-      istioctl x uninstall 
-      --kubeconfig='{{kubeconfig}}' 
-      -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml 
-      --purge 
-      --skip-confirmation
+  # - name: kubesphere k8s remove in cluster
+  #   when: "{{ removed.kubesphere }}"
+  #   kubernetes.core.k8s:
+  #     name: "{{ kubesphere }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "{{ kubesphere_namespace }}"
+  #     kind: kubesphere
+  #     api_version: kubesphere.io/v1alpha1
+  #     state: absent
+  #     wait: true
+
+  # - name: kubesphere helm remove in cluster
+  #   when: "{{ removed.kubesphere }}"
+  #   shell:
+  #     "{{ ansible_env.HOME }}/carrier/kubesphere-delete.sh"
+
+  # - name: istio k8s remove in cluster
+  #   when: "{{ removed.istio }}"
+  #   command: >-
+  #     istioctl x uninstall 
+  #     --kubeconfig='{{kubeconfig}}' 
+  #     -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml 
+  #     --purge 
+  #     --skip-confirmation

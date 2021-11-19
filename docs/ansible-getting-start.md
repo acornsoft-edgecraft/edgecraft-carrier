@@ -118,9 +118,11 @@ bitnami    https://charts.bitnami.com/bitnami
     	   chart_ref: bitnami/nginx
 ```
 
-## 필수 패지 목록
-- python3
+## 필수 패키지 목록
+- python3 라이브러리
   - pip3 insatll kubernetes
+  - pip3 insatll openshift
+  - pip3 insatll PyYAML
 
 - istioctl
   - curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.0 TARGET_ARCH=x86_64 sh -

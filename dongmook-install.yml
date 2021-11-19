@@ -2,6 +2,7 @@
 - hosts: masters[0]
   remote_user: "{{ remote_user }}"
   vars:
+    dongmook: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/"
     installed:  
       koreboard: false
       kong: false
@@ -23,7 +24,7 @@
   # - name: Template add in Master[0]
   #   template:
   #     # src: "{{ istio }}.yaml.j2"
-  #     src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ istio }}.yaml.j2"
+  #     src: "{{dongmook}}/{{ istio }}.yaml.j2"
   #     dest: "{{ ansible_env.HOME }}/carrier/{{ istio }}.yaml"
   #     mode: 0644
 
@@ -35,22 +36,63 @@
   #     --skip-confirmation 
   #     -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml
 
-  - name: Template add in Master[0]
-    template:
-      # src: "{{ kubesphere }}.yaml.j2"
-      src: "/Users/dongmook/git-workspaces/edgecarrier/roles/carrier/install/templates/{{ kubesphere }}.yaml.j2"
-      dest: "{{ ansible_env.HOME }}/carrier/{{ kubesphere }}.yaml"
-      mode: 0644
+  # - name: Template add in Master[0]
+  #   template:
+  #     src: "{{ item.src }}"
+  #     dest: "{{ ansible_env.HOME }}/carrier/{{ item.dest }}"
+  #     mode: 0644
+  #   with_items:
+  #     - { src: "{{dongmook}}{{ kubesphere }}.yaml.j2", dest: "{{ kubesphere }}.yaml" }
+  #     - { src: "{{dongmook}}{{ kubesphere }}.sh.j2", dest: "{{ kubesphere }}.sh" }
+  #     - { src: "{{dongmook}}{{ kubesphere }}_provisionercapabilities.yaml.j2", dest: "{{ kubesphere }}_provisionercapabilities.yaml" }
+  #     # - { src: "{{ kubesphere }}_provisionercapabilities.yaml.j2", dest: "{{ kubesphere }}_provisionercapabilities.yaml" }
+  #     # - { src: "{{ kubesphere }}.yaml.j2", dest: "{{ kubesphere }}.yaml" }
+  #     # - { src: "{{ kubesphere }}.sh.j2", dest: "{{ kubesphere }}.sh" }
 
-  - name: Install kubesphere from Helm Charts
-    when: "{{ installed.kubesphere }}"
-    kubernetes.core.helm:
-      name: "{{ kubesphere }}"
-      kubeconfig: "{{ kubeconfig }}"
-      atomic: true    # 설치 실패시 삭제 처리
-      chart_ref: "{{ helm_repository_name }}/ks-installer"
-      chart_version: "{{ chart_version['ks-installer'] }}"
-      release_namespace: "{{ kubesphere_namespace }}"
-      create_namespace: true
-      values_files:
-        - "{{ helm_value_dir }}/{{ kubesphere }}.yaml"
+  # - name: kubesphere k8s install provisionercapabilities crd in cluster
+  #   when: "{{ installed.kubesphere }}"
+  #   kubernetes.core.k8s:
+  #     # name: "{{ kubesphere }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "{{ kubesphere_namespace }}"
+  #     state: present
+  #     src: "{{ ansible_env.HOME }}/carrier/{{ kubesphere }}_provisionercapabilities.yaml"
+  #     wait: true
+
+  # - name: Install kubesphere from Helm Charts
+  #   when: "{{ installed.kubesphere }}"
+  #   kubernetes.core.helm:
+  #     name: "{{ kubesphere }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     atomic: true    # 설치 실패시 삭제 처리
+  #     chart_ref: "{{ helm_repository_name }}/ks-installer"
+  #     chart_version: "{{ chart_version['ks-installer'] }}"
+  #     release_namespace: "{{ kubesphere_namespace }}"
+  #     create_namespace: true
+  #     values_files:
+  #       - "{{ helm_value_dir }}/{{ kubesphere }}.yaml"
+  
+  # - name: test
+  #   kubernetes.core.k8s:
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     name: "test"
+  #     kind: "namespace"
+  #     state: present
+  #     wait: true
+
+  # - name: test
+  #   kubernetes.core.k8s:
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "gitlab"
+  #     state: present
+  #     src: "{{ ansible_env.HOME }}/carrier/gitlab.yaml"
+  #     wait: true
+
+  # - name: Install GitLab in Cluster
+  #   kubernetes.core.k8s:
+  #     name: "asdf"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "gitlab"
+  #     state: present
+  #     src: “{{ ansible_env.HOME }}/carrier/gitlab.yaml”
+  #     wait: true

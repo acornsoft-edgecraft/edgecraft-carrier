@@ -9,6 +9,7 @@ installed:
   kiali: false
   istio: false
   prometheus: false
+  kubesphere: false
 
 chart_version:
   zabbix: "0.3.2"
