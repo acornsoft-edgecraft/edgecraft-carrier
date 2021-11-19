@@ -17,6 +17,7 @@
 
     chart_version:
       kiali-operator: "1.30.0"
+      consul: "0.37.0"
 
   tasks:
 

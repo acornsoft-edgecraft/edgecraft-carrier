@@ -126,3 +126,11 @@ bitnami    https://charts.bitnami.com/bitnami
 
 - istioctl
   - curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.0 TARGET_ARCH=x86_64 sh -
+
+
+
+## 참고
+> [참고]
+> [kubesphere ks-installer](https://github.com/kubesphere/ks-installer)
+> [kubesphere 나만의 프로메테우스 사용하기](https://kubesphere.io/docs/faq/observability/byop/)
+> [Installing Consul](https://www.consul.io/docs/k8s/installation/install#helm-chart-installation)

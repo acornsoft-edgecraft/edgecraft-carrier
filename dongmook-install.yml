@@ -14,13 +14,32 @@
       kiali: false
       istio: false
       prometheus: false
-      kubesphere: true
+      kubesphere: false
+      consul: true
     
     chart_version:
       kiali-operator: "1.30.0"
       ks-installer: "0.2.2"
+      consul: "0.37.0"
 
   tasks:
+  - name: Create namespace for consul
+    when: "{{ installed.consul }}"
+    kubernetes.core.k8s:
+      kubeconfig: "{{ kubeconfig }}"
+      name: "{{ consul }}"
+      kind: "namespace"
+      state: present
+      wait: true
+
+  - name: Template add in Master[0]
+    template:
+      src: "{{dongmook}}/{{ consul }}.yaml.j2"
+      dest: "{{ ansible_env.HOME }}/carrier/{{ consul }}.yaml"
+      mode: 0644
+
+
+
   # - name: Template add in Master[0]
   #   template:
   #     # src: "{{ istio }}.yaml.j2"
@@ -79,6 +98,11 @@
   #     kind: "namespace"
   #     state: present
   #     wait: true
+  #   register: debug
+
+  # - debug:
+  #     var: debug
+  
 
   # - name: test
   #   kubernetes.core.k8s:
