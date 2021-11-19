@@ -10,4 +10,4 @@ removed:
   kiali: false
   istio: false
   prometheus: false
-
+  kubesphere: false

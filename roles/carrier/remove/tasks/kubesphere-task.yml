@@ -1,0 +1,5 @@
+---
+- name: kubesphere helm remove in cluster
+  when: "{{ removed.kubesphere }}"
+  shell:
+    "{{ ansible_env.HOME }}/carrier/kubesphere-delete.sh"
