@@ -12,4 +12,7 @@
 # - include_tasks: argocd-task.yml
 
 # jupyterhub include remove task
-- include_tasks: jupyterhub-task.yml
+# - include_tasks: jupyterhub-task.yml
+
+# gitlab include remove task
+- include_tasks: gitlab-task.yml

@@ -1,0 +1,24 @@
+---
+
+- name: GitLab Template add in Cluster
+  template:
+    src: "{{ gitlab }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ gitlab }}.yaml"
+    mode: 0644
+
+# - name: Create GitLab namespace
+#   kubernetes.core.k8s:
+#     kubeconfig: "{{ kubeconfig }}"
+#     name: "{{ gitlab }}"
+#     api_version: v1
+#     kind: Namespace
+#     state: present
+
+- name: Install GitLab in Cluster
+  kubernetes.core.k8s:
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ gitlab }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    state: present
+    src: "{{ ansible_env.HOME }}/carrier/{{ gitlab }}.yaml"
+    wait: true
