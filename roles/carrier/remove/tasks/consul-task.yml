@@ -1,0 +1,34 @@
+---
+- name: consul helm remove in cluster
+  when: "{{ removed.consul }}"
+  kubernetes.core.helm:
+    name: "{{ consul }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ consul }}"
+    state: absent
+    wait: true
+
+- name: consul get pvc list
+  when: "{{ removed.consul }}"
+  kubernetes.core.k8s_info:
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ consul }}"
+    kind: PersistentVolumeClaim
+    api_version: v1
+  register: pvc_list
+
+# - debug:
+#     msg: "{{ item }}"
+#   with_items: "{{ pvc_list['resources']|map(attribute='metadata.name')|list }}"
+
+- name: consul pvc remove in cluster
+  when: "{{ removed.consul }}"
+  kubernetes.core.k8s:
+    name: "{{ item }}"
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ consul }}"
+    kind: PersistentVolumeClaim
+    api_version: v1
+    state: absent
+    wait: true
+  with_items: "{{ pvc_list['resources']|map(attribute='metadata.name')|list }}"

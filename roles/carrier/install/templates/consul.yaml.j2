@@ -15,7 +15,7 @@ global:
   # It is recommended to generally not set this below "info" unless actively debugging due to logging verbosity.
   # One of "debug", "info", "warn", or "error".
   # @type: string
-  logLevel: "info"
+  logLevel: "debug"
 
   # Enable all component logs to be output in JSON format.
   # @type: boolean
@@ -445,7 +445,7 @@ server:
   # A `null` value will use the Kubernetes cluster's default StorageClass. If a default
   # StorageClass does not exist, you will need to create one.
   # @type: string
-  storageClass: null
+  storageClass: default-storage
 
   # This will enable/disable Connect (https://consul.io/docs/connect). Setting this to true
   # _will not_ automatically secure pod communication, this
@@ -563,7 +563,9 @@ server:
   # --set 'server.extraConfig="{"log_level": "DEBUG"}"'
   # ```
   extraConfig: |
-    {}
+    {
+        "log_level": "DEBUG"
+    }
 
   # A list of extra volumes to mount for server agents. This
   # is useful for bringing in extra data that can be referenced by other configurations
@@ -905,7 +907,9 @@ client:
   # --set 'client.extraConfig="{"log_level": "DEBUG"}"'
   # ```
   extraConfig: |
-    {}
+    {
+        "log_level": "DEBUG"
+    }
 
   # A list of extra volumes to mount for client agents. This
   # is useful for bringing in extra data that can be referenced by other configurations
@@ -1173,7 +1177,7 @@ ui:
 
     # The service type to register.
     # @type: string
-    type: null
+    type: NodePort
 
     # Set the port value of the UI service.
     port:
@@ -1191,11 +1195,11 @@ ui:
 
       # HTTP node port
       # @type: integer
-      http: null
+      http: 31080
 
       # HTTPS node port
       # @type: integer
-      https: null
+      https: 31043
 
     # Annotations to apply to the UI service.
     #

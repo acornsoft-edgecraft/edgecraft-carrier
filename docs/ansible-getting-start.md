@@ -121,7 +121,6 @@ bitnami    https://charts.bitnami.com/bitnami
 ## 필수 패키지 목록
 - python3 라이브러리
   - pip3 insatll kubernetes
-  - pip3 insatll openshift
   - pip3 insatll PyYAML
 
 - istioctl

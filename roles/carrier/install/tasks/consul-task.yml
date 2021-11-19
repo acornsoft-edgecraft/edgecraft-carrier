@@ -1,0 +1,21 @@
+---
+# tasks file for consul
+
+- name: Template add in Master[0]
+  template:
+    src: "{{ consul }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ consul }}.yaml"
+    mode: 0644
+
+- name: Install consul from Helm Charts
+  when: "{{ installed.consul }}"
+  kubernetes.core.helm:
+    name: "{{ consul }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/consul"
+    chart_version: "{{ chart_version['consul'] }}"
+    release_namespace: "{{ consul }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ consul }}.yaml"
