@@ -11,3 +11,4 @@ removed:
   istio: false
   prometheus: false
   kubesphere: false
+  consul: false
