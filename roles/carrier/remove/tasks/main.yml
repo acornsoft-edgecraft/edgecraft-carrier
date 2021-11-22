@@ -15,4 +15,7 @@
 # - include_tasks: jupyterhub-task.yml
 
 # gitlab include remove task
-- include_tasks: gitlab-task.yml
+# - include_tasks: gitlab-task.yml
+
+# spark include remove task
+- include_tasks: spark-task.yml

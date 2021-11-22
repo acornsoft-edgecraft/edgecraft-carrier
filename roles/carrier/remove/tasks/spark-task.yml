@@ -1,0 +1,37 @@
+---
+- name: Spark remove in cluster
+  kubernetes.core.helm:
+    name: "{{ spark }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ spark }}-operator"
+    state: absent
+    wait: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ spark }}.yaml"
+
+- name: Delete a Clusterrolebining Spark-operator
+  community.kubernetes.k8s:
+    name: "{{ spark }}-spark-operator"
+    api_version: v1
+    kind: ClusterRoleBinding
+    state: absent
+    wait: true
+    kubeconfig: "{{ kubeconfig }}"
+
+- name: Delete a Clusterrole Spark-operator
+  community.kubernetes.k8s:
+    name: "{{ spark }}-spark-operator"
+    api_version: v1
+    kind: ClusterRole
+    state: absent
+    wait: true
+    kubeconfig: "{{ kubeconfig }}"
+
+- name: Delete a Spark-operator namespace
+  community.kubernetes.k8s:
+    name: "{{ spark }}-operator"
+    api_version: v1
+    kind: Namespace
+    state: absent
+    wait: true
+    kubeconfig: "{{ kubeconfig }}"
