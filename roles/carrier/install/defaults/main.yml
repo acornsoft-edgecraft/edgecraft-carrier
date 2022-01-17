@@ -22,7 +22,7 @@ chart_version:
   argocd: "3.26.8"
   prometheus: "14.1.1"
   kiali-operator: "1.30.0"
-  jaeger-operator: "2.21.30"
+  jaeger-operator: "2.21.3"
   grafana: "6.11.0"
   ks-installer: "0.2.2"
   jupyterhub: "0.11.1"

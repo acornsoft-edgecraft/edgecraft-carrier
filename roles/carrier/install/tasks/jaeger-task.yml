@@ -8,7 +8,7 @@
     mode: 0644
 
 - name: Install jaeger from Helm Charts
-  when: {{ installed.jaeger  }}
+  when: "{{ installed.jaeger  }}"
   kubernetes.core.helm:
     name: "{{ jaeger }}"
     kubeconfig: "{{ kubeconfig }}"

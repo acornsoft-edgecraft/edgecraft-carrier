@@ -71,6 +71,7 @@ cr:
       accessible_namespaces:
       - '**'
       ingress_enabled: false
+      service_type: NodePort
       logger:
         log_level: debug
         log_format: text
@@ -83,5 +84,6 @@ cr:
       prometheus:
         url: 'http://prometheus-server.monitoring:9090'
       tracing:
-        in_cluster_url: 'http://jaeger-operator-jaeger-query.monitoring:16686'
-        url: ''
+        in_cluster_url: 'http://jaeger-operator-jaeger-query.monitoring:16686/jaeger'
+        url: 'http://jaeger-operator-jaeger-query.monitoring:30186'
+        use_grpc: true

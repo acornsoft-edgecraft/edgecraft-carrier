@@ -8,54 +8,91 @@
       gitlab: false
       argocd: false
       nexus: false
-      jaeger: false
+      jaeger: true
       grafana: false
       kiali: false
       istio: false
+      istio_demo: false
       prometheus: false
       kubesphere: false
       consul: true
 
     chart_version:
+      zabbix: "0.3.2"
+      koreboard: "0.4.0"
+      nexus: "29.0.2"
+      kong: "2.1.0"
+      konga: "1.0.0"
+      argocd: "3.26.8"
+      prometheus: "14.1.1"
       kiali-operator: "1.30.0"
+      jaeger-operator: "2.21.3"
+      grafana: "6.11.0"
+      ks-installer: "0.2.2"
+      jupyterhub: "0.11.1"
       consul: "0.37.0"
+      gitlab: "5.4.2"
 
   tasks:
-
-  - name: consul helm remove in cluster
-    when: "{{ removed.consul }}"
+  ### jaeger-operator 삭제
+  - name: jaeger helm remove in cluster
+    when: "{{ removed.jaeger }}"
     kubernetes.core.helm:
-      name: "{{ consul }}"
+      name: "{{ jaeger }}"
       kubeconfig: "{{ kubeconfig }}"
-      release_namespace: "{{ consul }}"
+      release_namespace: "{{ monitoring_namespace }}"
       state: absent
       wait: true
+  ######
 
-  - name: consul get pvc list
-    when: "{{ removed.consul }}"
-    kubernetes.core.k8s_info:
-      kubeconfig: "{{ kubeconfig }}"
-      namespace: "{{ consul }}"
-      kind: PersistentVolumeClaim
-      api_version: v1
-    register: pvc_list
+  ### istio-demo 삭제
+  # - name: istio-demo k8s remove in cluster
+  #   when: "{{ removed.istio_demo }}"
+  #   kubernetes.core.k8s:
+  #     state: absent
+  #     definition: "{{ lookup('file', '/root/carrier/istio_demo/istio_demo_2_0.yaml') | from_yaml }}"
+  #     wait: true
+  ######
+
+  ### consul 삭제
+  # - name: consul helm remove in cluster
+  #   when: "{{ removed.consul }}"
+  #   kubernetes.core.helm:
+  #     name: "{{ consul }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     release_namespace: "{{ consul }}"
+  #     state: absent
+  #     wait: true
+
+  ## k8s_info 사용으로 pvc list 변수 처리
+  # - name: consul get pvc list
+  #   when: "{{ removed.consul }}"
+  #   kubernetes.core.k8s_info:
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "{{ consul }}"
+  #     kind: PersistentVolumeClaim
+  #     api_version: v1
+  #   register: pvc_list
   
   # - debug:
   #     msg: "{{ item }}"
   #   with_items: "{{ pvc_list['resources']|map(attribute='metadata.name')|list }}"
 
-  - name: consul pvc remove in cluster
-    when: "{{ removed.consul }}"
-    kubernetes.core.k8s:
-      name: "{{ item }}"
-      kubeconfig: "{{ kubeconfig }}"
-      namespace: "{{ consul }}"
-      kind: PersistentVolumeClaim
-      api_version: v1
-      state: absent
-      wait: true
-    with_items: "{{ pvc_list['resources']|map(attribute='metadata.name')|list }}"
+  ## pvc list 삭제 - 병렬처리 
+  # - name: consul pvc remove in cluster
+  #   when: "{{ removed.consul }}"
+  #   kubernetes.core.k8s:
+  #     name: "{{ item }}"
+  #     kubeconfig: "{{ kubeconfig }}"
+  #     namespace: "{{ consul }}"
+  #     kind: PersistentVolumeClaim
+  #     api_version: v1
+  #     state: absent
+  #     wait: true
+  #   with_items: "{{ pvc_list['resources']|map(attribute='metadata.name')|list }}"
+  ######
 
+  ### grafana 삭제
   # - name: grafana helm remove in cluster
   #   when: "{{ removed.grafana }}"
   #   kubernetes.core.helm:
@@ -64,7 +101,9 @@
   #     release_namespace: "{{ monitoring_namespace }}"
   #     state: absent
   #     wait: true
+  ######
 
+  ### kubesphere 삭제
   # - name: kubesphere k8s remove in cluster
   #   when: "{{ removed.kubesphere }}"
   #   kubernetes.core.k8s:
@@ -76,11 +115,15 @@
   #     state: absent
   #     wait: true
 
+  ## 완전삭제를 위해 kubesphere에서 제공 하는 삭제 쉘 사용
   # - name: kubesphere helm remove in cluster
   #   when: "{{ removed.kubesphere }}"
   #   shell:
   #     "{{ ansible_env.HOME }}/carrier/kubesphere-delete.sh"
+  ######
 
+  ### istio 삭제
+  ## istioctl 패키지 필요
   # - name: istio k8s remove in cluster
   #   when: "{{ removed.istio }}"
   #   command: >-
@@ -89,3 +132,4 @@
   #     -f {{ ansible_env.HOME }}/carrier/{{ istio }}.yaml 
   #     --purge 
   #     --skip-confirmation
+  ######

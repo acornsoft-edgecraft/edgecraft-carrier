@@ -3,6 +3,7 @@
 # Declare variables to be passed into your templates.
 
 nameOverride: ""
+fullnameOverride: "jaeger-operator"
 
 image:
   repository: jaegertracing/jaeger-operator
@@ -24,6 +25,9 @@ jaeger:
       strategy: DaemonSet
     ingress:
       enabled: false
+    query:
+      serviceType: NodePort
+      nodePort: 30186
     storage:
       type: badger
       options:
