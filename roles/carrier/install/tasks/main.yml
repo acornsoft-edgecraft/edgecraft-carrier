@@ -39,4 +39,7 @@
 # - include_tasks: jupyterhub-task.yml
 
 # gitlab include task
-- include_tasks: gitlab-task.yml
+# - include_tasks: gitlab-task.yml
+
+# spark include task
+- include_tasks: spark-task.yml
