@@ -8,7 +8,6 @@
     mode: 0644
 
 - name: Install consul from Helm Charts
-  when: "{{ installed.consul }}"
   kubernetes.core.helm:
     name: "{{ consul }}"
     kubeconfig: "{{ kubeconfig }}"

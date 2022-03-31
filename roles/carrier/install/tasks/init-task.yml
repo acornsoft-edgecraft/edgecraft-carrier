@@ -1,0 +1,15 @@
+# add helm repository
+- name: Add helm repository for installation
+  command: "helm repo add --ca-file {{ helm_repository_ca_crt }} {{ helm_repository_name }} {{ helm_repository_url }}"
+
+# update helm repository
+- name: Update helm repository
+  command: "helm repo update"
+  
+
+# create directory
+- name: Create directory for template
+  file:
+    path: "{{ helm_value_dir }}"
+    state: directory
+    mode: '0755'

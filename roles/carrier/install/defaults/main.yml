@@ -1,5 +1,6 @@
 installed:
-  koreboard: false
+  common: true
+  koreboard: true
   kong: false
   gitlab: false
   argocd: false
@@ -16,7 +17,7 @@ installed:
 
 chart_version:
   zabbix: "0.3.2"
-  koreboard: "0.4.0"
+  koreboard: "0.4.2"
   nexus: "29.0.2"
   kong: "2.1.0"
   konga: "1.0.0"
