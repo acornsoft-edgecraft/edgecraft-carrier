@@ -1,6 +1,6 @@
 installed:
   common: true
-  koreboard: true
+  koreboard: false
   kong: false
   gitlab: false
   argocd: false

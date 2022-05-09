@@ -1,5 +1,6 @@
 ---
 removed:
+  common: true
   koreboard: false
   kong: false
   gitlab: false
@@ -11,4 +12,6 @@ removed:
   istio: false
   prometheus: false
   kubesphere: false
+  jupyterhub: false
+  spark: false
   consul: false
