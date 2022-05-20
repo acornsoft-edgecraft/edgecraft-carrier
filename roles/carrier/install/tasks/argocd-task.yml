@@ -17,3 +17,4 @@
     create_namespace: true
     values_files:
       - "{{ helm_value_dir }}/{{ argocd }}.yaml"
+

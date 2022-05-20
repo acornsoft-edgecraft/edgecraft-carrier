@@ -31,3 +31,4 @@ chart_version:
   gitlab: "5.4.2"
   spark: "1.1.13"
   consul: "0.37.0"
+
