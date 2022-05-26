@@ -28,7 +28,7 @@ kubernetes.core.k8s_service      Manage Services on Kubernetes
 [...]
 ```
 
-
+ 
 ## Automating Helm using Ansible
 kubernetes.core 컬렉션에 포함된 Helm 관련 모듈 목록은 다음과 같습니다.
 
