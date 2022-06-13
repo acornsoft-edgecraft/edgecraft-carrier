@@ -1,4 +1,5 @@
 installed:
+  common: true
   koreboard: false
   kong: false
   gitlab: false
@@ -13,11 +14,11 @@ installed:
   jupyterhub: false
   spark: false
   consul: false
-  cert-manager: false
+  cert_manager: false
 
 chart_version:
   zabbix: "0.3.2"
-  koreboard: "0.4.0"
+  koreboard: "0.4.2"
   nexus: "29.0.2"
   kong: "2.1.0"
   konga: "1.0.0"
@@ -31,4 +32,5 @@ chart_version:
   gitlab: "5.4.2"
   spark: "1.1.13"
   consul: "0.37.0"
-  cert-manager: "1.8.0"
+  cert_manager: "1.8.0"
+

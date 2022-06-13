@@ -1,45 +1,80 @@
 ---
-# kiali include task
-#- include_tasks: kiali-task.yml
+- name: Install Task for ArgoCD
+  when: installed.common
+  include: init-task.yml
+  tags: common
 
-# jaeger include task
-#- include_tasks: jaeger-task.yml
+- name: Install Task for ArgoCD
+  when: installed.argocd
+  include: argocd-task.yml
+  tags: argocd
 
-# prometheus include task
-#- include_tasks: prometheus-task.yml
+- name: Install Task for Consul
+  when: installed.consul
+  include: consul-task.yml
+  tags: consul
 
-# grafana include task
-#- include_tasks: grafana-task.yml
+- name: Install Task for GitLab
+  when: installed.gitlab
+  include: gitlab-task.yml
+  tags: gitlab
 
-# # nexus include task
-# - include_tasks: nexus-task.yml
+- name: Install Task for Grafana
+  when: installed.grafana
+  include: grafana-task.yml
+  tags: grafana
 
-# # kore-board include task
-# - include_tasks: koreboard-task.yml
+- name: Install Task for Istio
+  when: installed.istio
+  include: istio-task.yml
+  tags: istio
 
-# # zabbix include task
-# - include_tasks: zabbix-task.yml
+- name: Install Task for Jaeger
+  when: installed.jaeger
+  include: jaeger-task.yml
+  tags: jaeger
 
-# kong/konga include task
-# - include_tasks: kong-task.yml
+- name: Install Task for Jupyterhub
+  when: installed.jupyterhub
+  include: jupyterhub-task.yml
+  tags: jupyterhub
 
-# kong/konga include task
-# - include_tasks: argocd-task.yml
+- name: Install Task for Kiali
+  when: installed.kiali
+  include: kiali-task.yml
+  tags: kiali
 
-# nexus include task
-# - include_tasks: nexus-task.yml
+- name: Install Task for Kong/Konga
+  when: installed.kong
+  include: kong-task.yml
+  tags: kong
 
-# kore-board include task
-# - include_tasks: koreboard-task.yml
+- name: Install Task for KoreBoard
+  when: installed.koreboard
+  include: koreboard-task.yml
+  tags: koreboard
 
-# zabbix include task
-# - include_tasks: zabbix-task.yml
+- name: Install Task for Kubesphere
+  when: installed.kubesphere
+  include: kubesphere-task.yml
+  tags: kubesphere
 
-# jupyterhub include task
-# - include_tasks: jupyterhub-task.yml
+- name: Install Task for Nexus
+  when: installed.nexus
+  include: nexus-task.yml
+  tags: nexus
 
-# gitlab include task
-# - include_tasks: gitlab-task.yml
+- name: Install Task for Prometheus
+  when: installed.prometheus
+  include: prometheus-task.yml
+  tags: prometheus
 
-# spark include task
-- include_tasks: spark-task.yml
+- name: Install Task for Spark
+  when: installed.spark
+  include: spark-task.yml
+  tags: spark
+
+- name: Install Task for Zabbix
+  when: installed.zabbix
+  include: zabbix-task.yml
+  tags: zabbix

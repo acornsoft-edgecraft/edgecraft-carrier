@@ -8,7 +8,7 @@
     mode: 0644
 
 - name: Install Prometheus from Helm Charts
-  when: {{ installed.prometheus }}
+  when: "{{ installed.prometheus }}"
   kubernetes.core.helm:
     name: "{{ prometheus }}"
     kubeconfig: "{{ kubeconfig }}"

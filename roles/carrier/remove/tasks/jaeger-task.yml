@@ -1,0 +1,20 @@
+---
+- name: jaeger k8s remove in cluster
+  when: "{{ removed.jaeger }}"
+  kubernetes.core.k8s:
+    name: "{{ jaeger }}"
+    kubeconfig: "{{ kubeconfig }}"
+    namespace: "{{ monitoring_namespace }}"
+    kind: jaeger
+    api_version: jaeger.io/v1alpha1
+    state: absent
+    wait: true
+
+- name: jaeger helm remove in cluster
+  when: "{{ removed.jaeger }}"
+  kubernetes.core.helm:
+    name: "{{ jaeger }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    state: absent
+    wait: true

@@ -1,17 +1,18 @@
 ---
+# tasks file for cert_manager
 
-- name: Cert Manager Template add in Cluster
+- name: Template add in Master[0]
   template:
     src: "{{ cert_manager }}.yaml.j2"
     dest: "{{ ansible_env.HOME }}/carrier/{{ cert_manager }}.yaml"
     mode: 0644
 
-- name: Install Cert Manager in Cluster
+- name: Install cert_manager from Helm Charts
   kubernetes.core.helm:
     name: "{{ cert_manager }}"
     kubeconfig: "{{ kubeconfig }}"
     atomic: true    # 설치 실패시 삭제 처리
-    chart_ref: "{{ helm_repository_name }}/cert-manager"
+    chart_ref: "{{ helm_repository_name }}/cert_manager"
     chart_version: "{{ chart_version['cert_manager'] }}"
     release_namespace: "{{ cert_manager }}"
     create_namespace: true

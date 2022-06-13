@@ -28,7 +28,7 @@ kubernetes.core.k8s_service      Manage Services on Kubernetes
 [...]
 ```
 
-
+ 
 ## Automating Helm using Ansible
 kubernetes.core 컬렉션에 포함된 Helm 관련 모듈 목록은 다음과 같습니다.
 
@@ -85,7 +85,7 @@ roles/
 
 ```
 
-#### 시나리오 1 - 새 Helm 저장소 추가
+#### 시나리오 1 - 새로운 Helm 저장소 추가
 helm_repository 모듈을 사용하여 Helm 저장소를 추가해 보겠습니다.
 ```sh
 $ vi test.yaml

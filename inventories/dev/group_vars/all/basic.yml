@@ -1,5 +1,5 @@
 # common
-remote_user: centos
+remote_user: ubuntu
 monitoring_namespace: monitoring
 addon_namespace: addon
 kubesphere_namespace: kubesphere-system
@@ -7,6 +7,8 @@ kubeconfig: /etc/kubernetes/acloud/acloud-client-kubeconfig
 
 # helm configuration
 helm_repository_name: "edge"
+helm_repository_ca_crt: "/etc/docker/certs.d/192.168.77.100/ca.crt"
+helm_repository_url: "https://192.168.77.100/chartrepo/helm-chart"
 helm_value_dir: "{{ansible_env.HOME}}/carrier"
 
 # template configuration

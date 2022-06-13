@@ -1,21 +1,80 @@
 ---
-# kore-board include remove task
-#- include_tasks: koreboard-task.yml
+- name: Install Task for ArgoCD
+  when: removed.common
+  include: init-task.yml
+  tags: common
 
-# nexus include remove task
-#- include_tasks: nexus-task.yml
+- name: Install Task for ArgoCD
+  when: removed.argocd
+  include: argocd-task.yml
+  tags: argocd
 
-# zabbix include remove task
-#- include_tasks: zabbix-task.yml
+- name: Install Task for Consul
+  when: removed.consul
+  include: consul-task.yml
+  tags: consul
 
-# argocd include remove task
-# - include_tasks: argocd-task.yml
+- name: Install Task for GitLab
+  when: removed.gitlab
+  include: gitlab-task.yml
+  tags: gitlab
 
-# jupyterhub include remove task
-# - include_tasks: jupyterhub-task.yml
+- name: Install Task for Grafana
+  when: removed.grafana
+  include: grafana-task.yml
+  tags: grafana
 
-# gitlab include remove task
-# - include_tasks: gitlab-task.yml
+- name: Install Task for Istio
+  when: removed.istio
+  include: istio-task.yml
+  tags: istio
 
-# spark include remove task
-- include_tasks: spark-task.yml
+- name: Install Task for Jaeger
+  when: removed.jaeger
+  include: jaeger-task.yml
+  tags: jaeger
+
+- name: Install Task for Jupyterhub
+  when: removed.jupyterhub
+  include: jupyterhub-task.yml
+  tags: jupyterhub
+
+- name: Install Task for Kiali
+  when: removed.kiali
+  include: kiali-task.yml
+  tags: kiali
+
+- name: Install Task for Kong/Konga
+  when: removed.kong
+  include: kong-task.yml
+  tags: kong
+
+- name: Install Task for KoreBoard
+  when: removed.koreboard
+  include: koreboard-task.yml
+  tags: koreboard
+
+- name: Install Task for Kubesphere
+  when: removed.kubesphere
+  include: kubesphere-task.yml
+  tags: kubesphere
+
+- name: Install Task for Nexus
+  when: removed.nexus
+  include: nexus-task.yml
+  tags: nexus
+
+- name: Install Task for Prometheus
+  when: removed.prometheus
+  include: prometheus-task.yml
+  tags: prometheus
+
+- name: Install Task for Spark
+  when: removed.spark
+  include: spark-task.yml
+  tags: spark
+
+- name: Install Task for Zabbix
+  when: removed.zabbix
+  include: zabbix-task.yml
+  tags: zabbix
