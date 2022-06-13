@@ -1,0 +1,10 @@
+---
+- name: Cert Manager remove in cluster
+  kubernetes.core.helm:
+    name: "{{ cert_manager }}"
+    kubeconfig: "{{ kubeconfig }}"
+    release_namespace: "{{ cert_manager }}"
+    state: absent
+    wait: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ cert_manager }}.yaml"
