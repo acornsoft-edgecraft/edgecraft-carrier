@@ -11,7 +11,7 @@ helm_value_dir: "{{ansible_env.HOME}}/carrier"
 
 # template configuration
 argocd: "argocd"
-cert_manager: "cert_manager"
+cert_manager: "cert-manager"
 consul: "consul"
 elasticsearch: "elasticsearch"
 fluentbit: "fluentbit"

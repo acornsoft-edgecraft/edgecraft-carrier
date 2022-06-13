@@ -13,6 +13,7 @@ installed:
   jupyterhub: false
   spark: false
   consul: false
+  cert-manager: false
 
 chart_version:
   zabbix: "0.3.2"
@@ -30,3 +31,4 @@ chart_version:
   gitlab: "5.4.2"
   spark: "1.1.13"
   consul: "0.37.0"
+  cert-manager: "1.8.0"
