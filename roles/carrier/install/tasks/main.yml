@@ -44,6 +44,11 @@
   include: kiali-task.yml
   tags: kiali
 
+- name: Install Task for Keycloak
+  when: installed.keycloak
+  include: keycloak-task.yml
+  tags: keycloak
+
 - name: Install Task for Kong/Konga
   when: installed.kong
   include: kong-task.yml
