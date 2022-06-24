@@ -1,0 +1,21 @@
+---
+# tasks file for keycloak
+
+- name: Template add in Master[0]
+  template:
+    src: "{{ keycloak }}.yaml.j2"
+    dest: "{{ ansible_env.HOME }}/carrier/{{ keycloak }}.yaml"
+    mode: 0644
+
+- name: Install keycloak from Helm Charts
+  when: "{{ installed.keycloak }}"
+  kubernetes.core.helm:
+    name: "{{ keycloak }}"
+    kubeconfig: "{{ kubeconfig }}"
+    atomic: true    # 설치 실패시 삭제 처리
+    chart_ref: "{{ helm_repository_name }}/keycloak-operator"
+    chart_version: "{{ chart_version['keycloak-operator'] }}"
+    release_namespace: "{{ monitoring_namespace }}"
+    create_namespace: true
+    values_files:
+      - "{{ helm_value_dir }}/{{ keycloak }}.yaml"
