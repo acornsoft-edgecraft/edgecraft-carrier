@@ -12,7 +12,14 @@
 
 -----
 ## 🗄 Directory structure
+### ./cmd
+**Main applications for this project.**
 
+### ./pkg
+**Library code that's ok to use by applications.**. This directory contains all the project-specific code tailored only for your business use case, like _configs_, _middleware_, _routes_ or _utils_.
+
+### ./scripts
+**빌드, 설치, 분석, 기타 작업을 위한 스크립트들.**
 -----
 ## ⚡️ Quick start
 
