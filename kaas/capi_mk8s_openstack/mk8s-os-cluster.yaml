@@ -1,7 +1,7 @@
 apiVersion: v1
 data:
   cacert: Cg==
-  clouds.yaml: Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC44OC4xMTo1MDAwL3YzLwogICAgICB1c2VybmFtZTogImFkbWluIgogICAgICBwYXNzd29yZDogIkBjMHJuczBmdCIKICAgICAgcHJvamVjdF9pZDogM2I2NmI2OWE4ZDI0NDE3MDhkMTc3M2M3Y2Y0OWRlMjUKICAgICAgcHJvamVjdF9uYW1lOiAiZWRnZWNyYWZ0LXRlc3QiCiAgICAgIHVzZXJfZG9tYWluX25hbWU6ICJEZWZhdWx0IgogICAgcmVnaW9uX25hbWU6ICJSZWdpb25PbmUiCiAgICBpbnRlcmZhY2U6ICJwdWJsaWMiCiAgICBpZGVudGl0eV9hcGlfdmVyc2lvbjogMw==
+  clouds.yaml: Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC44OC4xMTo1MDAwL3YzLwogICAgICB1c2VybmFtZTogImVkZ2VjcmFmdCIKICAgICAgcGFzc3dvcmQ6ICJQYXNzMDAwMEAiCiAgICAgIHByb2plY3RfaWQ6IDNiNjZiNjlhOGQyNDQxNzA4ZDE3NzNjN2NmNDlkZTI1CiAgICAgIHByb2plY3RfbmFtZTogImVkZ2VjcmFmdC10ZXN0IgogICAgICB1c2VyX2RvbWFpbl9uYW1lOiAiRGVmYXVsdCIKICAgIHJlZ2lvbl9uYW1lOiAiUmVnaW9uT25lIgogICAgaW50ZXJmYWNlOiAicHVibGljIgogICAgaWRlbnRpdHlfYXBpX3ZlcnNpb246IDM=
 kind: Secret
 metadata:
   labels:
@@ -80,7 +80,7 @@ spec:
       identityRef:
         kind: Secret
         name: mk8s-os-cluster-cloud-config
-      image: Ubuntu2004-Official
+      image: ubuntu-20.04-capi
       sshKeyName: hostacloud
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
@@ -121,7 +121,7 @@ spec:
       identityRef:
         kind: Secret
         name: mk8s-os-cluster-cloud-config
-      image: Ubuntu2004-Official
+      image: ubuntu-20.04-capi
       sshKeyName: hostacloud
 ---
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
