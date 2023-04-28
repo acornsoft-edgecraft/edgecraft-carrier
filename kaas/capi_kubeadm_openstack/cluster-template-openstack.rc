@@ -1,0 +1,62 @@
+# Kubernetes cluster configuration
+export KUBERNETES_VERSION="v1.25.6"
+export CONTROL_PLANE_MACHINE_COUNT=1
+export WORKER_MACHINE_COUNT=1
+export POD_CIDR=10.96.0.1/12
+export SVC_CIDR=10.96.0.0/12
+
+# OpenStack credentials configuration. No changes needed if you followed the README.
+export OPENSTACK_CLOUD=openstack
+export OPENSTACK_CLOUD_YAML_B64="Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC44OC4xMTo1MDAwL3YzLwogICAgICB1c2VybmFtZTogImVkZ2VjcmFmdCIKICAgICAgcGFzc3dvcmQ6ICJQYXNzMDAwMEAiCiAgICAgIHByb2plY3RfaWQ6IGYwMDYwOTllODViMTRjYTJhZWYxZDZjYmMwOTNhNmIxCiAgICAgIHByb2plY3RfbmFtZTogImVkZ2VjcmFmdC1hZG0iCiAgICAgIHVzZXJfZG9tYWluX25hbWU6ICJEZWZhdWx0IgogICAgcmVnaW9uX25hbWU6ICJSZWdpb25PbmUiCiAgICBpbnRlcmZhY2U6ICJwdWJsaWMiCiAgICBpZGVudGl0eV9hcGlfdmVyc2lvbjogMwo="
+export OPENSTACK_CLOUD_PROVIDER_CONF_B64="W0dsb2JhbF0KYXV0aC11cmw9aHR0cDovLzE5Mi4xNjguODguMTE6NTAwMC92My8KdXNlcm5hbWU9ImVkZ2VjcmFmdCIKcGFzc3dvcmQ9IlBhc3MwMDAwQCIKdGVuYW50LWlkPSJmMDA2MDk5ZTg1YjE0Y2EyYWVmMWQ2Y2JjMDkzYTZiMSIKdGVuYW50LW5hbWU9ImVkZ2VjcmFmdC1hZG0iCmRvbWFpbi1uYW1lPSJEZWZhdWx0IgpyZWdpb249IlJlZ2lvbk9uZSIK"
+export OPENSTACK_CLOUD_CACERT_B64="Cg=="
+
+# OpenStack region and network configuration. External network ID is only needed if multiple external networks exist.
+export OPENSTACK_EXTERNAL_NETWORK_ID="public"
+export OPENSTACK_FAILURE_DOMAIN="nova"
+
+# OpenStack machine conifugration
+export OPENSTACK_IMAGE_NAME="ubuntu-2004-kube-v1.25.6"
+export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR="2Core.4G_20GB"
+export OPENSTACK_NODE_MACHINE_FLAVOR="2Core.4G_20GB"
+export OPENSTACK_SSH_KEY_NAME="hostacloud"
+## OPENSTACK_ROOTVOLUME_DISKSIZE는 GB 단위이다.
+export OPENSTACK_ROOTVOLUME_DISKSIZE=20
+export OPENSTACK_ROOTVOLUME_VOLUMETYPE="ceph"
+export OPENSTACK_ROOTVOLUME_AVAILABILITYZONE="nova"
+
+
+# OpenStack network configuration
+export OPENSTACK_NETWORK_CIDR=10.6.0.0/24
+export OPENSTACK_DNS_NAMESERVERS=168.126.63.1
+
+# (optional) Containerd HTTP proxy configuration. Leave empty if not required.
+export CONTAINERD_HTTP_PROXY=""
+export CONTAINERD_HTTPS_PROXY=""
+export CONTAINERD_NO_PROXY=""
+
+# (optional) Snap risk level and confinement
+export SNAP_RISKLEVEL="stable"
+export SNAP_CONFINEMENT="classic"
+
+# Upgrade configuration
+export UPGRADE_STRATEGY=SmartUpgrade
+
+#{
+#    "openstack_cloud":"openstack",
+#    "openstack_cloud_provider_conf_b64":"W0dsb2JhbF0KYXV0aC11cmw9aHR0cDovLzE5Mi4xNjguNzcuMTEvaWRlbnRpdHkKdXNlcm5hbWU9InN1bm1pIgpwYXNzd29yZD0iZmtmZms0NDgiCnRlbmFudC1pZD0iNTQyZTdhMDRmNjkxNDgyOWI0M2U3N2Y5ZWYxMmI3NzkiCnRlbmFudC1uYW1lPSJlZGdlY3JhZnQiCmRvbWFpbi1uYW1lPSJEZWZhdWx0IgpyZWdpb249IlJlZ2lvbk9uZSIK",
+#    "openstack_cloud_yaml_b64":"Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC43Ny4xMS9pZGVudGl0eQogICAgICB1c2VybmFtZTogInN1bm1pIgogICAgICBwYXNzd29yZDogImZrZmZrNDQ4IgogICAgICBwcm9qZWN0X2lkOiA1NDJlN2EwNGY2OTE0ODI5YjQzZTc3ZjllZjEyYjc3OQogICAgICBwcm9qZWN0X25hbWU6ICJlZGdlY3JhZnQiCiAgICAgIHVzZXJfZG9tYWluX25hbWU6ICJEZWZhdWx0IgogICAgcmVnaW9uX25hbWU6ICJSZWdpb25PbmUiCiAgICBpbnRlcmZhY2U6ICJwdWJsaWMiCiAgICBpZGVudGl0eV9hcGlfdmVyc2lvbjogMwo=",
+#    "openstack_cloud_cacert_b64":"Cg==",
+#    "dns_nameservers":"168.126.63.1",
+#    "failure_domain":"nova",
+#    "image_name":"ubuntu-2004-kube-v1.23.3",
+#    "ssh_key_name":"sunmi",
+#    "external_network_id":"public",
+#    "api_server_floating_ip":"",
+#    "node_cidr":"10.6.0.0/24",
+#    "use_bastion_host":false,
+#    "bastion_flavor":"",
+#    "bastion_image_name":"",
+#    "bastion_ssh_key_name":"",
+#    "bastion_floating_ip":""
+#}
