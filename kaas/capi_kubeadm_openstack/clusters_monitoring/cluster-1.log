@@ -1,0 +1,14 @@
+Total_cluster: 1
+Total_instance: 2
+Current_instance: 
+    control_plane: 1
+    worker_node: 0
+Start_Time: 2023년 04월 27일 목요일 (16시 30분 38초)
+End_Time:
+Status:
+
+----- admk8s-os-cluster-1 ------------------------------------------------------------------------------
+NAME                                      STATUS     ROLES           AGE    VERSION   INTERNAL-IP   EXTERNAL-IP     OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+admk8s-os-cluster-1-control-plane-ndjjt   NotReady   control-plane   9m5s   v1.25.6   10.6.0.174    192.168.88.67   Ubuntu 20.04.5 LTS   5.4.0-144-generic   containerd://1.6.15
+------------------------------------------------------------------------------------------------------
+

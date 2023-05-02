@@ -1,7 +1,0 @@
-providers:
-  - name: "microk8s"
-    url: ${PWD}/deployments/bootstrap-microk8s/v0.4.0/bootstrap-components.yaml
-    type: "BootstrapProvider"
-  - name: "microk8s"
-    url: ${PWD}/deployments/control-plane-microk8s/v0.4.0/control-plane-components.yaml
-    type: "ControlPlaneProvider"

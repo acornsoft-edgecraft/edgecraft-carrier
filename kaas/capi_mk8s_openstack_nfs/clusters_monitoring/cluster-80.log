@@ -1,0 +1,477 @@
+Total_cluster: 80
+Total_instance: 160
+Current_instance: 
+    control_plane: 77
+    worker_node: 74
+Start_Time: 2023년 04월 28일 금요일 (19시 26분 36초)
+End_Time:
+Status:
+
+----- mk8s-os-cluster-1 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-1-md-0-t25bm            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.164    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-1-control-plane-fzhrl   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.136    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-2 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-2-md-0-8glxr            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.67     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-2-control-plane-rk64j   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.189    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-3 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-3-md-0-b7g6w            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.119    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-3-control-plane-wfz2m   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.179    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-4 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-4-md-0-7zf8t            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.10     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-4-control-plane-5lnk9   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.7      <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-5 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-5-md-0-t284r            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.18     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-5-control-plane-cx8zl   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.119    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-6 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-6-control-plane-wf9p2   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.92     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-6-md-0-rhwz2            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.13     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-7 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-7-md-0-6ch22            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.240    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-7-control-plane-4mghk   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.101    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-8 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-8-control-plane-ssxdr   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.66     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-8-md-0-vplng            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.27     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-9 ------------------------------------------------------------------------------
+NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-9-control-plane-sj5nx   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.73     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-9-md-0-z86zx            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.158    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-10 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-10-control-plane-4hj4h   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.230    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-10-md-0-jwbcl            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.217    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-11 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-11-control-plane-sdsxj   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.90     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-11-md-0-9r7cg            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.113    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-12 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-12-control-plane-gjlv8   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.60     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-13 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-13-control-plane-crzgp   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.170    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-13-md-0-rcjct            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.49     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-14 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-14-md-0-5nk6z            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.126    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-14-control-plane-v8fv9   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.131    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-15 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-15-md-0-jm96s            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.46     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-15-control-plane-6zsws   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.60     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-16 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-16-control-plane-n9szr   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.151    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-17 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-17-md-0-hcgp5            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.233    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-17-control-plane-5w4st   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.150    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-18 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-18-md-0-9xp4s            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.71     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-18-control-plane-hj78k   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.109    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-19 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-19-control-plane-sbk8g   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.170    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-19-md-0-c25lj            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.6      <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-20 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-20-md-0-d8mvs            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.142    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-20-control-plane-lhb57   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.30     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-21 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-21-control-plane-c75lf   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.112    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-21-md-0-9rjhv            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.143    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-22 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-22-control-plane-ffnjz   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.105    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-22-md-0-5p54t            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.25     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-23 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-23-md-0-vgpgf            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.38     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-23-control-plane-267xk   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.76     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-24 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-24-md-0-f5p5q            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.125    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-24-control-plane-5nhld   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.46     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-25 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-25-control-plane-w6zbw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.202    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-25-md-0-4rq8t            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.249    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-26 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-26-control-plane-dp7fz   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.37     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-26-md-0-xqrw5            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.241    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-27 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-27-control-plane-jw28g   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.91     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-27-md-0-f5w2x            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.116    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-28 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-28-control-plane-vn2qv   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.69     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-28-md-0-qqvqk            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.65     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-29 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-29-md-0-wckgp            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.53     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-29-control-plane-ddmxx   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.7      <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-30 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-30-md-0-8prfs            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.65     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-30-control-plane-nbztw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.192    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-31 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-31-md-0-cvg24            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.99     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-31-control-plane-szbl5   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.92     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-32 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-32-md-0-5pw2w            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.139    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-32-control-plane-xwtrj   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.53     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-33 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-33-control-plane-72svx   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.146    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-33-md-0-jbt27            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.188    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-34 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-34-md-0-zdwdp            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.125    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-34-control-plane-j9c2h   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.227    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-35 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-35-md-0-j5bfr            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.224    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-35-control-plane-jtc4v   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.253    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-36 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-36-control-plane-s842k   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.19     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-37 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-37-control-plane-hs76q   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.53     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-37-md-0-qx8p6            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.46     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-38 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-38-md-0-zhv4g            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.215    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-38-control-plane-dgzrt   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.84     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-39 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-39-control-plane-tl8xw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.136    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-39-md-0-2hb8n            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.124    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-40 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-40-md-0-hqq58            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.174    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-40-control-plane-rkrcw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.128    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-41 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-41-control-plane-2krxr   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.184    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-41-md-0-v9prv            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.128    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-42 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-42-md-0-x2lbd            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.17     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-42-control-plane-w6wk5   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.189    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-43 ------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-44 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-44-control-plane-qj5tr   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.74     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-44-md-0-cmjqr            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.102    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-45 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-45-control-plane-dqkqs   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.195    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-45-md-0-47h9z            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.106    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-46 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-46-md-0-5k2cm            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.25     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-46-control-plane-mc752   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.164    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-47 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-47-md-0-scjbw            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.252    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-47-control-plane-pr5jb   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.206    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-48 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-48-md-0-jxpj2            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.160    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-48-control-plane-n7zks   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.44     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-49 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-49-md-0-bg5xn            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.204    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-49-control-plane-klhv8   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.184    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-50 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-50-md-0-rkthx            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.227    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-50-control-plane-6gwq6   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.174    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-51 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-51-md-0-s5g6t            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.42     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-51-control-plane-78sp6   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.47     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-52 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-52-md-0-pghbt            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.208    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-52-control-plane-v2j8c   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.114    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-53 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-53-control-plane-466tm   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.205    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-53-md-0-2wvpg            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.110    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-54 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-54-control-plane-fsmzc   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.86     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-54-md-0-fdphm            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.205    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-55 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-55-md-0-ws22b            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.52     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-55-control-plane-r9ks7   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.13     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-56 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-56-md-0-9dnr8            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.215    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-56-control-plane-56r7d   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.43     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-57 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-57-md-0-h9g65            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.227    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-57-control-plane-46g4l   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.173    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-58 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-58-md-0-lc522            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.31     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-58-control-plane-67ghw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.159    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-59 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-59-md-0-tg7q8            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.11     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-59-control-plane-9ltcz   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.134    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-60 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-60-control-plane-8xsfg   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.16     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-60-md-0-q2nm4            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.87     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-61 ------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-62 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-62-control-plane-5j6x2   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.152    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-62-md-0-cb4zm            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.241    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-63 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-63-md-0-5mpd5            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.141    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-63-control-plane-trxqb   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.214    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-64 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-64-md-0-f7cr8            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.245    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-64-control-plane-h4vqr   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.67     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-65 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-65-md-0-tkbd7            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.93     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-65-control-plane-5lfhz   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.68     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-66 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-66-md-0-d4g55            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.168    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-66-control-plane-rqftv   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.195    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-67 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-67-control-plane-gz6k9   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.14     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-67-md-0-mn978            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.229    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-68 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-68-md-0-7v8d2            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.139    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-68-control-plane-8xgnb   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.132    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-69 ------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-70 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-70-control-plane-h2cnb   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.192    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-70-md-0-k4kbn            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.177    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-71 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-71-md-0-dv2zn            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.84     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-71-control-plane-mxnd7   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.66     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-72 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-72-md-0-z86tv            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.135    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-72-control-plane-d2l74   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.126    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-73 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-73-md-0-mvfvs            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.248    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-73-control-plane-xsrdp   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.170    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-74 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-74-md-0-kwnrt            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.162    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-74-control-plane-5v76h   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.27     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-75 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-75-md-0-7bkg7            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.232    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-75-control-plane-55pt7   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.45     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-76 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-76-md-0-lgd4f            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.63     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-76-control-plane-p4sr9   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.113    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-77 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-77-control-plane-d8hc9   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.124    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-77-md-0-7krjk            Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.54     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-78 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-78-md-0-szkkr            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.180    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-78-control-plane-wtkfq   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.217    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-79 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-79-control-plane-tz4zk   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.24     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-79-md-0-5nqhf            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.165    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
+----- mk8s-os-cluster-80 ------------------------------------------------------------------------------
+NAME                                     STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
+mk8s-os-cluster-80-control-plane-c46cw   Ready    <none>   3d14h   v1.23.17-2+40cc20cc310518   10.6.0.42     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+mk8s-os-cluster-80-md-0-4vswc            Ready    <none>   3d13h   v1.23.17-2+40cc20cc310518   10.6.0.98     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+
