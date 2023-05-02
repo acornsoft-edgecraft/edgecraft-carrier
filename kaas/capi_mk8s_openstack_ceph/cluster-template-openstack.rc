@@ -18,7 +18,7 @@ export OPENSTACK_FAILURE_DOMAIN="nova"
 
 # OpenStack machine conifugration
 #export OPENSTACK_IMAGE_NAME=Ubuntu2004-Official
-export OPENSTACK_IMAGE_NAME=ubuntu-20.04-capi
+export OPENSTACK_IMAGE_NAME=ubuntu-20.04-capi-ceph
 export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR=2Core.4G_20GB
 export OPENSTACK_NODE_MACHINE_FLAVOR=2Core.4G_20GB
 export OPENSTACK_SSH_KEY_NAME=hostacloud
