@@ -74,3 +74,97 @@ kube-system                          kube-scheduler-edgecraft-master-3          
 kube-system                          metrics-server-5994f7658b-fz9xl                                   1/1     Running   0              124m   10.4.1.65     edgecraft-worker-1   <none>           <none>
 kube-system                          metrics-server-5994f7658b-k5nhf                                   1/1     Running   0              124m   10.4.5.65     edgecraft-worker-2   <none>           <none>
 ```
+
+
+```log
+4d6fxgq8pp-j2qwg" cluster="mk8s-os-cluster-92" openStackCluster="mk8s-os-cluster-92"
+2023/05/09 06:44:56 http: TLS handshake error from 10.4.3.193:55707: EOF
+2023/05/09 06:44:56 http: TLS handshake error from 10.4.3.193:26337: EOF
+2023/05/09 06:44:56 http: TLS handshake error from 10.4.3.193:7269: EOF
+I0509 06:44:57.367337       1 openstackmachine_controller.go:446] "Machine not exist, Creating Machine" controller="openstackmachine" controllerGroup="infrastructure.cluster.x-k8s.io" controllerKind="OpenStackMachine" OpenStackMachine="default/mk8s-os-cluster-92-md-0-nzr6h" namespace="default" name="mk8s-os-cluster-92-md-0-nzr6h" reconcileID=7ee0313e-4a7a-4892-8c89-5e7ecd68b385 openStackMachine="mk8s-os-cluster-92-md-0-nzr6h" machine="mk8s-os-cluster-92-md-0-588fc64d6fxgq8pp-j2qwg" cluster="mk8s-os-cluster-92" openStackCluster="mk8s-os-cluster-92" Machine="mk8s-os-cluster-92-md-0-nzr6h"
+I0509 06:44:58.172214       1 recorder.go:103] "events: Created port mk8s-os-cluster-92-md-0-nzr6h-0 with id 6e9ccfa4-40d5-4013-8e73-b5c2a6d65ef8" type="Normal" object={Kind:OpenStackMachine Namespace:default Name:mk8s-os-cluster-92-md-0-nzr6h UID:082f0549-61a3-4351-b86b-e5ebca5ed713 APIVersion:infrastructure.cluster.x-k8s.io/v1alpha6 ResourceVersion:38638 FieldPath:} reason="Successfulcreateport"
+2023/05/09 06:45:30 http: TLS handshake error from 10.4.3.193:31258: EOF
+2023/05/09 06:45:30 http: TLS handshake error from 10.4.3.193:26416: EOF
+2023/05/09 06:46:05 http: TLS handshake error from 10.4.3.193:59221: EOF
+2023/05/09 06:47:05 http: TLS handshake error from 10.4.3.193:52214: EOF
+E0509 06:47:21.957231       1 leaderelection.go:330] error retrieving resource lock capo-system/controller-leader-election-capo: Get "https://10.96.0.1:443/apis/coordination.k8s.io/v1/namespaces/capo-system/leases/controller-leader-election-capo": context deadline exceeded
+I0509 06:47:21.957386       1 leaderelection.go:283] failed to renew lease capo-system/controller-leader-election-capo: timed out waiting for the condition
+E0509 06:47:21.957479       1 main.go:200] "setup: problem running manager" err="leader election lost"./
+```
+
+### controller-manager leader election lost Crashloopback 현상
+
+이 문제는 리소스 위기 또는 네트워크 문제가 있을 때 발생합니다. 내 경우에는 Kube API 서버에 리소스 크런치가 발생하여 API 호출 대기 시간이 증가하여 리더 선택 API 호출이 시간 초과되었습니다.
+
+- 참고: https://stackoverflow.com/questions/65481831/kube-controller-manager-and-kube-scheduler-leaderelection-lost-crashloopback
+- 해결방법: 
+  1. 노드의 CPU 및 메모리를 늘린 후 문제가 해결되었습니다
+  2. 네트워크 지연 문제라면 kube-controller-manager.yaml 에서 leader-elect-lease-duration, leader-elect-renew-deadline 값을 조정 합니다.
+
+```sh
+## 제 경우에는 네트워크 문제였으며 해결 방법은 kube-controller-manager.yaml 매니페스트에서 leader-elect-lease-duration 및 leader-elect-renew-deadline을 늘리는 것이었습니다. 기본적으로:
+##
+## --leader-elect-lease-duration duration     Default: 15s
+## --leader-elect-renew-deadline duration     Default: 10s
+## 도움이 되는지 확인하기 위해 각각 120초와 60초로 늘렸습니다
+$ vi /etc/kubernetes/manifests/kube-controller-manager.yaml
+    - --leader-elect=true
+    - --leader-elect-lease-duration=120s
+    - --leader-elect-renew-deadline=80s
+```
+
+- 위와같이 capi의 controller-manager 옵션도 조정 합니다.
+- 위와같이 capi의 controller-manager 옵션도 조정 합니다.
+- 위와같이 capi의 controller-manager 옵션도 조정 합니다.
+
+```sh
+## manager 옵션 정보
+Usage of /manager:
+      --add-dir-header                         If true, adds the file directory to the header of the log messages
+      --alsologtostderr                        log to standard error as well as files
+      --feature-gates mapStringBool            A set of key=value pairs that describe feature gates for alpha/experimental features. Options are:
+                                               AllAlpha=true|false (ALPHA - default=false)
+                                               AllBeta=true|false (BETA - default=false)
+                                               ClusterResourceSet=true|false (BETA - default=true)
+                                               ClusterTopology=true|false (ALPHA - default=false)
+                                               MachinePool=true|false (ALPHA - default=false) (default )
+      --health-addr string                     The address the health endpoint binds to. (default ":9440")
+      --kubeadmcontrolplane-concurrency int    Number of kubeadm control planes to process simultaneously (default 10)
+      --kubeconfig string                      Paths to a kubeconfig. Only required if out-of-cluster.
+      --leader-elect                           Enable leader election for controller manager. Enabling this will ensure there is only one active controller manager.
+      --leader-elect-lease-duration duration   Interval at which non-leader candidates will wait to force acquire leadership (duration string) (default 1m0s)
+      --leader-elect-renew-deadline duration   Duration that the leading controller manager will retry refreshing leadership before giving up (duration string) (default 40s)
+      --leader-elect-retry-period duration     Duration the LeaderElector clients should wait between tries of actions (duration string) (default 5s)
+      --log-backtrace-at traceLocation         when logging hits line file:N, emit a stack trace (default :0)
+      --log-dir string                         If non-empty, write log files in this directory
+      --log-file string                        If non-empty, use this log file
+      --log-file-max-size uint                 Defines the maximum size a log file can grow to. Unit is megabytes. If the value is 0, the maximum file size is unlimited. (default 1800)
+      --logtostderr                            log to standard error instead of files (default true)
+      --metrics-bind-addr string               The address the metric endpoint binds to. (default "localhost:8080")
+      --namespace string                       Namespace that the controller watches to reconcile cluster-api objects. If unspecified, the controller watches for cluster-api objects across all namespaces.
+      --one-output                             If true, only write logs to their native severity level (vs also writing to each lower severity level)
+      --profiler-address string                Bind address to expose the pprof profiler (e.g. localhost:6060)
+      --skip-headers                           If true, avoid header prefixes in the log messages
+      --skip-log-headers                       If true, avoid headers when opening log files
+      --stderrthreshold severity               logs at or above this threshold go to stderr (default 2)
+      --sync-period duration                   The minimum interval at which watched resources are reconciled (e.g. 15m) (default 10m0s)
+  -v, --v Level                                number for the log level verbosity
+      --vmodule moduleSpec                     comma-separated list of pattern=N settings for file-filtered logging
+      --watch-filter string                    Label value that the controller watches to reconcile cluster-api objects. Label key is always cluster.x-k8s.io/watch-filter. If unspecified, the controller watches for all cluster-api objects.
+      --webhook-cert-dir string                Webhook cert dir, only used when webhook-port is specified. (default "/tmp/k8s-webhook-server/serving-certs/")
+      --webhook-port int                       Webhook Server port (default 9443)
+
+## 각각의 capi, capo controller-manager를 업데이트 한다.
+## capi-microk8s-bootstrap-controller-manager, capi-microk8s-control-plane-controller-manager 지원 안됨
+$ kubectl -n capi-system edit deployment capi-controller-manager
+$ kubectl -n capo-system edit deployment capo-controller-manager
+...
+    spec:
+      containers:
+      - args:
+        - --leader-elect
+        - --leader-elect-lease-duration=120s
+        - --leader-elect-renew-deadline=80s
+...
+
+```

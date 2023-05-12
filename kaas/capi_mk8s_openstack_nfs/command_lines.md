@@ -6,19 +6,28 @@ $ microk8s ctr --debug image pull --hosts-dir /etc/containerd/certs.d  docker.io
 
 ## incrontab 설정
 
-### private registry mirror 구성을 위한 설정
+- 설치
+```sh
+$ apt-get install incron
+```
+
+- root 권한 설정
 
 ```sh
 ## step-1. root 권한 생성
 $ vi /etc/incron.allow
 root
+```
 
-## step-2. incrontab role 설정
+- OS 이미지에서 hostname을 체크 한다.
+
+```sh
+## step-1. 처음 icrontabl 설정
 $ vi /var/spool/incron/root
-/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args $#
+/var/snap       IN_ALL_EVENTS        /opt/scripts/change_hostname.sh
 
-## step-3. 변경 쉘스크립트 생성
-$ vi /opt/scripts/copy_to_containerd_toml.sh
+## change_hostname.sh 내용
+$ vi /opt/scripts/change_hostname.sh
 #!/bin/bash
 
 ## local-hostname 비교후 hostname 변경
@@ -26,9 +35,21 @@ get_metadata=`curl http://169.254.169.254/latest/meta-data/local-hostname`
 
 if [ $get_metadata != "" ]; then
   if [ $get_metadata != $(hostname) ]; then
+    echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
     hostnamectl set-hostname $get_metadata
+    reboot
+  else
+    echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
   fi
 fi
+```
+
+### private registry mirror 구성을 위한 설정
+
+```sh
+## step-1. 변경 쉘스크립트 생성
+$ vi /opt/scripts/copy_to_containerd_toml.sh
+#!/bin/bash
 
 ## snap microk8s 설치시 container 설정 변경 for private registry mirror구성
 if [ "$2" == "args" ]; then
@@ -42,6 +63,7 @@ if [ "$2" == "containerd.toml" ]; then
   file_name_4="10-configure-kubelet.sh"
   check_str="daemon-containerd"
   add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
+  docker_io=""
 
   result=$(grep "$check_str" $script_path/$file_name_1)
   if [ -z  "$result" ]; then
@@ -69,7 +91,16 @@ if [ "$2" == "containerd.toml" ]; then
   fi
 
   echo "" > /var/spool/incron/root
-  cp -r /etc/containerd/certs.d/docker.io/hosts.toml "$1/certs.d/docker.io/hosts.toml"
+  cat <<EOF > $1/certs.d/docker.io/hosts.toml
+server = "https://docker.io"
+
+[host."https://192.168.88.206/v2/docker.io/"]
+   capabilities = ["pull", "resolve"]
+   ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
+   override_path = true
+EOF
+
+  #cp -r /etc/containerd/certs.d/docker.io/hosts.toml "$1/certs.d/docker.io/hosts.toml"
   systemctl stop incron.service
 fi
 
