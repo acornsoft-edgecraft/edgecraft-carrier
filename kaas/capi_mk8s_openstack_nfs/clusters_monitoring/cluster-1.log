@@ -1,15 +1,8 @@
-Total_cluster: 1
-Total_instance: 2
+Total_cluster: 
+Total_instance: 
 Current_instance: 
-    control_plane: 1
-    worker_node: 1
-Start_Time: 2023년 04월 24일 월요일 (14시 33분 07초)
-End_Time: 2023년 04월 24일 월요일 (14시 40분 10초)
-Status: Ready
-
------ mk8s-os-cluster-1 ------------------------------------------------------------------------------
-NAME                                    STATUS   ROLES    AGE     VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION     CONTAINER-RUNTIME
-mk8s-os-cluster-1-control-plane-4fpsv   Ready    <none>   5m52s   v1.23.17-2+40cc20cc310518   10.6.0.210    <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
-mk8s-os-cluster-1-md-0-mvj2f            Ready    <none>   42s     v1.23.17-2+40cc20cc310518   10.6.0.65     <none>        Ubuntu 20.04.3 LTS   5.4.0-89-generic   containerd://1.5.13
-------------------------------------------------------------------------------------------------------
-
+    control_plane: 
+    worker_node: 
+Start_Time: 2023년 05월 31일 수요일 (16시 36분 18초)
+End_Time:
+Status:

@@ -57,37 +57,45 @@ if [ "$2" == "args" ]; then
 fi
 if [ "$2" == "containerd.toml" ]; then
   script_path="/capi-scripts"
+  file_name_0="00-install-microk8s.sh"
   file_name_1="10-configure-cert-for-lb.sh"
   file_name_2="10-configure-apiserver.sh"
   file_name_3="20-microk8s-join.sh"
   file_name_4="10-configure-kubelet.sh"
   check_str="daemon-containerd"
   add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
+  check_service="while systemctl list-units --type=service --state=failed \| grep microk8s; do\n  for i in \$(systemctl list-units --type=service --state=failed \| grep microk8s \| awk '{print \$1}')\n  do\n    systemctl start \$i\n  done\n  sleep 5\ndone"
   docker_io=""
+
+
+  result=$(grep "for" $script_path/$file_name_0)
+  if [ -z  "$result" ]; then
+    sed -i -r -e "/done/a\\$check_service" $script_path/$file_name_0
+  fi
 
   result=$(grep "$check_str" $script_path/$file_name_1)
   if [ -z  "$result" ]; then
-    sed -i '' -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
+    sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
   fi
 
   result=$(grep "$check_str" $script_path/$file_name_2)
   if [ -z  "$result" ]; then
-    sed -i '' -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_2
+    sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_2
   fi
 
   result=$(grep "if ! microk8s" $script_path/$file_name_3)
   if [ -n  "$result" ]; then
-    sed -i '' -r -e "s/if ! microk8s/if microk8s/g" $script_path/$file_name_3
+    sed -i -r -e "s/if ! microk8s/if microk8s/g" $script_path/$file_name_3
   fi
 
   result=$(grep "^then" $script_path/$file_name_3)
   if [ -n  "$result" ]; then
-    sed -i '' -r -e "s/^then/fi/g" $script_path/$file_name_3
+    sed -i -r -e "s/^then/fi/g" $script_path/$file_name_3
   fi
 
   result=$(grep "exit 0" $script_path/$file_name_4)
   if [ -n  "$result" ]; then
-    sed -i '' -r -e "/exit 0/i\\$add_script" $script_path/$file_name_4
+    sed -i -r -e "/exit 0/i\\$add_script" $script_path/$file_name_4
   fi
 
   echo "" > /var/spool/incron/root
