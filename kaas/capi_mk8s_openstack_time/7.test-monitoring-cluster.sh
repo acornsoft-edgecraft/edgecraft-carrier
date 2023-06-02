@@ -23,9 +23,9 @@ if [ $list_cnt -eq $total_cluster ]; then
     for i in $list
     do
         name=`basename $i`
-        echo "----- $name ------------------------------------------------------------------------------" >> $log_path
+        echo "----- $name ------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         kubectl --kubeconfig=./clusters_kubeconfig/$i get nodes -o wide >> $log_path 
-        echo "------------------------------------------------------------------------------------------------------" >> $log_path
+        echo "--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         echo "" >> $log_path
         get_lastTransitionTime=`kubectl --kubeconfig=./clusters_kubeconfig/$i get nodes -o jsonpath='{.items[*].status.conditions[?(@.type == "Ready")].lastTransitionTime}' | tr " " "\n"`
         

@@ -1,0 +1,18 @@
+Total_cluster: 1
+Total_instance: 5
+Current_instance: 
+    control_plane: 3
+    worker_node: 2
+Start_Time: 2023년 06월 02일 금요일 (19시 24분 43초)
+End_Time: 2023년 06월 02일 금요일 (19시 34분 33초)
+Status: Ready
+
+----- mk8s-provisioning-1 ------------------------------------------------------------------------------
+NAME                                      STATUS   ROLES    AGE   VERSION                     INTERNAL-IP   EXTERNAL-IP   OS-IMAGE             KERNEL-VERSION      CONTAINER-RUNTIME
+mk8s-provisioning-1-control-plane-kvhs2   Ready    <none>   19m   v1.23.17-2+40cc20cc310518   10.6.0.176    <none>        Ubuntu 20.04.6 LTS   5.4.0-150-generic   containerd://1.5.13
+mk8s-provisioning-1-md-0-5zpzh            Ready    <none>   13m   v1.23.17-2+40cc20cc310518   10.6.0.63     <none>        Ubuntu 20.04.6 LTS   5.4.0-150-generic   containerd://1.5.13
+mk8s-provisioning-1-md-0-zf2hs            Ready    <none>   13m   v1.23.17-2+40cc20cc310518   10.6.0.88     <none>        Ubuntu 20.04.6 LTS   5.4.0-150-generic   containerd://1.5.13
+mk8s-provisioning-1-control-plane-z8b2l   Ready    <none>   12m   v1.23.17-2+40cc20cc310518   10.6.0.128    <none>        Ubuntu 20.04.6 LTS   5.4.0-150-generic   containerd://1.5.13
+mk8s-provisioning-1-control-plane-nq55f   Ready    <none>   12m   v1.23.17-2+40cc20cc310518   10.6.0.33     <none>        Ubuntu 20.04.6 LTS   5.4.0-150-generic   containerd://1.5.13
+------------------------------------------------------------------------------------------------------
+

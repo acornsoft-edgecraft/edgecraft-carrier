@@ -8,7 +8,7 @@ $ microk8s ctr --debug image pull --hosts-dir /etc/containerd/certs.d  docker.io
 
 - 설치
 ```sh
-$ apt-get install incron
+$ apt-get install -y incron
 ```
 
 - root 권한 설정
@@ -54,6 +54,7 @@ $ vi /opt/scripts/copy_to_containerd_toml.sh
 ## snap microk8s 설치시 container 설정 변경 for private registry mirror구성
 if [ "$2" == "args" ]; then
   echo "$1      IN_CREATE        /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
+  systemctl restart incron.service
 fi
 if [ "$2" == "containerd.toml" ]; then
   script_path="/capi-scripts"
@@ -62,50 +63,81 @@ if [ "$2" == "containerd.toml" ]; then
   file_name_2="10-configure-apiserver.sh"
   file_name_3="20-microk8s-join.sh"
   file_name_4="10-configure-kubelet.sh"
+  file_name_5="30-configure-traefik.sh"
   check_str="daemon-containerd"
   add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
-  check_service="while systemctl list-units --type=service --state=failed \| grep microk8s; do\n  for i in \$(systemctl list-units --type=service --state=failed \| grep microk8s \| awk '{print \$1}')\n  do\n    systemctl start \$i\n  done\n  sleep 5\ndone"
+  check_service="while systemctl list-units --type=service --state=failed \| grep microk8s; do\n  for i in \$(systemctl list-units --type=service --state=failed \| grep microk8s \| awk '{print \$2}')\n  do\n    systemctl start \$i\n  done\n  sleep 5\ndone"
   docker_io=""
 
+  ## 00-install-microk8s.sh - 서비스 failed 체크 추가
+  # result=$(grep "$check_service" $script_path/$file_name_0)
+  # if [ -z  "$result" ]; then
+  #   sed -i -r -e "/done/a\\$check_service" $script_path/$file_name_0
+  # fi
 
-  result=$(grep "for" $script_path/$file_name_0)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "/done/a\\$check_service" $script_path/$file_name_0
-  fi
-
+  # 10-configure-cert-for-lb.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_1)
   if [ -z  "$result" ]; then
     sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
   fi
 
+  ## 10-configure-apiserver.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_2)
   if [ -z  "$result" ]; then
     sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_2
   fi
 
+  ## 10-configure-apiserver.sh - 서비스 failed 체크 추가
+  # result=$(grep "$check_service" $script_path/$file_name_2)
+  # if [ -z  "$result" ]; then
+  #   sed -i -r -e "/updated/a\\$check_service" $script_path/$file_name_2
+  # fi
+
+  ## 20-microk8s-join.sh - 구문 오류 수정 추가
   result=$(grep "if ! microk8s" $script_path/$file_name_3)
   if [ -n  "$result" ]; then
     sed -i -r -e "s/if ! microk8s/if microk8s/g" $script_path/$file_name_3
   fi
 
+  ## 20-microk8s-join.sh - 구문 오류 수정 추가
   result=$(grep "^then" $script_path/$file_name_3)
   if [ -n  "$result" ]; then
     sed -i -r -e "s/^then/fi/g" $script_path/$file_name_3
   fi
 
+  ## 20-microk8s-join.sh - 서비스 failed 체크 추가
+  result=$(grep "$check_service" $script_path/$file_name_3)
+  if [ -z  "$result" ]; then
+    sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_3
+  fi
+
+  ## 10-configure-kubelet.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "exit 0" $script_path/$file_name_4)
   if [ -n  "$result" ]; then
     sed -i -r -e "/exit 0/i\\$add_script" $script_path/$file_name_4
+    
+    ## 10-configure-kubelet.sh - 서비스 failed 체크 추가
+    # result=$(grep "$check_service" $script_path/$file_name_4)
+    # if [ -z  "$result" ]; then
+    #   sed -i -r -e "/exit 0/i\\$check_service" $script_path/$file_name_4
+    #   sed -i -r -e "/arguments/a\\$check_service" $script_path/$file_name_4
+    # fi
   fi
 
-  echo "" > /var/spool/incron/root
-  cat <<EOF > $1/certs.d/docker.io/hosts.toml
+  ## 30-configure-traefik.sh - 서비스 failed 체크 추가
+  result=$(grep "$check_service" $script_path/$file_name_5)
+  if [ -z  "$result" ]; then
+    sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_5
+  fi
+
+echo "" > /var/spool/incron/root
+cat <<EOF > $1/certs.d/docker.io/hosts.toml
 server = "https://docker.io"
 
 [host."https://192.168.88.206/v2/docker.io/"]
-   capabilities = ["pull", "resolve"]
-   ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
-   override_path = true
+  capabilities = ["pull", "resolve"]
+  ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
+  override_path = true
 EOF
 
   #cp -r /etc/containerd/certs.d/docker.io/hosts.toml "$1/certs.d/docker.io/hosts.toml"
