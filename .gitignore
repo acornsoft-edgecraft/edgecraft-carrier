@@ -3,3 +3,9 @@
 .history
 .vscode
 test__
+
+## edgecraft
+clusters/
+clusters_kubeconfig/
+clusters_monitoring/
+
