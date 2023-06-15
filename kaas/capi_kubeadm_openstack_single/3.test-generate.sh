@@ -2,7 +2,7 @@
 rm -f ./clusters/*.yaml
 source ./cluster-template-openstack.rc
 
-FILE_NAME="mk8s-os-cluster"
+FILE_NAME="kubeadm-provisioning"
 COUNT=0
 while [ "$COUNT" -lt 1 ]
 do

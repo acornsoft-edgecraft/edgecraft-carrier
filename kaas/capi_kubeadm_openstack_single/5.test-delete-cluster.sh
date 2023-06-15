@@ -1,7 +1,8 @@
 #!/bin/bash
 # LIST=""
 # #find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs kubectl --kubeconfig=$1 delete clusters " \; 
-# find ./clusters -type f -name '*.yaml' -exec LIST=$(basename {} .yaml) \; 
+# find ./clusters -type f -name '*.yaml' -exec LIST=$(basename {} .yaml) \;
+kubeconfig=./kubeconfig
 
 # echo $LIST
 file_list=$(ls ./clusters/*.yaml | sort -n -t- -k4)
@@ -14,4 +15,4 @@ do
     rm -f ./clusters_kubeconfig/$name
 done
 
-kubectl --kubeconfig=$1 delete clusters $LIST
+kubectl --kubeconfig=$kubeconfig delete clusters $LIST

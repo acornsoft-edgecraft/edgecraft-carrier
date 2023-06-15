@@ -32,7 +32,8 @@ $ systemd-resolve --status
 ## 패키기 업그레이드
 
 ```sh
-$ apt-get upgrade
+## step-
+$ apt-get -y upgrade
 ```
 
 ## incrontab 설정
@@ -54,65 +55,107 @@ root
 
 ```sh
 ## step-1. 처음 icrontabl 설정
-$ vi /var/spool/incron/root
-/var/snap       IN_ALL_EVENTS        /opt/scripts/change_hostname.sh
+$ echo "/var/snap       IN_ALL_EVENTS,IN_ONESHOT        /opt/scripts/copy_to_containerd_toml.sh" > /var/spool/incron/root
 
-## change_hostname.sh 내용
-$ mkdir -p /opt/scripts
-$ vi /opt/scripts/change_hostname.sh
+# ## change_hostname.sh 내용
+# $ mkdir -p /opt/scripts
+# $ vi /opt/scripts/change_hostname.sh
+# #!/bin/bash
+
+# ## local-hostname 비교후 hostname 변경
+# get_metadata=`curl http://169.254.169.254/latest/meta-data/local-hostname`
+
+# if [ $get_metadata != "" ]; then
+#   if [ $get_metadata != $(hostname) ]; then
+#     # echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+#     echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+#     hostnamectl set-hostname $get_metadata
+#     reboot
+#   else
+#     # echo "/var/snap IN_CREATE,IN_ISDIR  /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+#     echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+#     systemctl restart incron.service
+#   fi
+# fi
+```
+
+-  기본 쉘을 생성한다.
+
+```sh
+## step-1. failed 서비스 재시작 쉘스크립트
+# 
+$ vi /capi-scripts/check_service.sh
 #!/bin/bash
 
-## local-hostname 비교후 hostname 변경
-get_metadata=`curl http://169.254.169.254/latest/meta-data/local-hostname`
-
-if [ $get_metadata != "" ]; then
-  if [ $get_metadata != $(hostname) ]; then
-    echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
-    hostnamectl set-hostname $get_metadata
+count=0
+while systemctl list-units --type=service --state=failed | grep microk8s; do
+  count=$(( count +1 ))
+  for i in $(systemctl list-units --type=service --state=failed | grep microk8s | awk '{print $2}')
+  do
+    systemctl start $i
+  done
+  sleep 5
+  if [ $count -ge 10  ]; then
     reboot
-  else
-    echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
   fi
-fi
+done
+
+## step-2. docker.io mirror 구성 쉘스크립트
+#
+$ vi /capi-scripts/add-docker-io.sh
+#!/bin/bash
+
+cat <<EOF > /var/snap/microk8s/current/args/certs.d/docker.io/hosts.toml
+server = "https://docker.io"
+
+[host."https://192.168.88.206/v2/docker.io/"]
+  capabilities = ["pull", "resolve"]
+  ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
+  override_path = true
+EOF
 ```
 
 ### private registry mirror 구성을 위한 설정
 
 ```sh
 ## step-1. 변경 쉘스크립트 생성
+$ mkdir -p /opt/scripts
 $ vi /opt/scripts/copy_to_containerd_toml.sh
 #!/bin/bash
 
+## snap auto-refresh 연기
+snap refresh --hold=1h
+
 ## snap microk8s 설치시 container 설정 변경 for private registry mirror구성
-if [ "$2" == "args" ]; then
-  echo "$1      IN_CREATE        /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args \$#" > /var/spool/incron/root
-  systemctl restart incron.service
-fi
-if [ "$2" == "containerd.toml" ]; then
-  script_path="/capi-scripts"
-  file_name_0="00-install-microk8s.sh"
-  file_name_1="10-configure-cert-for-lb.sh"
-  file_name_2="10-configure-apiserver.sh"
-  file_name_3="20-microk8s-join.sh"
-  file_name_4="10-configure-kubelet.sh"
-  file_name_5="30-configure-traefik.sh"
-  check_str="daemon-containerd"
-  add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
-  check_service="while systemctl list-units --type=service --state=failed \| grep microk8s; do\n  for i in \$(systemctl list-units --type=service --state=failed \| grep microk8s \| awk '{print \$2}')\n  do\n    systemctl start \$i\n  done\n  sleep 5\ndone"
-  docker_io=""
+script_path="/capi-scripts"
+file_name_0="00-install-microk8s.sh"
+file_name_1="10-configure-cert-for-lb.sh"
+file_name_2="10-configure-apiserver.sh"
+file_name_3="20-microk8s-join.sh"
+file_name_4="10-configure-kubelet.sh"
+file_name_5="30-configure-traefik.sh"
+check_str="containerd"
+add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
+check_service="source \/capi-scripts\/check_service.sh"
+docker_io="source \/capi-scripts\/add-docker-io.sh"
 
+if [ -n $(ls "$file_name_0") ]; then
   ## 00-install-microk8s.sh - 서비스 failed 체크 추가
-  # result=$(grep "$check_service" $script_path/$file_name_0)
-  # if [ -z  "$result" ]; then
-  #   sed -i -r -e "/done/a\\$check_service" $script_path/$file_name_0
-  # fi
+  result=$(grep "$docker_io" $script_path/$file_name_0)
+  if [ -z  "$result" ]; then
+    sed -i -r -e "/done/a\\$docker_io" $script_path/$file_name_0
+  fi
+fi
 
+if [ -n $(ls "$file_name_1") ]; then
   # 10-configure-cert-for-lb.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_1)
   if [ -z  "$result" ]; then
     sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
   fi
+fi
 
+if [ -n $(ls "$file_name_2") ]; then
   ## 10-configure-apiserver.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_2)
   if [ -z  "$result" ]; then
@@ -124,7 +167,9 @@ if [ "$2" == "containerd.toml" ]; then
   # if [ -z  "$result" ]; then
   #   sed -i -r -e "/updated/a\\$check_service" $script_path/$file_name_2
   # fi
+fi
 
+if [ -n $(ls "$file_name_3") ]; then
   ## 20-microk8s-join.sh - 구문 오류 수정 추가
   result=$(grep "if ! microk8s" $script_path/$file_name_3)
   if [ -n  "$result" ]; then
@@ -138,11 +183,13 @@ if [ "$2" == "containerd.toml" ]; then
   fi
 
   ## 20-microk8s-join.sh - 서비스 failed 체크 추가
-  result=$(grep "$check_service" $script_path/$file_name_3)
+  result=$(grep "check_service" $script_path/$file_name_3)
   if [ -z  "$result" ]; then
     sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_3
   fi
+fi
 
+if [ -n $(ls "$file_name_4") ]; then
   ## 10-configure-kubelet.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "exit 0" $script_path/$file_name_4)
   if [ -n  "$result" ]; then
@@ -155,25 +202,17 @@ if [ "$2" == "containerd.toml" ]; then
     #   sed -i -r -e "/arguments/a\\$check_service" $script_path/$file_name_4
     # fi
   fi
+fi
 
+if [ -n $(ls "$file_name_5") ]; then
   ## 30-configure-traefik.sh - 서비스 failed 체크 추가
-  result=$(grep "$check_service" $script_path/$file_name_5)
+  result=$(grep "check_service" $script_path/$file_name_5)
   if [ -z  "$result" ]; then
     sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_5
   fi
 
 echo "" > /var/spool/incron/root
-cat <<EOF > $1/certs.d/docker.io/hosts.toml
-server = "https://docker.io"
-
-[host."https://192.168.88.206/v2/docker.io/"]
-  capabilities = ["pull", "resolve"]
-  ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
-  override_path = true
-EOF
-
-  #cp -r /etc/containerd/certs.d/docker.io/hosts.toml "$1/certs.d/docker.io/hosts.toml"
-  systemctl stop incron.service
+systemctl stop incron.service
 fi
 
 ## step-4. 실행 권한 부여
@@ -181,7 +220,7 @@ $ chmod +x /opt/scripts/change_hostname.sh
 $ chmod +x /opt/scripts/copy_to_containerd_toml.sh
 
 ## step-5. private registry 인증서 복사
-$ mkdir -p mkdir -p /etc/docker/certs.d/192.168.88.206
+$ mkdir -p /etc/docker/certs.d/192.168.88.206
 $ curl -k -L https://192.168.88.206/ca.crt > /etc/docker/certs.d/192.168.88.206/ca.crt
 $ cat /etc/docker/certs.d/192.168.88.206/ca.crt
 ```
