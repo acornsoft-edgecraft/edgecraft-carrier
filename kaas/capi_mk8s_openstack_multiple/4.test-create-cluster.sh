@@ -2,7 +2,7 @@
 
 # kubectl --kubeconfig=$1 apply -f ./clusters
 file_list=$(ls ./clusters/*.yaml | sort -n -t- -k4)
-start_time=$(date "+%Y년 %m월 %d일 %A (%H시 %M분 %S초)")
+start_time=$(TZ='Asia/Seoul' date "+%Y-%m-%d(%A) %H:%M:%S")
 cnt_clusters=$(ls ./clusters | wc -l)
 kubeconfig=./kubeconfig
 
@@ -14,10 +14,16 @@ done
 cat <<EOF > "./clusters_monitoring/cluster-$cnt_clusters.log"
 Total_cluster: 
 Total_instance: 
-Current_instance: 
+Current_instance
     control_plane: 
     worker_node: 
 Start_Time: $start_time
 End_Time:
+Total_Duration:
 Status:
+
+Cluster_Duration_of_time
+    Min_time:
+    Max_time:
+    Average_time:
 EOF
