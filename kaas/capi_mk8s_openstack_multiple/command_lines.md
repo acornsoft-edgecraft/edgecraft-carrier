@@ -100,16 +100,17 @@ file_name_2="10-configure-apiserver.sh"
 file_name_3="20-microk8s-join.sh"
 file_name_4="10-configure-kubelet.sh"
 file_name_5="30-configure-traefik.sh"
+file_name_6="10-configure-containerd-proxy.sh"
 check_str="containerd"
 add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
 check_service="source \/capi-scripts\/check_service.sh"
 docker_io="source \/capi-scripts\/add-docker-io.sh"
 
-if [ -n $(ls "$file_name_0") ]; then
+if [ -n $(ls "$file_name_6") ]; then
   ## 00-install-microk8s.sh - 서비스 failed 체크 추가
-  result=$(grep "$docker_io" $script_path/$file_name_0)
+  result=$(grep "$docker_io" $script_path/$file_name_6)
   if [ -z  "$result" ]; then
-    sed -i -r -e "/done/a\\$docker_io" $script_path/$file_name_0
+    sed -i -r -e "/installed/a\\$docker_io" $script_path/$file_name_6
   fi
 fi
 

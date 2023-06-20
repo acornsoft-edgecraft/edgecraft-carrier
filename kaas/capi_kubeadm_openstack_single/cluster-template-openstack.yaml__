@@ -15,12 +15,18 @@ metadata:
 spec:
   template:
     spec:
-      files: 
-        - content: ${OPENSTACK_CLOUD_CACERT_B64}
-          encoding: base64
-          owner: root
-          path: /etc/certs/cacert
-          permissions: "0600"
+      files: []
+      # files:
+      #   - content: ${OPENSTACK_CLOUD_PROVIDER_CONF_B64}
+      #     encoding: base64
+      #     owner: root
+      #     path: /etc/kubernetes/cloud.conf
+      #     permissions: "0600"
+      #   - content: ${OPENSTACK_CLOUD_CACERT_B64}
+      #     encoding: base64
+      #     owner: root
+      #     path: /etc/certs/cacert
+      #     permissions: "0600"
       joinConfiguration:
         nodeRegistration:
           kubeletExtraArgs:
@@ -83,49 +89,54 @@ spec:
     clusterConfiguration:
       apiServer:
         extraArgs:
+          # cloud-config: /etc/kubernetes/cloud.conf
           cloud-provider: external
+        # extraVolumes:
+        #   - hostPath: /etc/kubernetes/cloud.conf
+        #     mountPath: /etc/kubernetes/cloud.conf
+        #     name: cloud
+        #     readOnly: true
       controllerManager:
         extraArgs:
+          # cloud-config: /etc/kubernetes/cloud.conf
           cloud-provider: external
-    files: 
-      - content: ${CLOUD_CONTROLLER_MANAGER_ROLES}
-        encoding: base64
-        owner: root
-        path: /etc/kubernetes/addon/openstack/cloud-controller-manager-roles.yaml
-        permissions: "0600"
-      - content: ${CLOUD_CONTROLLER_MANAGER_ROLE_BINDINGS}
-        encoding: base64
-        owner: root
-        path: /etc/kubernetes/addon/openstack/cloud-controller-manager-role-bindings.yaml
-        permissions: "0600"
-      - content: ${OPENSTACK_CLOUD_CONTROLLER_MANAGER_DS}
-        encoding: base64
-        owner: root
-        path: /etc/kubernetes/addon/openstack/openstack-cloud-controller-manager-ds.yaml
-        permissions: "0600"
-      - content: ${OPENSTACK_CLOUD_PROVIDER_CONF_B64}
-        encoding: base64
-        owner: root
-        path: /etc/kubernetes/cloud.conf
-        permissions: "0600"
+        # extraVolumes:
+        #   - hostPath: /etc/kubernetes/cloud.conf
+        #     mountPath: /etc/kubernetes/cloud.conf
+        #     name: cloud
+        #     readOnly: true
+        #   - hostPath: /etc/certs/cacert
+        #     mountPath: /etc/certs/cacert
+        #     name: cacerts
+        #     readOnly: true
+    files: []
+    # files:
+    #   - content: ${OPENSTACK_CLOUD_PROVIDER_CONF_B64}
+    #     encoding: base64
+    #     owner: root
+    #     path: /etc/kubernetes/cloud.conf
+    #     permissions: "0600"
+    #   - content: ${OPENSTACK_CLOUD_CACERT_B64}
+    #     encoding: base64
+    #     owner: root
+    #     path: /etc/certs/cacert
+    #     permissions: "0600"
     initConfiguration:
       nodeRegistration:
         kubeletExtraArgs:
+          # cloud-config: /etc/kubernetes/cloud.conf
           cloud-provider: external
           provider-id: openstack:///'{{ instance_id }}'
         name: "{{ local_hostname }}"
     joinConfiguration:
       nodeRegistration:
         kubeletExtraArgs:
+          # cloud-config: /etc/kubernetes/cloud.conf
           cloud-provider: external
           provider-id: openstack:///'{{ instance_id }}'
         name: "{{ local_hostname }}"
     postKubeadmCommands:
       - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
-      - kubectl --kubeconfig=/etc/kubernetes/admin.conf create secret -n kube-system generic cloud-config --from-file=/etc/kubernetes/cloud.conf
-      - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/cloud-controller-manager-roles.yaml
-      - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/cloud-controller-manager-role-bindings.yaml
-      - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/openstack-cloud-controller-manager-ds.yaml
   machineTemplate:
     infrastructureRef:
       apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
