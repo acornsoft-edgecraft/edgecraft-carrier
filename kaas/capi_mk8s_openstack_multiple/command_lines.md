@@ -25,25 +25,25 @@ root
 ## step-1. 처음 icrontabl 설정
 $ echo "/var/snap       IN_ALL_EVENTS,IN_ONESHOT        /opt/scripts/copy_to_containerd_toml.sh" > /var/spool/incron/root
 
-# ## change_hostname.sh 내용
-# $ vi /opt/scripts/change_hostname.sh
-# #!/bin/bash
+## change_hostname.sh 내용
+$ vi /opt/scripts/change_hostname.sh
+#!/bin/bash
 
-# ## local-hostname 비교후 hostname 변경
-# get_metadata=`curl http://169.254.169.254/latest/meta-data/local-hostname`
+## local-hostname 비교후 hostname 변경
+get_metadata=`curl http://169.254.169.254/latest/meta-data/local-hostname`
 
-# if [ $get_metadata != "" ]; then
-#   if [ $get_metadata != $(hostname) ]; then
-#     # echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
-#     echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
-#     hostnamectl set-hostname $get_metadata
-#     reboot
-#   else
-#     # echo "/var/snap IN_CREATE,IN_ISDIR  /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
-#     echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
-#     systemctl restart incron.service
-#   fi
-# fi
+if [ $get_metadata != "" ]; then
+  if [ $get_metadata != $(hostname) ]; then
+    # echo "/var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+    echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+    hostnamectl set-hostname $get_metadata
+    reboot
+  else
+    # echo "/var/snap IN_CREATE,IN_ISDIR  /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+    echo "/capi-scripts/        IN_CREATE       /opt/scripts/copy_to_containerd_toml.sh \$@ \$#" > /var/spool/incron/root
+    systemctl restart incron.service
+  fi
+fi
 ```
 
 -  기본 쉘을 생성한다.
@@ -80,6 +80,33 @@ server = "https://docker.io"
   ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
   override_path = true
 EOF
+
+## step-3. chekc microk8s status 쉘스크립트
+#
+$ vi /capi-scripts/microk8s-status.sh
+#!/bin/bash
+
+## chekc microk8s status
+while true;
+do
+  result=$(microk8s status --format yaml | grep "running:" | awk '{print $2}')
+  if [[ $result == "False" ]]; then
+    error=$(systemctl status snap.microk8s.daemon-containerd.service | grep -io "level=error")
+    if [[ -n $error ]]; then
+      while ! snap restart microk8s.daemon-containerd; do
+        sleep 5
+      done
+    fi
+  else
+    break;
+  fi
+  sleep 2
+done
+
+## step-4. 쉘스크립트 실행권한 추가
+$ chmod +x /capi-scripts/check_service.sh
+$ chmod +x /capi-scripts/add-docker-io.sh
+$ chmod +x /capi-scripts/microk8s-status.sh
 ```
 
 ### private registry mirror 구성을 위한 설정
@@ -87,100 +114,7 @@ EOF
 ```sh
 ## step-1. 변경 쉘스크립트 생성
 $ vi /opt/scripts/copy_to_containerd_toml.sh
-#!/bin/bash
-
-## snap auto-refresh 연기
-snap refresh --hold=1h
-
-## snap microk8s 설치시 container 설정 변경 for private registry mirror구성
-script_path="/capi-scripts"
-file_name_0="00-install-microk8s.sh"
-file_name_1="10-configure-cert-for-lb.sh"
-file_name_2="10-configure-apiserver.sh"
-file_name_3="20-microk8s-join.sh"
-file_name_4="10-configure-kubelet.sh"
-file_name_5="30-configure-traefik.sh"
-file_name_6="10-configure-containerd-proxy.sh"
-check_str="containerd"
-add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
-check_service="source \/capi-scripts\/check_service.sh"
-docker_io="source \/capi-scripts\/add-docker-io.sh"
-
-if [ -n $(ls "$file_name_6") ]; then
-  ## 00-install-microk8s.sh - 서비스 failed 체크 추가
-  result=$(grep "$docker_io" $script_path/$file_name_6)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "/installed/a\\$docker_io" $script_path/$file_name_6
-  fi
-fi
-
-if [ -n $(ls "$file_name_1") ]; then
-  # 10-configure-cert-for-lb.sh - microk8s.daemon-containerd restart 추가
-  result=$(grep "$check_str" $script_path/$file_name_1)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
-  fi
-fi
-
-if [ -n $(ls "$file_name_2") ]; then
-  ## 10-configure-apiserver.sh - microk8s.daemon-containerd restart 추가
-  result=$(grep "$check_str" $script_path/$file_name_2)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_2
-  fi
-
-  ## 10-configure-apiserver.sh - 서비스 failed 체크 추가
-  # result=$(grep "$check_service" $script_path/$file_name_2)
-  # if [ -z  "$result" ]; then
-  #   sed -i -r -e "/updated/a\\$check_service" $script_path/$file_name_2
-  # fi
-fi
-
-if [ -n $(ls "$file_name_3") ]; then
-  ## 20-microk8s-join.sh - 구문 오류 수정 추가
-  result=$(grep "if ! microk8s" $script_path/$file_name_3)
-  if [ -n  "$result" ]; then
-    sed -i -r -e "s/if ! microk8s/if microk8s/g" $script_path/$file_name_3
-  fi
-
-  ## 20-microk8s-join.sh - 구문 오류 수정 추가
-  result=$(grep "^then" $script_path/$file_name_3)
-  if [ -n  "$result" ]; then
-    sed -i -r -e "s/^then/fi/g" $script_path/$file_name_3
-  fi
-
-  ## 20-microk8s-join.sh - 서비스 failed 체크 추가
-  result=$(grep "check_service" $script_path/$file_name_3)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_3
-  fi
-fi
-
-if [ -n $(ls "$file_name_4") ]; then
-  ## 10-configure-kubelet.sh - microk8s.daemon-containerd restart 추가
-  result=$(grep "exit 0" $script_path/$file_name_4)
-  if [ -n  "$result" ]; then
-    sed -i -r -e "/exit 0/i\\$add_script" $script_path/$file_name_4
-    
-    ## 10-configure-kubelet.sh - 서비스 failed 체크 추가
-    # result=$(grep "$check_service" $script_path/$file_name_4)
-    # if [ -z  "$result" ]; then
-    #   sed -i -r -e "/exit 0/i\\$check_service" $script_path/$file_name_4
-    #   sed -i -r -e "/arguments/a\\$check_service" $script_path/$file_name_4
-    # fi
-  fi
-fi
-
-if [ -n $(ls "$file_name_5") ]; then
-  ## 30-configure-traefik.sh - 서비스 failed 체크 추가
-  result=$(grep "check_service" $script_path/$file_name_5)
-  if [ -z  "$result" ]; then
-    sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_5
-  fi
-
-echo "" > /var/spool/incron/root
-systemctl stop incron.service
-fi
+00-install-microk8s.sh
 
 ## step-4. 실행 권한 부여
 $ chmod +x copy_to_containerd_toml.sh

@@ -105,24 +105,6 @@ done
 $ vi /capi-scripts/add-docker-io.sh
 #!/bin/bash
 
-count=0
-while systemctl list-units --type=service --state=failed | grep microk8s; do
-  count=$(( count +1 ))
-  for i in $(systemctl list-units --type=service --state=failed | grep microk8s | awk '{print $2}')
-  do
-    systemctl start $i
-  done
-  sleep 5
-  if [ $count -ge 10  ]; then
-    reboot
-  fi
-done
-
-## step-2. docker.io mirror 구성 쉘스크립트
-#
-$ vi /capi-scripts/add-docker-io.sh
-#!/bin/bash
-
 cat <<EOF > /var/snap/microk8s/current/args/certs.d/docker.io/hosts.toml
 server = "https://docker.io"
 
@@ -131,6 +113,46 @@ server = "https://docker.io"
   ca = "/etc/docker/certs.d/192.168.88.206/ca.crt"
   override_path = true
 EOF
+
+## step-3. chekc microk8s status 쉘스크립트
+#
+$ vi /capi-scripts/microk8s-status.sh
+#!/bin/bash
+
+## chekc microk8s status
+while true;
+do
+  result=$(microk8s status --format yaml | grep "running:" | awk '{print $2}')
+  if [[ $result == "False" ]]; then
+    error=$(systemctl status snap.microk8s.daemon-containerd.service | grep -io "level=error")
+    if [[ -n $error ]]; then
+      while ! snap restart microk8s.daemon-containerd; do
+        sleep 5
+      done
+    fi
+  else
+    break;
+  fi
+  sleep 2
+done
+
+## step-4. microk8s refresh-certs 체크 쉘스크립트 추가
+$ vi /capi-scripts/microk8s-certs.sh
+#!/bin/bash
+
+while ! diff /var/snap/microk8s/current/certs/ca.crt /var/tmp/ca.crt; do
+  echo "microk8s refresh-certs failed will retry."
+  while ! microk8s refresh-certs /var/tmp; do
+    sleep 5
+  done
+  sleep 2
+done
+
+## step-5. 쉘스크립트 실행권한 추가ㄴ
+$ chmod +x /capi-scripts/check_service.sh
+$ chmod +x /capi-scripts/add-docker-io.sh
+$ chmod +x /capi-scripts/microk8s-status.sh
+$ chmod +x /capi-scripts/microk8s-certs.sh
 ```
 
 ### private registry mirror 구성을 위한 설정
@@ -152,80 +174,79 @@ file_name_3="20-microk8s-join.sh"
 file_name_4="10-configure-kubelet.sh"
 file_name_5="30-configure-traefik.sh"
 file_name_6="10-configure-containerd-proxy.sh"
+file_name_7="10-configure-calico-ipip.sh"
 check_str="containerd"
 add_script="while ! snap restart microk8s.daemon-containerd; do\n    sleep 5\ndone"
 check_service="source \/capi-scripts\/check_service.sh"
 docker_io="source \/capi-scripts\/add-docker-io.sh"
+microk8s_status="source \/capi-scripts\/microk8s-status.sh"
+microk8s_certs="source \/capi-scripts\/microk8s-certs.sh"
 
-if [ -n $(ls "$file_name_6") ]; then
-  ## 00-install-microk8s.sh - 서비스 failed 체크 추가
+if resutl=$(ls "$script_path/$file_name_6" > /dev/null 2>&1); then
+  ## 10-configure-containerd-proxy.sh - containerd 설정에 docker mirror 주소 추가
   result=$(grep "$docker_io" $script_path/$file_name_6)
-  if [ -z  "$result" ]; then
+  if [[ -z $result ]]; then
     sed -i -r -e "/installed/a\\$docker_io" $script_path/$file_name_6
   fi
 fi
 
-if [ -n $(ls "$file_name_1") ]; then
+if resutl=$(ls "$script_path/$file_name_7" > /dev/null 2>&1); then
+  ## 10-configure-calico-ipip.sh - 인증서 체크후 인증서가 틀리면 microk8s refresh-certs 재시작
+  result=$(grep "$microk8s_certs" $script_path/$file_name_7)
+  if [[ -z $result ]]; then
+    sed -i -r -e "/cluster/a\\$microk8s_certs" $script_path/$file_name_7
+  fi
+fi
+
+if resutl=$(ls "$script_path/$file_name_1" > /dev/null 2>&1); then
   # 10-configure-cert-for-lb.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_1)
-  if [ -z  "$result" ]; then
+  if [[ -z  "$result" ]]; then
     sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_1
   fi
 fi
 
-if [ -n $(ls "$file_name_2") ]; then
+if resutl=$(ls "$script_path/$file_name_2" > /dev/null 2>&1); then
   ## 10-configure-apiserver.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$check_str" $script_path/$file_name_2)
-  if [ -z  "$result" ]; then
+  if [[ -z  "$result" ]]; then
     sed -i -r -e "/snap restart microk8s.daemon-kubelite/i\\$add_script" $script_path/$file_name_2
   fi
-
-  ## 10-configure-apiserver.sh - 서비스 failed 체크 추가
-  # result=$(grep "$check_service" $script_path/$file_name_2)
-  # if [ -z  "$result" ]; then
-  #   sed -i -r -e "/updated/a\\$check_service" $script_path/$file_name_2
-  # fi
 fi
 
-if [ -n $(ls "$file_name_3") ]; then
+if resutl=$(ls "$script_path/$file_name_3" > /dev/null 2>&1); then
   ## 20-microk8s-join.sh - 구문 오류 수정 추가
   result=$(grep "if ! microk8s" $script_path/$file_name_3)
-  if [ -n  "$result" ]; then
+  if [[ -n  "$result" ]]; then
     sed -i -r -e "s/if ! microk8s/if microk8s/g" $script_path/$file_name_3
   fi
 
   ## 20-microk8s-join.sh - 구문 오류 수정 추가
   result=$(grep "^then" $script_path/$file_name_3)
-  if [ -n  "$result" ]; then
+  if [[ -n  "$result" ]]; then
     sed -i -r -e "s/^then/fi/g" $script_path/$file_name_3
   fi
 
   ## 20-microk8s-join.sh - 서비스 failed 체크 추가
   result=$(grep "check_service" $script_path/$file_name_3)
-  if [ -z  "$result" ]; then
+  if [[ -z  "$result" ]]; then
     sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_3
   fi
 fi
 
-if [ -n $(ls "$file_name_4") ]; then
+if resutl=$(ls "$script_path/$file_name_4" > /dev/null 2>&1); then
   ## 10-configure-kubelet.sh - microk8s.daemon-containerd restart 추가
-  result=$(grep "exit 0" $script_path/$file_name_4)
-  if [ -n  "$result" ]; then
-    sed -i -r -e "/exit 0/i\\$add_script" $script_path/$file_name_4
-    
-    ## 10-configure-kubelet.sh - 서비스 failed 체크 추가
-    # result=$(grep "$check_service" $script_path/$file_name_4)
-    # if [ -z  "$result" ]; then
-    #   sed -i -r -e "/exit 0/i\\$check_service" $script_path/$file_name_4
-    #   sed -i -r -e "/arguments/a\\$check_service" $script_path/$file_name_4
-    # fi
+  result=$(grep "$microk8s_status" $script_path/$file_name_4)
+  if [[ -n  "$result" ]]; then
+    sed -i -r -e "/exit 0/i\\$microk8s_status" $script_path/$file_name_4
   fi
 fi
 
-if [ -n $(ls "$file_name_5") ]; then
+## 마지막 실행 쉘스크립트
+if resutl=$(ls "$script_path/$file_name_5" > /dev/null 2>&1); then
   ## 30-configure-traefik.sh - 서비스 failed 체크 추가
   result=$(grep "check_service" $script_path/$file_name_5)
-  if [ -z  "$result" ]; then
+  if [[ -z  "$result" ]]; then
     sed -i -r -e "\$s/\$/\n\n\\$check_service/" $script_path/$file_name_5
   fi
 
@@ -252,7 +273,7 @@ $ cat /etc/docker/certs.d/192.168.88.206/ca.crt
 $ incrontab -l
 /var/snap       IN_CREATE,IN_ISDIR          /opt/scripts/copy_to_containerd_toml.sh /var/snap/microk8s/current/args $#
 
-$ echo "/var/snap       IN_ALL_EVENTS        /opt/scripts/change_hostname.sh" > /var/spool/incron/root
+$ echo "/var/snap       IN_ALL_EVENTS,IN_ONESHOT        /opt/scripts/copy_to_containerd_toml.sh" > /var/spool/incron/root
 
 ## step-4. incrond 서비스 재시작 / 필요없는 로그를 정리 후 종료 한다.
 $ systemctl restart incron.service
