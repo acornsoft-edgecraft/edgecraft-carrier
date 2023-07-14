@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ template "name" . }}
+  namespace: {{ template "namespace" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ template "fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ template "fullname" . }}
+    spec:
+      containers:
+      - name: {{ template "fullname" . }}
+        image: {{ .Values.gitlabimage }}
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        - containerPort: 22
+        volumeMounts:
+        - mountPath: /var/opt/gitlab
+          name: data
+        - mountPath: /var/log/gitlab
+          name: log
+        - mountPath: /etc/gitlab
+          name: config
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ template "pvcdata" . }}
+      - name: log
+        persistentVolumeClaim:
+          claimName: {{ template "pvclog" . }}
+      - name: config
+        persistentVolumeClaim:
+          claimName: {{ template "pvcconfig" . }}

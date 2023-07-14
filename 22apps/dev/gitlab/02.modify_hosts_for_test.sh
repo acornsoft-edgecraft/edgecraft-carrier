@@ -9,4 +9,7 @@ sudo echo "127.0.0.1  registry.localhost.com" | sudo tee -a /etc/hosts
 cat /etc/hosts
 
 # restart DNS cache
-sudo killall -HUP mDNSResponder
+#sudo killall -HUP mDNSResponder
+
+# DNS Cache 갱신
+dscacheutil -flushcache

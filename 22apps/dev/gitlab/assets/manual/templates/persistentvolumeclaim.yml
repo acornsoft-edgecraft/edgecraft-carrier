@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "pvcdata" . }}
+  namespace: {{ template "namespace" . }}
+spec:
+  storageClassName: {{ .Values.pv.storageclass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pv.datasize }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "pvclog" . }}
+  namespace: {{ template "namespace" . }}
+spec:
+  storageClassName: {{ .Values.pv.storageclass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pv.logsize }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ template "pvcconfig" . }}
+  namespace: {{ template "namespace" . }}
+spec:
+  storageClassName: {{ .Values.pv.storageclass }}
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.pv.configsize }}

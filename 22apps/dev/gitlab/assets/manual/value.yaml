@@ -1,0 +1,24 @@
+# gitlab image
+nameOverride: ""
+fullnameOverride: ""
+namespace: "gitlab"
+
+gitlabimage: "gitlab/gitlab-ce"
+
+ports:
+  http: 32555
+  https: 32556
+  ssh: 32557
+
+pv:
+  storageclass: nfs-csi
+  datasize: 5Gi
+  logsize: 10Gi
+  configsize: 1Gi
+
+#nfs:
+#  name: "nfs"
+#  datasize: "5Gi"
+#  logsize: "10Gi"
+#  configsize: "1Gi"
+#  ip: "192.168.219.156"
