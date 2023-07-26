@@ -24,8 +24,12 @@
 
 - subnet 설정:
 Network Address: 10.10.20.0/24
-
 ```
+
+- 보안그룹 생성
+![edgecraft-closed](./assets/images/security-group-edgecraft-closed.png)
+![k8s-cluster-secgroup-controlplane](./assets/images/k8s-cluster-secgroup-controlplane.png)
+![k8s-cluster-secgroup-worker](./assets/images/k8s-cluster-secgroup-worker.png)
 
 ## Private Management cluster 구성
 
@@ -416,3 +420,6 @@ $ ./4.test-create-cluster.sh
 $ kubectl get machines.cluster.x-k8s.io --sort-by=.metadata.name | awk 'NR <= 101'
 ```
 
+### 실행 - 화면 
+
+![AirGap Network](./assets/images/airgap-network.png)
