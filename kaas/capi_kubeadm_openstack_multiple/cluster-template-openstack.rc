@@ -15,7 +15,7 @@ export OPENSTACK_CLOUD_PROVIDER_CONF_B64="W0dsb2JhbF0KYXV0aC11cmw9aHR0cDovLzE5Mi
 export OPENSTACK_CLOUD_CACERT_B64="Cg=="
 
 # OpenStack region and network configuration. External network ID is only needed if multiple external networks exist.
-export OPENSTACK_EXTERNAL_NETWORK_ID="public"
+export OPENSTACK_EXTERNAL_NETWORK_ID="396da06f-3577-4e5c-9bda-b7400b917282"
 export OPENSTACK_FAILURE_DOMAIN="nova"
 
 # OpenStack machine conifugration

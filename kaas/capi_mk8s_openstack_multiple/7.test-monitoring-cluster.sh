@@ -16,7 +16,8 @@ duration_of_time_list=()
 
 main() {
 local cluster_time_list=()
-if [ $list_cnt -eq $total_cluster ]; then
+local aaa=0
+if [[ $list_cnt -eq $total_cluster ]]; then
     sed -i '' -r -e '15,$d' $log_path
     sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
     sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
@@ -31,7 +32,6 @@ if [ $list_cnt -eq $total_cluster ]; then
     do
         name=`basename $i`
         cluster_time_list=()
-
         ## 노드 완료 시간
         get_lastTransitionTime=`kubectl --kubeconfig=./clusters_kubeconfig/$i get nodes -o jsonpath='{.items[*].status.conditions[?(@.type == "Ready")].lastTransitionTime}' | tr " " "\n"`
         for k in $get_lastTransitionTime
@@ -64,9 +64,9 @@ if [ $list_cnt -eq $total_cluster ]; then
     sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
     sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
 
-    if [ $total_instance -eq $(($control_plane + $md)) ]; then
-        result=$(grep "NotReady" $log_path)
-        if [ -z "$result" ]; then
+    if [[ $total_instance -eq $(($control_plane + $md)) ]]; then
+        result=$(grep "NotReady" $log_path | grep -Ev "Status:" | awk '{printf "%s\n", $1}' | sort -r -n -t- -k4)
+        if [[ -z "$result" ]]; then
             total_start_time=$(grep -i "Start_Time" $log_path | awk '{print $2 " " $3}')
             last_transition_time=$(end_time_taken "${time_list[@]}")
             end_time=$(TZ='Asia/Seoul' date -d $last_transition_time "+%Y-%m-%d(%A) %H:%M:%S")
@@ -88,6 +88,11 @@ if [ $list_cnt -eq $total_cluster ]; then
             sed -i '' -r -e "s/Min_time\:/Min_time\: $min_time/g" $log_path
             sed -i '' -r -e "s/Max_time\:/Max_time\: $max_time/g" $log_path
             sed -i '' -r -e "s/Average_time\:/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")/g" $log_path
+        else
+            for i in $result
+            do
+                sed -i '' -r -e "s/Status\:.*/Status\: NotReady\n   NotReady Node - $i/g" $log_path
+            done
         fi
     fi
 fi

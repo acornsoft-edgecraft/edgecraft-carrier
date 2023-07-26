@@ -237,7 +237,7 @@ fi
 if resutl=$(ls "$script_path/$file_name_4" > /dev/null 2>&1); then
   ## 10-configure-kubelet.sh - microk8s.daemon-containerd restart 추가
   result=$(grep "$microk8s_status" $script_path/$file_name_4)
-  if [[ -n  "$result" ]]; then
+  if [[ -z  "$result" ]]; then
     sed -i -r -e "/exit 0/i\\$microk8s_status" $script_path/$file_name_4
   fi
 fi
