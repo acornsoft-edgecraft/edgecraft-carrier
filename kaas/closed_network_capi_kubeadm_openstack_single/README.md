@@ -27,6 +27,7 @@ Network Address: 10.10.20.0/24
 ```
 
 - 보안그룹 생성
+  - controlplane과 worker의 보안그룹은 inbound/outbound 모두 전체 프로토콜 열기로 한다. - pod간 network 모두 open (calico ReadinessProbe(9099) 체크 등으로 필요한 포트들이 있음)
 ![edgecraft-closed](./assets/images/security-group-edgecraft-closed.png)
 ![k8s-cluster-secgroup-controlplane](./assets/images/k8s-cluster-secgroup-controlplane.png)
 ![k8s-cluster-secgroup-worker](./assets/images/k8s-cluster-secgroup-worker.png)
