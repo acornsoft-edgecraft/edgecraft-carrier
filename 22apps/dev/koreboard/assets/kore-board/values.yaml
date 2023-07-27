@@ -1,0 +1,58 @@
+image:
+  pullPolicy: IfNotPresent  #Always
+
+metricsScraper:
+  persistence:
+    enabled: false
+    accessMode: ReadWriteOnce
+    size: 8Gi
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "20m"
+    limits:
+      memory: "128Mi"
+      cpu: "40m"
+  ## database data Persistent Volume Storage Class
+  ## If defined, storageClassName: <storageClass>
+  ## If set to "-", storageClassName: "", which disables dynamic provisioning
+  ## If undefined (the default) or set to null, no storageClassName spec is
+  ##   set, choosing the default provisioner.  (gp2 on AWS, standard on GKE, AWS & OpenStack)
+  ##   
+  # storageClass: "-"
+  ##
+  ## Reuse exist Persistent Volume Claim
+  ##
+  #persistence:
+  #  existingClaim: "exist-pvc"
+
+backend:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "128Mi"
+      cpu: "100m"
+    limits:
+      memory: "256Mi"
+      cpu: "200m"
+
+frontend:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "64Mi"
+      cpu: "10m"
+    limits:
+      memory: "128Mi"
+      cpu: "20m"
+  service:
+    type: NodePort
+
+terminal:
+  resources:
+    requests:
+      memory: "192Mi"
+      cpu: "200m"
+    limits:
+      memory: "384Mi"
+      cpu: "300m"
