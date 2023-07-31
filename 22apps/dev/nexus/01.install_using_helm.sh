@@ -5,13 +5,14 @@ set -eEx
 VERSION="58.1.0"
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="nexus"
-NEXUS_CART_VALUES="./assets/nexus-repository-manager/values.yaml"
+CHART_NAME="nexus-repository-manager"
+NEXUS_CART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 # install using helm
 ## Usage:
 ##   helm upgrade [RELEASE] [CHART] [flags]
 # helm upgrade nexus sonatype/nexus-repository-manager \
-helm upgrade nexus ./assets/nexus-repository-manager \
+helm upgrade nexus ./assets/${CHART_NAME} \
     --install \
     --reset-values \
     --atomic \

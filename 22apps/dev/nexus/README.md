@@ -2,6 +2,7 @@
 
 > [sonatype-nexus-oss] https://www.sonatype.com/products/sonatype-nexus-oss
 > [Helm3 Charts for Sonatype Products] https://sonatype.github.io/helm3-charts/
+> [참고] https://www.bearpooh.com/46
 
 - 확장 가능한 중앙 집중식 리포지토리 관리
 - 소프트웨어 공급망 전체에서 바이너리 및 빌드 아티팩트 제어

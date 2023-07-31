@@ -5,14 +5,14 @@ set -eE
 VERSION="0.5.5"
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="kore-board"
-NEXUS_CART_VALUES="./assets/kore-board/values.yaml"
 CHART_NAME="kore-board"
+NEXUS_CART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 # install using helm
 ## Usage:
 ##   helm upgrade [RELEASE] [CHART] [flags]
 # helm upgrade kore-board kore/kore-board \
-helm upgrade ${CHART_NAME} ./assets/kore-board \
+helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --install \
     --reset-values \
     --atomic \
