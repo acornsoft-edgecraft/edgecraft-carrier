@@ -41,7 +41,7 @@ helm upgrade harbor ./assets/harbor \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION}
 ```
 

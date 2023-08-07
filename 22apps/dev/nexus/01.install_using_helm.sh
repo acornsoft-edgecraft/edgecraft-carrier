@@ -6,7 +6,7 @@ VERSION="58.1.0"
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="nexus"
 CHART_NAME="nexus-repository-manager"
-NEXUS_CART_VALUES="./assets/${CHART_NAME}/values.yaml"
+CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 # install using helm
 ## Usage:
@@ -20,7 +20,7 @@ helm upgrade nexus ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${NEXUS_CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION}
 
 # 최초 admin password 검색

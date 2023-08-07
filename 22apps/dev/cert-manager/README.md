@@ -32,7 +32,7 @@ helm upgrade cert-manager ./assets/cert-manager \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION}
 ```
 
@@ -78,7 +78,7 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION} \
     --set controller.admissionWebhooks.certManager.enabled=true \
     --set controller.metrics.enabled=true \

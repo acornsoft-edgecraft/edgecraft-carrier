@@ -6,7 +6,7 @@ VERSION="18.4.3"
 URL="https://codecentric.github.io/helm-charts"
 RELEASE_NAME="codecentric"
 CHART_NAME="keycloak"
-CART_VALUES="./assets/${CHART_NAME}/values.yaml"
+CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="keycloak"
@@ -20,7 +20,7 @@ helm repo update
 # download charts
 ## Usage:
 ##  helm pull [chart URL | repo/chartname] [...] [flags]
-if [[ -z $(ls $CART_VALUES) ]]; then
+if [[ -z $(ls $CHART_VALUES) ]]; then
     helm pull ${RELEASE_NAME}/${CHART_NAME} --untar -d ./assets --version ${VERSION}
 fi
 
@@ -36,7 +36,7 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION} \
     --set service.type="NodePort" \
     --set postgresql.global.storageClass="nfs-csi" \

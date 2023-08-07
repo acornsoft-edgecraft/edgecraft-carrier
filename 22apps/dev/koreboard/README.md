@@ -57,6 +57,6 @@ helm upgrade kore-board ./assets/kore-board \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${NEXUS_CART_VALUES} \
+    --values ${NEXUS_CHART_VALUES} \
     --version ${VERSION}
 ```

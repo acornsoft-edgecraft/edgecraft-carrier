@@ -6,7 +6,7 @@ VERSION="0.5.5"
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="kore-board"
 CHART_NAME="kore-board"
-NEXUS_CART_VALUES="./assets/${CHART_NAME}/values.yaml"
+CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 # install using helm
 ## Usage:
@@ -20,7 +20,7 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${NEXUS_CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION}
 
 # Sign-in Configuration

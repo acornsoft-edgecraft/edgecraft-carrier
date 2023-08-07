@@ -31,7 +31,7 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION} \
     --set service.type="NodePort" \
     --set postgresql.global.storageClass="nfs-csi" \
@@ -58,6 +58,7 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
 ```
 
 - Creating a Keycloak Admin User
+values.yaml 에서 "extraEnv:" 값으로 최초 계졍을 생성한다.
 
 ```sh
 ## step-1. It must be configured via environment variables

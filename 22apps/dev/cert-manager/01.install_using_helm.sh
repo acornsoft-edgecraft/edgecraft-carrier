@@ -6,7 +6,7 @@ VERSION="v1.12.0"
 KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="cert-manager"
 CHART_NAME="cert-manager"
-CART_VALUES="./assets/${CHART_NAME}/values.yaml"
+CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 # install using helm
 ## Usage:
@@ -20,6 +20,6 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace ${NAMESPACE} \
-    --values ${CART_VALUES} \
+    --values ${CHART_VALUES} \
     --version ${VERSION} \
     --set installCRDs=true

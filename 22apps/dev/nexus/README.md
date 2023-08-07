@@ -38,7 +38,7 @@ $ helm show values sonatype/nexus-repository-manager
 ```sh
 ## step-1. configuration in values file
 ### strageclass 사용
-$ vi ${NEXUS_CART_VALUES}
+$ vi ${NEXUS_CHART_VALUES}
 persistence:
   storageClass: "nfs-csi"
 
@@ -57,7 +57,7 @@ helm upgrade nexus sonatype/nexus-repository-manager   \
     --create-namespace \
     --kubeconfig ${KUBECONFIG} \
     --namespace nexus \
-    --values ${NEXUS_CART_VALUES} \
+    --values ${NEXUS_CHART_VALUES} \
     --version ${VERSION}
 
 # service tyep: ClusterIP 일때
