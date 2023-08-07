@@ -296,20 +296,19 @@ velero 클라이언트에서 명령어를 입력하여 velero 컨트롤러에게
 
 ```sh
 ## step-1. example nginx 배포
-$ kubectl apply -f examples/nginx-app/base.yaml
+$ kubectl apply -f examples/nginx-app/with-pv.yaml
 $ kubectl -n nginx-example get all
 NAME                                    READY   STATUS    RESTARTS   AGE
-pod/nginx-deployment-7c89967545-q5gpb   1/1     Running   0          111s
-pod/nginx-deployment-7c89967545-zs6dw   1/1     Running   0          111s
+pod/nginx-deployment-5df669cf7c-t2bws   2/2     Running   0          18s
 
 NAME               TYPE       CLUSTER-IP    EXTERNAL-IP   PORT(S)        AGE
-service/my-nginx   NodePort   10.96.5.231   <none>        80:31668/TCP   111s
+service/my-nginx   NodePort   10.96.14.82   <none>        80:30024/TCP   17s
 
 NAME                               READY   UP-TO-DATE   AVAILABLE   AGE
-deployment.apps/nginx-deployment   2/2     2            2           111s
+deployment.apps/nginx-deployment   1/1     1            1           17s
 
 NAME                                          DESIRED   CURRENT   READY   AGE
-replicaset.apps/nginx-deployment-7c89967545   2         2         2       111s
+replicaset.apps/nginx-deployment-5df669cf7c   1         1         1       18s
 
 ## step-2. velero 클라이언트에서 명령어를 입력하여 velero 컨트롤러에게 백업을 요청합니다
 ### namespace: velero는 default
