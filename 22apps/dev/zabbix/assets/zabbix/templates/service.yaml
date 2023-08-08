@@ -1,0 +1,231 @@
+{{- if .Values.zabbixServer.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-zabbix-server
+  labels:
+    app: {{ template "zabbix.fullname" . }}-zabbix-server
+    app.kubernetes.io/name: zabbix-server
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-zabbix-server
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-zabbix-server
+  {{- if .Values.zabbixServer.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.zabbixServer.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.zabbixServer.service.type }}
+  {{- if .Values.zabbixServer.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.zabbixServer.service.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.zabbixServer.service.externalIPs }}
+  externalIPs: {{ .Values.zabbixServer.service.externalIPs | toYaml | nindent 6 }}
+  {{- end }}
+  {{- if .Values.zabbixServer.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.zabbixServer.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.zabbixServer.service.clusterIP }}
+  clusterIP: {{ .Values.zabbixServer.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.zabbixServer.service.port }}
+      targetPort: 10051
+      name: zabbix-server
+      protocol: TCP
+      {{- if ( and (eq .Values.zabbixServer.service.type "NodePort" ) (not (empty .Values.zabbixServer.service.nodePort)) ) }}
+      nodePort: {{ .Values.zabbixServer.service.nodePort }}
+      {{- end }}
+    - port: 10052
+      targetPort: 10052
+      protocol: TCP
+      name: zabbix-jmx
+  selector:
+    app: {{ template "zabbix.fullname" . }}-zabbix-server
+{{- end }}
+
+
+{{- if .Values.zabbixAgent.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-zabbix-agent
+  labels:
+    app: {{ template "zabbix.fullname" . }}-zabbix-agent
+    app.kubernetes.io/name: zabbix-agent
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-zabbix-agent
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-zabbix-agent
+  {{- if .Values.zabbixAgent.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.zabbixAgent.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.zabbixAgent.service.type }}
+  {{- if .Values.zabbixAgent.service.clusterIP }}
+  clusterIP: {{ .Values.zabbixAgent.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.zabbixAgent.service.port }}
+      targetPort: 10050
+      {{- if ( and (eq .Values.zabbixAgent.service.type "NodePort" ) (not (empty .Values.zabbixAgent.service.nodePort)) ) }}
+      nodePort: {{ .Values.zabbixAgent.service.nodePort }}
+      {{- end }}
+      protocol: TCP
+      name: zabbix-agent
+  selector:
+    {{- if .Values.zabbixAgent.runAsSidecar }}
+    app: {{ template "zabbix.fullname" . }}-zabbix-server
+    {{- end }}
+    {{- if .Values.zabbixAgent.runAsDaemonSet }}
+    app: {{ template "zabbix.fullname" . }}-zabbix-agent
+    {{- end }}
+{{- end }}
+
+
+{{- if .Values.zabbixWeb.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-zabbix-web
+  labels:
+    app: {{ template "zabbix.fullname" . }}-zabbix-web
+    app.kubernetes.io/name: zabbix-web
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-zabbix-web
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-zabbix-web
+  {{- if .Values.zabbixWeb.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.zabbixWeb.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.zabbixWeb.service.type }}
+  {{- if .Values.zabbixWeb.service.externalTrafficPolicy }}
+  externalTrafficPolicy: {{ .Values.zabbixWeb.service.externalTrafficPolicy }}
+  {{- end }}
+  {{- if .Values.zabbixWeb.service.externalIPs }}
+  externalIPs: {{ .Values.zabbixWeb.service.externalIPs | toYaml | nindent 6 }}
+  {{- end }}
+  {{- if .Values.zabbixWeb.service.loadBalancerIP }}
+  loadBalancerIP: {{ .Values.zabbixWeb.service.loadBalancerIP }}
+  {{- end }}
+  {{- if .Values.zabbixWeb.service.clusterIP }}
+  clusterIP: {{ .Values.zabbixWeb.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.zabbixWeb.service.port }}
+      targetPort: 8080
+      protocol: TCP
+      name: zabbix-web
+      {{- if ( and (eq .Values.zabbixWeb.service.type "NodePort" ) (not (empty .Values.zabbixWeb.service.nodePort)) ) }}
+      nodePort: {{ .Values.zabbixWeb.service.nodePort }}
+      {{- end }}
+  selector:
+    app: {{ template "zabbix.fullname" . }}-zabbix-web
+  {{- end }}
+
+
+{{- if .Values.zabbixWebService.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-zabbix-webservice
+  labels:
+    app: {{ template "zabbix.fullname" . }}-zabbix-webservice
+    app.kubernetes.io/name: zabbix-webservice
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-zabbix-webservice
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-zabbix-webservice
+  {{- if .Values.zabbixWebService.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.zabbixWebService.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.zabbixWebService.service.type }}
+  {{- if .Values.zabbixWebService.service.clusterIP }}
+  clusterIP: {{ .Values.zabbixWebService.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.zabbixWebService.service.port }}
+      targetPort: 10053
+      protocol: TCP
+      name: webservice
+  selector:
+    app: {{ template "zabbix.fullname" . }}-zabbix-webservice
+  {{- end }}
+
+
+{{- if .Values.zabbixProxy.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-zabbix-proxy
+  labels:
+    app: {{ template "zabbix.fullname" . }}-zabbix-proxy
+    app.kubernetes.io/name: zabbix-proxy
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-zabbix-proxy
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-zabbix-proxy
+  {{- if .Values.zabbixProxy.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.zabbixProxy.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.zabbixProxy.service.type }}
+  {{- if .Values.zabbixProxy.service.clusterIP }}
+  clusterIP: {{ .Values.zabbixProxy.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.zabbixProxy.service.port }}
+      targetPort: 10051
+      protocol: TCP
+      name: zabbix-proxy
+  selector:
+    app: {{ template "zabbix.fullname" . }}-zabbix-proxy
+{{- end }}
+
+{{- if .Values.postgresql.enabled }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "zabbix.fullname" . }}-postgresql
+  labels:
+    app: {{ template "zabbix.fullname" . }}-postgresql
+    app.kubernetes.io/name: postgresql
+    helm.sh/chart: {{ include "zabbix.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}-postgresql
+    app.kubernetes.io/managed-by: {{ .Release.Service }}-postgresql
+  {{- if .Values.postgresql.service.annotations }}
+  annotations:
+    {{- range $key,$value := .Values.postgresql.service.annotations }}
+    {{ $key }}: {{ $value | quote }}
+    {{- end }}
+  {{- end }}
+spec:
+  type: {{ .Values.postgresql.service.type }}
+  {{- if .Values.postgresql.service.clusterIP }}
+  clusterIP: {{ .Values.postgresql.service.clusterIP }}
+  {{- end }}
+  ports:
+    - port: {{ .Values.postgresql.service.port }}
+      targetPort: 5432
+      protocol: TCP
+      name: db
+  selector:
+    app: {{ template "zabbix.fullname" . }}-postgresql
+{{- end }}

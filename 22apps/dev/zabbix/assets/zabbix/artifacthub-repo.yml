@@ -1,0 +1,7 @@
+# Artifact Hub repository metadata file
+# Reference: https://github.com/artifacthub/hub/blob/master/docs/metadata/artifacthub-repo.yml
+#
+repositoryID: 1d23ea5a-5611-40f1-b5c2-bb60fec224e4
+owners:
+  - name: aeciopires
+    email: https://blog.aeciopires.com/contato
