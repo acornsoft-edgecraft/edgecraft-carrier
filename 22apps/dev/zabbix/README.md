@@ -50,14 +50,11 @@ helm show values zabbix-community/zabbix > ./examples/values.yaml
 
 # Change the values according to the environment
 
-# Test the installation/upgrade
-helm upgrade --install zabbix zabbix-community/zabbix -f ./examples/zabbix_values.yaml -n monitoring --dry-run
-
 # Install/upgrade the Zabbix
-helm upgrade --install zabbix zabbix-community/zabbix -f ./examples/zabbix_values.yaml -n monitoring 
+helm upgrade --install zabbix zabbix-community/zabbix -f ./examples/values.yaml -n zabbix --create-namespace 
 
 # View the pods
-kubectl get pods -n monitoring
+kubectl get pods -n zabbix
 ```
 
 ### config values.yaml
