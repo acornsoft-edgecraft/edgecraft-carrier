@@ -418,7 +418,7 @@ $ ./4.test-create-cluster.sh
 ### 실행 - workload cluster 생성 단계 확인
 ```sh
 ## step-1. magement cluster에서 k8s crd 확인
-$ kubectl get machines.cluster.x-k8s.io --sort-by=.metadata.name | awk 'NR <= 101'
+$ watch "kubectl get machines.cluster.x-k8s.io --sort-by=.metadata.name | awk 'NR <= 101'"
 ```
 
 ### 실행 - 화면 

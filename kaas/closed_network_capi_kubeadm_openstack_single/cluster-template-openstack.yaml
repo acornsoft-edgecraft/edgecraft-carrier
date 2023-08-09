@@ -28,12 +28,12 @@ spec:
             provider-id: openstack:///'{{ instance_id }}'
           name: '{{ local_hostname }}'
       preKubeadmCommands:
-        - echo "10.10.20.16 regi.edgecraft.acornsoft.io" >> /etc/hosts
-        - mkdir -p /etc/docker/certs.d/10.10.20.16
-        - curl -Lk https://10.10.20.16/ca.crt -o /etc/docker/certs.d/10.10.20.16/ca.crt
+        - echo "${PRIVATE_REGISTRY_IP} ${PRIVATE_REGISTRY_HOSTNAME}" >> /etc/hosts
+        - mkdir -p /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}
+        - curl -Lk https://${PRIVATE_REGISTRY_IP}/ca.crt -o /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}/ca.crt
         - rm -rf /etc/containerd/certs.d
-        - mkdir -p /etc/containerd/certs.d/10.10.20.16
-        - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/10.10.20.16/hosts.toml
+        - mkdir -p /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}
+        - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}/hosts.toml
         - mkdir -p /etc/containerd/certs.d/docker.io
         - echo ${CONTAINERD_DOCKER_IO_HOSTS} | base64 -d > /etc/containerd/certs.d/docker.io/hosts.toml
         - mkdir -p /etc/containerd/certs.d/gcr.io
@@ -138,12 +138,12 @@ spec:
           provider-id: openstack:///'{{ instance_id }}'
         name: "{{ local_hostname }}"
     preKubeadmCommands:
-      - echo "10.10.20.16 regi.edgecraft.acornsoft.io" >> /etc/hosts
-      - mkdir -p /etc/docker/certs.d/10.10.20.16
-      - curl -Lk https://10.10.20.16/ca.crt -o /etc/docker/certs.d/10.10.20.16/ca.crt
+      - echo "${PRIVATE_REGISTRY_IP} ${PRIVATE_REGISTRY_HOSTNAME}" >> /etc/hosts
+      - mkdir -p /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}
+      - curl -Lk https://${PRIVATE_REGISTRY_IP}/ca.crt -o /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}/ca.crt
       - rm -rf /etc/containerd/certs.d
-      - mkdir -p /etc/containerd/certs.d/10.10.20.16
-      - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/10.10.20.16/hosts.toml
+      - mkdir -p /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}
+      - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}/hosts.toml
       - mkdir -p /etc/containerd/certs.d/docker.io
       - echo ${CONTAINERD_DOCKER_IO_HOSTS} | base64 -d > /etc/containerd/certs.d/docker.io/hosts.toml
       - mkdir -p /etc/containerd/certs.d/gcr.io
@@ -155,7 +155,7 @@ spec:
       - mkdir -p /etc/containerd/certs.d/registry.k8s.io
       - echo ${CONTAINERD_REGISTY_K8S_IO_HOSTS} | base64 -d > /etc/containerd/certs.d/registry.k8s.io/hosts.toml
       - mkdir -p /etc/kubernetes/addon/calico
-      - curl -Lk https://regi.edgecraft.acornsoft.io/download/calico/v3.25.1/calico.yaml > /etc/kubernetes/addon/calico/calico.yaml
+      - curl -Lk https://${PRIVATE_REGISTRY_HOSTNAME}/download/calico/v3.25.1/calico.yaml > /etc/kubernetes/addon/calico/calico.yaml
     postKubeadmCommands:
       - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/calico/calico.yaml
       - kubectl --kubeconfig=/etc/kubernetes/admin.conf create secret -n kube-system generic cloud-config --from-file=/etc/kubernetes/cloud.conf
