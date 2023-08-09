@@ -1,0 +1,13 @@
+{{ if (lookup "installer.kubesphere.io/v1alpha1" "ClusterConfiguration" "kubesphere-system" "ks-installer") -}}
+{{ lookup "installer.kubesphere.io/v1alpha1" "ClusterConfiguration" "kubesphere-system" "ks-installer" | toYaml }}
+{{ else -}}
+apiVersion: installer.kubesphere.io/v1alpha1
+kind: ClusterConfiguration
+metadata:
+  name: ks-installer
+  namespace: kubesphere-system
+  labels:
+    version: {{ .Chart.AppVersion }}
+spec:
+{{ toYaml .Values.cc | indent 2 }}
+{{ end -}}
