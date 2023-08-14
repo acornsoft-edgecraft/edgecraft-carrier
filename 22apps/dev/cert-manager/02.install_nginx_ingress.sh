@@ -40,4 +40,6 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --version ${VERSION} \
     --set controller.admissionWebhooks.certManager.enabled=true \
     --set controller.metrics.enabled=true \
-    --set controller.service.type=NodePort
+    --set controller.service.type=NodePort \
+    --set controller.service.nodePorts.http=30001 \
+    --set controller.service.nodePorts.https=30002 \
