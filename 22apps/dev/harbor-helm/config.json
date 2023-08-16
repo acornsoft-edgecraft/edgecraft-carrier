@@ -1,0 +1,6 @@
+{
+        "auths": {
+                "core.harbor.domain:32443": {}
+        },
+        "credsStore": "osxkeychain"
+}

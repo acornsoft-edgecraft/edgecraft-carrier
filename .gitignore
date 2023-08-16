@@ -9,3 +9,4 @@ clusters/
 clusters_kubeconfig/
 clusters_monitoring/
 
+kubeconfig

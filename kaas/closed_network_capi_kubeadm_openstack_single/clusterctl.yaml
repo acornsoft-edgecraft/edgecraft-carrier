@@ -1,0 +1,17 @@
+---
+providers:
+  - name: "cluster-api"
+    url: "/root/closed_network_capi_kubeadm_openstack_single/deployments/core/cluster-api/v1.4.3/core-components.yaml"
+    type: "CoreProvider"
+  - name: "kubeadm"
+    url: "/root/closed_network_capi_kubeadm_openstack_single/deployments/provider/bootstrap-kubeadm/v1.4.3/bootstrap-components.yaml"
+    type: "BootstrapProvider"
+  - name: "kubeadm"
+    url: "/root/closed_network_capi_kubeadm_openstack_single/deployments/provider/control-plane-kubeadm/v1.4.3/control-plane-components.yaml"
+    type: "ControlPlaneProvider"
+  - name: "openstack"
+    url: "/root/closed_network_capi_kubeadm_openstack_single/deployments/infrastructure/infrastructure-openstack/v0.7.3/infrastructure-components.yaml"
+    type: "InfrastructureProvider"
+
+cert-manager:
+  url: "/root/closed_network_capi_kubeadm_openstack_single/deployments/cert-manager/v1.12.1/cert-manager.yaml"

@@ -2,7 +2,7 @@
 rm -f ./clusters/*.yaml
 source ./cluster-template-openstack.rc
 
-FILE_NAME="mk8s-provisioning"
+FILE_NAME="single-mk8s-provisioning"
 COUNT=0
 while [ "$COUNT" -lt 1 ]
 do
