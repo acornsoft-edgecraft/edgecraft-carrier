@@ -1,0 +1,63 @@
+# create secret hex 32
+#> openssl rand -hex 32
+
+hub: # Hub Control Panel 설정 
+  # service:
+  #   type: NodePort   # NodePort로 사용
+  #   ports: 
+  #     nodePort: 32560
+  networkPolicy: 
+    interNamespaceAccessLabels: accept 
+  # extraConfig: 
+  #   httpTimeout: | 
+  #     c.KubeSpawner.http_timeout = 3000
+  # extraConfig:
+  #   03-add-container-port.py: |
+  #       from kubernetes import client
+  #       def modify_pod_hook(spawner, pod):
+  #           pod.spec.containers[0].ports.append(client.V1ContainerPort(2222,name='driver',protocol='TCP'))
+  #           pod.spec.containers[0].ports.append(client.V1ContainerPort(7777,name='blockManager',protocol='TCP'))
+  #           return pod
+  #       c.KubeSpawner.modify_pod_hook = modify_pod_hook
+
+proxy:
+  # 생성한 Hex 32 값 설정
+  secretToken: 2a454a47ad547ac9549cd462e08289d3a6d5a5d39498339be6016fde522cb713
+  service:
+    # nodePort 사용 (proxy-public)
+    type: NodePort  
+    nodePorts:
+      http: 32560
+      https: 32561
+
+ingress: # 외부와 연결을 위한 Ingress 설정 
+  enabled: false
+ 
+singleuser: # 개인마다 JupyterLab이 생성될 때의 설정 
+  cpu:
+    limit: 1
+    guarantee: 0.5
+  memory:
+    limit: 2G
+    guarantee: 1G
+  serviceAccountName: spark
+  startTimeout: 600 
+  defaultUrl: "/lab" 
+  cloudMetadata:
+    blockWithIptables: false
+  storage:
+    homeMountPath: /home/{username}
+  image:
+    name: itayb/jupyter-notebook
+    tag: latest
+    pullPolicy: IfNotPresent
+    pullSecrets: []
+  #cmd: ["/usr/local/bin/start.sh", "jupyterhub-singleuser"]
+  cmd: ["/usr/local/bin/start-singleuser.sh"]
+  #cmd: ["jupyter-lab"]
+
+cull: 
+  enabled: false 
+
+debug:
+  enabled: true

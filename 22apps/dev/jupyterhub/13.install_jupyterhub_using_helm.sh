@@ -6,5 +6,5 @@ helm upgrade --cleanup-on-fail \
     --namespace jhub \
     --create-namespace \
     --version 2.0.0 \
-    --values ./examples/helm/override_values.yaml \
+    --values ./examples/helm/config.yaml \
     --kubeconfig ../../88apps.kubeconfig

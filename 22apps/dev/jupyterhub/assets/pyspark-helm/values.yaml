@@ -1,0 +1,135 @@
+# Default values for pyspark.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: jupyter/pyspark-notebook
+  pullPolicy: IfNotPresent
+  tag: "spark-3.1.2"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+volumeClaimTemplate:
+  accessModes: ["ReadWriteOnce"]
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName:
+
+persistence:
+  enabled: true
+  labels:
+    # Add default labels for the volumeClaimTemplate fo the StatefulSet
+    enabled: false
+  annotations: {}
+
+# Extra environment variables to append to pyspark container
+# This will be appended to the current 'env:' key. You can use any of the kubernetes env
+# syntax here
+env: []
+  # - name: GOOGLE_APPLICATION_CREDENTIALS
+  #   value: /mnt/secrets/key.json
+
+# Allows you to load environment variables from kubernetes secret
+secret: []
+# - envName: AWS_ACCESS_KEY_ID
+#   secretName: ""
+#   secretKey: ""
+# - envName: AWS_SECRET_ACCESS_KEY
+#   secretName: ""
+#   secretKey: ""
+
+# Mount additional volumes into pyspark container.
+extraVolumes: []
+#   - name: secrets
+#     secret:
+#       secretName: gcp-credentials
+
+extraVolumeMounts: []
+#   - name: secrets
+#     mountPath: "/mnt/secrets"
+#     readOnly: true
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # Annotations to add to the service account
+  annotations: {}
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podAnnotations: {}
+
+disableToken: false
+
+podSecurityContext:
+  fsGroup: 100
+  runAsUser: 1000
+
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  # readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
+
+# The default is to deploy all pods serially. By setting this to parallel all pods are started at
+# the same time when bootstrapping the cluster
+podManagementPolicy: "Parallel"
+
+httpPort: 8888
+blockManagerPort: 7777
+driverPort: 2222
+
+service:
+  type: ClusterIP
+  nodePort: ""
+  annotations: {}
+  httpPortName: http
+  blockManagerPortName: blockmanager
+  driverPortName: driver
+  loadBalancerIP: ""
+  loadBalancerSourceRanges: []
+  externalTrafficPolicy: ""
+
+updateStrategy: RollingUpdate
+
+# How long to wait for pyspark to stop gracefully
+terminationGracePeriod: 30
+
+ingress:
+  enabled: false
+  className: ""
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  requests:
+    cpu: "1000m"
+    memory: "2Gi"
+  limits:
+    cpu: "2000m"
+    memory: "16Gi"
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}

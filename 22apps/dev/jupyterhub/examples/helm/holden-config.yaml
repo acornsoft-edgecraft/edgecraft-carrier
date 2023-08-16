@@ -1,0 +1,56 @@
+# create secret hex 32
+#> openssl rand -hex 32
+
+hub: # Hub Control Panel 설정 
+  # image:
+  #   name: holdenk/jupyter-hub-magichub
+  #   tag: '0.10.2'
+  networkPolicy: 
+    interNamespaceAccessLabels: accept 
+
+proxy:
+  service:
+    # nodePort 사용 (proxy-public)
+    type: NodePort  
+    nodePorts:
+      http: 32560
+      https: 32561
+  # 생성한 Hex 32 값 설정
+  secretToken: 2a454a47ad547ac9549cd462e08289d3a6d5a5d39498339be6016fde522cb713
+
+ingress: # 외부와 연결을 위한 Ingress 설정 
+  enabled: false
+ 
+singleuser: # 개인마다 JupyterLab이 생성될 때의 설정 
+  serviceAccountName: spark
+  image:
+    name: holdenk/jupyter-hub-magicsingleuser-sample
+    tag: 'cheeseburger3'
+  # profileList:
+  #   - display_name: "Minimal environment"
+  #     description: "To avoid too much bells and whistles: Python."
+  #     default: true
+  #   - display_name: "Dask container"
+  #     description: "If you want to run dask"
+  #     kubespawner_override:
+  #       image: holdenk/dask-notebook:v0.9.4b
+  #   - display_name: "Spark 3.0.1 container"
+  #     description: "If you want to run Spark"
+  #     kubespawner_override:
+  #       image: holdenk/spark-notebook:v3.0.1.1
+  # cmd: ["/usr/local/bin/start-singleuser.sh"]
+
+# prePuller:
+#   hook:
+#     image:
+#       name: holdenk/jupyter-hub-magicimage-awaiter
+#       tag: '0.10.2'
+# Do something better here! It's being reworked though - https://github.com/jupyterhub/zero-to-jupyterhub-k8s/issues/1871
+# auth:
+#   type: dummy
+#   dummy:
+#     password: 'mypassword'
+#   whitelist:
+#     users:
+#       - user1
+#       - user2

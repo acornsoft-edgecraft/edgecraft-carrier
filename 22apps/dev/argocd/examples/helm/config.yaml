@@ -1,0 +1,15 @@
+## Argo CD configuration
+## Ref: https://github.com/argoproj/argo-cd
+##
+
+## Server
+server:
+
+  ## Server service configuration
+  service:
+    # -- Server service type
+    type: NodePort
+# -- Server service http port for NodePort service type (only if `server.service.type` is set to "NodePort")
+    nodePortHttp: 32570
+    # -- Server service https port for NodePort service type (only if `server.service.type` is set to "NodePort")
+    nodePortHttps: 32571
