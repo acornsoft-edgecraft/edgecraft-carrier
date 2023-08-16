@@ -10,3 +10,7 @@ clusters_kubeconfig/
 clusters_monitoring/
 
 kubeconfig
+
+.DS_Store
+22apps/.DS_Store
+22apps/dev/.DS_Store
