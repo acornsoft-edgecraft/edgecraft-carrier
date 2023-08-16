@@ -1,0 +1,20 @@
+{{- if .Values.gateway.tls.certificate.create -}}
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: {{ .Values.gateway.tls.certificate.name }}
+spec:
+  dnsNames: {{ .Values.gateway.tls.certificate.dnsNames }}
+  {{- if .Values.service.loadBalancerIP -}}
+  ipAddresses:
+    - {{ .Values.service.loadBalancerIP }}
+  {{- end }}
+  secretName: {{ .Values.gateway.tls.certificate.secretName }}
+  privateKey:
+    algorithm: ECDSA
+    size: 256
+  issuerRef:
+    name: {{ .Values.gateway.tls.certificate.issuer.name }}
+    kind: {{ .Values.gateway.tls.certificate.issuer.kind }}
+    group: {{ .Values.gateway.tls.certificate.issuer.group }}
+{{- end }}
