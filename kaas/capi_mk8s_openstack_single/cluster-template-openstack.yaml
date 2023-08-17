@@ -39,7 +39,7 @@ metadata:
   namespace: default
 spec:
   apiServerLoadBalancer:
-    enabled: true
+    enabled: false
   cloudName: ${OPENSTACK_CLOUD}
   dnsNameservers:
     - ${OPENSTACK_DNS_NAMESERVERS}

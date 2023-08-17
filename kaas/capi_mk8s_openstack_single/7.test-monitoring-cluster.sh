@@ -17,15 +17,15 @@ duration_of_time_list=()
 main() {
 local cluster_time_list=()
 if [[ $list_cnt -eq $total_cluster ]]; then
-    sed -i -r -e '15,$d' $log_path
-    sed -i -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
-    sed -i -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
-    sed -i -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
-    sed -i -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
-    sed -i -r -e "s/Status\:.*$/Status\:/g" $log_path
-    sed -i -r -e "s/Min_time\:.*$/Min_time\:/g" $log_path
-    sed -i -r -e "s/Max_time\:.*$/Max_time\:/g" $log_path
-    sed -i -r -e "s/Average_time\:.*$/Average_time\:/g" $log_path
+    sed -i '' -r -e '15,$d' $log_path
+    sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
+    sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
+    sed -i '' -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
+    sed -i '' -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
+    sed -i '' -r -e "s/Status\:.*$/Status\:/g" $log_path
+    sed -i '' -r -e "s/Min_time\:.*$/Min_time\:/g" $log_path
+    sed -i '' -r -e "s/Max_time\:.*$/Max_time\:/g" $log_path
+    sed -i '' -r -e "s/Average_time\:.*$/Average_time\:/g" $log_path
     echo "" >> $log_path
     for i in $list
     do
@@ -81,15 +81,15 @@ if [[ $list_cnt -eq $total_cluster ]]; then
             sec_total_duration=$(( sec_end_time - sec_total_start_time ))
             total_duration=$(TZ='Asia/Seoul' date -u -d @${sec_total_duration} "+%H:%M:%S")
 
-            sed -i -r -e "s/End_Time\:/End_Time\: $end_time/g" $log_path
-            sed -i -r -e "s/Total_Duration\:/Total_Duration\: $total_duration/g" $log_path
-            sed -i -r -e "s/Status\:/Status\: Ready/g" $log_path
-            sed -i -r -e "s/Min_time\:/Min_time\: $min_time/g" $log_path
-            sed -i -r -e "s/Max_time\:/Max_time\: $max_time/g" $log_path
-            sed -i -r -e "s/Average_time\:/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")/g" $log_path
+            sed -i '' -r -e "s/End_Time\:/End_Time\: $end_time/g" $log_path
+            sed -i '' -r -e "s/Total_Duration\:/Total_Duration\: $total_duration/g" $log_path
+            sed -i '' -r -e "s/Status\:/Status\: Ready/g" $log_path
+            sed -i '' -r -e "s/Min_time\:/Min_time\: $min_time/g" $log_path
+            sed -i '' -r -e "s/Max_time\:/Max_time\: $max_time/g" $log_path
+            sed -i '' -r -e "s/Average_time\:/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")/g" $log_path
         else
-            sed -i -r -e "s/Status\:.*/Status\: NotReady/g" $log_path
-            sed -i -r -e "s/Average_time\:.*$/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")\nNotReady_Node_List\:/g" $log_path
+            sed -i '' -r -e "s/Status\:.*/Status\: NotReady/g" $log_path
+            sed -i '' -r -e "s/Average_time\:.*$/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")\nNotReady_Node_List\:/g" $log_path
             for i in $result
             do
                 sed -i -r -e "s/NotReady_Node_List\:.*/NotReady_Node_List\:\n   - $i/g" $log_path
