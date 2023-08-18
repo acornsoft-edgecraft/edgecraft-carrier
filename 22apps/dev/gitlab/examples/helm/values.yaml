@@ -1,6 +1,6 @@
 global:
   ## https://docs.gitlab.com/charts/installation/deployment#deploy-the-community-edition
-  edition: cd   # modify ee to ce (community-edition)
+  edition: ce   # modify ee to ce (community-edition)
 
   ## https://docs.gitlab.com/charts/charts/globals#configure-host-settings
   hosts:

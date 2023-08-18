@@ -1,0 +1,47 @@
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: git-edgecraft
+  namespace: k3lab-addon
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - gitlab.edgecraft.acornsoft.io
+      secretName: tls-edgecraft-acornsoft-star
+  rules:
+    - host: gitlab.edgecraft.acornsoft.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gitlab-gitlab
+                port:
+                  number: 32555
+---
+kind: Ingress
+apiVersion: networking.k8s.io/v1
+metadata:
+  name: git-edgecraft
+  namespace: k3lab-addon
+  annotations:
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - gitlab.edgecraft.acornsoft.io
+      secretName: tls-edgecraft-acornsoft-star
+  rules:
+    - host: gitlab.edgecraft.acornsoft.io
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gitlab-gitlab
+                port:
+                  number: 32556
