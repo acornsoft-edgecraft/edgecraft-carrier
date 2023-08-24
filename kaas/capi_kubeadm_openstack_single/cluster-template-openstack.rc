@@ -1,5 +1,5 @@
 # Kubernetes cluster configuration
-export KUBERNETES_VERSION="v1.26.1"
+export KUBERNETES_VERSION="v1.23.3"
 export CONTROL_PLANE_MACHINE_COUNT=3
 export WORKER_MACHINE_COUNT=2
 export POD_CIDR=10.96.0.1/12
@@ -19,7 +19,7 @@ export OPENSTACK_EXTERNAL_NETWORK_ID="396da06f-3577-4e5c-9bda-b7400b917282"
 export OPENSTACK_FAILURE_DOMAIN="nova"
 
 # OpenStack machine conifugration
-export OPENSTACK_IMAGE_NAME="edgecraft-kube-v1.26.1"
+export OPENSTACK_IMAGE_NAME="edgecraft-kube-v1.23.3"
 export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR="m1.medium"
 export OPENSTACK_NODE_MACHINE_FLAVOR="m1.medium"
 export OPENSTACK_SSH_KEY_NAME="hostacloud"

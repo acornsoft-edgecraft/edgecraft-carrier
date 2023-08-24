@@ -8,6 +8,7 @@ test__
 clusters/
 clusters_kubeconfig/
 clusters_monitoring/
+cluster_upgrade/
 
 kubeconfig
 

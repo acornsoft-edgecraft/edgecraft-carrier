@@ -28,22 +28,22 @@ spec:
     kind: MicroK8sControlPlane
     name: ${CLUSTER_NAME}-control-plane
   infrastructureRef:
-    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
     kind: OpenStackCluster
     name: ${CLUSTER_NAME}
 ---
-apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
 kind: OpenStackCluster
 metadata:
   name: ${CLUSTER_NAME}
   namespace: default
 spec:
   apiServerLoadBalancer:
-    enabled: false
+    enabled: true
   cloudName: ${OPENSTACK_CLOUD}
   dnsNameservers:
-    - ${OPENSTACK_DNS_NAMESERVERS}
-  externalNetworkId: ${OPENSTACK_EXTERNAL_NETWORK_ID}
+    - ${OPENSTACK_DNS_NAMESERVERS:=}
+  externalNetworkId: ${OPENSTACK_EXTERNAL_NETWORK_ID:=""}
   identityRef:
     kind: Secret
     name: ${CLUSTER_NAME}-cloud-config
@@ -59,19 +59,27 @@ metadata:
 spec:
   controlPlaneConfig:
     initConfiguration:
+      # joinTokenTTLInSecs: 9000
       addons:
         - dns
         - ingress
-      # joinTokenTTLInSecs: 9000
+      httpProxy: "${CONTAINERD_HTTP_PROXY:=}"
+      httpsProxy: "${CONTAINERD_HTTPS_PROXY:=}"
+      noProxy: "${CONTAINERD_NO_PROXY:=}"
+      riskLevel: "${SNAP_RISKLEVEL:=}"
+      confinement: "${SNAP_CONFINEMENT:=}"
+    clusterConfiguration:
+      portCompatibilityRemap: true
   machineTemplate:
     infrastructureTemplate:
-      apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+      apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
       kind: OpenStackMachineTemplate
-      name: ${CLUSTER_NAME}-control-plane
+      name: "${CLUSTER_NAME}-control-plane"
   replicas: ${CONTROL_PLANE_MACHINE_COUNT}
-  version: v${KUBERNETES_VERSION}
+  version: "v${KUBERNETES_VERSION}"
+  upgradeStrategy: "${UPGRADE_STRATEGY}"
 ---
-apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
 kind: OpenStackMachineTemplate
 metadata:
   name: ${CLUSTER_NAME}-control-plane
@@ -100,7 +108,7 @@ spec:
   clusterName: ${CLUSTER_NAME}
   replicas: ${WORKER_MACHINE_COUNT}
   selector:
-    matchLabels: null
+    matchLabels:
   template:
     spec:
       bootstrap:
@@ -111,12 +119,12 @@ spec:
       clusterName: ${CLUSTER_NAME}
       failureDomain: ${OPENSTACK_FAILURE_DOMAIN}
       infrastructureRef:
-        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
         kind: OpenStackMachineTemplate
         name: ${CLUSTER_NAME}-md-0
       version: v${KUBERNETES_VERSION}
 ---
-apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
 kind: OpenStackMachineTemplate
 metadata:
   name: ${CLUSTER_NAME}-md-0
@@ -143,4 +151,12 @@ metadata:
   namespace: default
 spec:
   template:
-    spec: {}
+    spec:
+      clusterConfiguration:
+        portCompatibilityRemap: true
+      initConfiguration:
+        httpProxy: "${CONTAINERD_HTTP_PROXY:=}"
+        httpsProxy: "${CONTAINERD_HTTPS_PROXY:=}"
+        noProxy: "${CONTAINERD_NO_PROXY:=}"
+        riskLevel: "${SNAP_RISKLEVEL:=}"
+        confinement: "${SNAP_CONFINEMENT:=}"

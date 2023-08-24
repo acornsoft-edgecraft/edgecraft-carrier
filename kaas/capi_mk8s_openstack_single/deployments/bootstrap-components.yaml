@@ -31,10 +31,14 @@ spec:
         description: MicroK8sConfig is the Schema for the microk8sconfigs API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -42,17 +46,27 @@ spec:
             description: MicroK8sConfigSpec defines the desired state of MicroK8sConfig
             properties:
               clusterConfiguration:
-                description: InitConfiguration along with ClusterConfiguration are the configurations necessary for the init command
+                description: InitConfiguration along with ClusterConfiguration are
+                  the configurations necessary for the init command
                 properties:
                   apiVersion:
-                    description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+                    description: 'APIVersion defines the versioned schema of this
+                      representation of an object. Servers should convert recognized
+                      schemas to the latest internal value, and may reject unrecognized
+                      values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
                     type: string
                   kind:
-                    description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                    description: 'Kind is a string value representing the REST resource
+                      this object represents. Servers may infer this from the endpoint
+                      the client submits requests to. Cannot be updated. In CamelCase.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
                     type: string
                   portCompatibilityRemap:
                     default: true
-                    description: PortCompatibilityRemap switches the default ports used by cluster agent (25000) and dqlite (19001) to 30000 and 2379. The default ports are blocked via security groups in several infra providers.
+                    description: PortCompatibilityRemap switches the default ports
+                      used by cluster agent (25000) and dqlite (19001) to 30000 and
+                      2379. The default ports are blocked via security groups in several
+                      infra providers.
                     type: boolean
                 type: object
               initConfiguration:
@@ -66,7 +80,10 @@ spec:
                       type: string
                     type: array
                   apiVersion:
-                    description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+                    description: 'APIVersion defines the versioned schema of this
+                      representation of an object. Servers should convert recognized
+                      schemas to the latest internal value, and may reject unrecognized
+                      values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
                     type: string
                   confinement:
                     description: The confinement (strict or classic) configuration
@@ -75,14 +92,17 @@ spec:
                     - strict
                     type: string
                   extraKubeletArgs:
-                    description: ExtraKubeletArgs is a list of extra arguments to add to the kubelet.
+                    description: ExtraKubeletArgs is a list of extra arguments to
+                      add to the kubelet.
                     items:
                       type: string
                     type: array
                   extraWriteFiles:
-                    description: ExtraWriteFiles is a list of extra files to inject with cloud-init.
+                    description: ExtraWriteFiles is a list of extra files to inject
+                      with cloud-init.
                     items:
-                      description: CloudInitWriteFile is a file that will be injected by cloud-init
+                      description: CloudInitWriteFile is a file that will be injected
+                        by cloud-init
                       properties:
                         content:
                           description: Content of the file to create.
@@ -111,24 +131,41 @@ spec:
                     type: string
                   joinTokenTTLInSecs:
                     default: 315569260
-                    description: The join token will expire after the specified seconds, defaults to 10 years
+                    description: The join token will expire after the specified seconds,
+                      defaults to 10 years
                     format: int64
                     minimum: 1
                     type: integer
                   kind:
-                    description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                    description: 'Kind is a string value representing the REST resource
+                      this object represents. Servers may infer this from the endpoint
+                      the client submits requests to. Cannot be updated. In CamelCase.
+                      More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
                     type: string
                   noProxy:
                     description: The optional no proxy configuration
                     type: string
                   riskLevel:
                     default: stable
-                    description: The risk-level (stable, candidate, beta, or edge) for the snaps
+                    description: The risk-level (stable, candidate, beta, or edge)
+                      for the snaps
                     enum:
                     - stable
                     - candidate
                     - beta
                     - edge
+                    type: string
+                  snapstoreHTTPProxy:
+                    description: Optional http proxy configuration for the snap store
+                    type: string
+                  snapstoreHTTPSProxy:
+                    description: Optional https proxy configuration for the snap store
+                    type: string
+                  snapstoreProxyDomain:
+                    description: The snap store proxy domain
+                    type: string
+                  snapstoreProxyId:
+                    description: The snap store proxy ID
                     type: string
                 type: object
             type: object
@@ -136,28 +173,44 @@ spec:
             description: MicroK8sConfigStatus defines the observed state of MicroK8sConfig
             properties:
               conditions:
-                description: Conditions provide observations of the operational state of a Cluster API resource.
+                description: Conditions provide observations of the operational state
+                  of a Cluster API resource.
                 items:
-                  description: Condition defines an observation of a Cluster API resource operational state.
+                  description: Condition defines an observation of a Cluster API resource
+                    operational state.
                   properties:
                     lastTransitionTime:
-                      description: Last time the condition transitioned from one status to another. This should be when the underlying condition changed. If that is not known, then using the time when the API field changed is acceptable.
+                      description: Last time the condition transitioned from one status
+                        to another. This should be when the underlying condition changed.
+                        If that is not known, then using the time when the API field
+                        changed is acceptable.
                       format: date-time
                       type: string
                     message:
-                      description: A human readable message indicating details about the transition. This field may be empty.
+                      description: A human readable message indicating details about
+                        the transition. This field may be empty.
                       type: string
                     reason:
-                      description: The reason for the condition's last transition in CamelCase. The specific API may choose whether or not this field is considered a guaranteed API. This field may not be empty.
+                      description: The reason for the condition's last transition
+                        in CamelCase. The specific API may choose whether or not this
+                        field is considered a guaranteed API. This field may not be
+                        empty.
                       type: string
                     severity:
-                      description: Severity provides an explicit classification of Reason code, so the users or machines can immediately understand the current situation and act accordingly. The Severity field MUST be set only when Status=False.
+                      description: Severity provides an explicit classification of
+                        Reason code, so the users or machines can immediately understand
+                        the current situation and act accordingly. The Severity field
+                        MUST be set only when Status=False.
                       type: string
                     status:
                       description: Status of the condition, one of True, False, Unknown.
                       type: string
                     type:
-                      description: Type of condition in CamelCase or in foo.example.com/CamelCase. Many .condition.type values are consistent across resources like Available, but because arbitrary conditions can be useful (see .node.status.conditions), the ability to deconflict is important.
+                      description: Type of condition in CamelCase or in foo.example.com/CamelCase.
+                        Many .condition.type values are consistent across resources
+                        like Available, but because arbitrary conditions can be useful
+                        (see .node.status.conditions), the ability to deconflict is
+                        important.
                       type: string
                   required:
                   - lastTransitionTime
@@ -166,7 +219,8 @@ spec:
                   type: object
                 type: array
               dataSecretName:
-                description: DataSecretName is the name of the secret that stores the bootstrap data script.
+                description: DataSecretName is the name of the secret that stores
+                  the bootstrap data script.
                 type: string
               failureMessage:
                 description: FailureMessage will be set on non-retryable errors
@@ -175,11 +229,13 @@ spec:
                 description: FailureReason will be set on non-retryable errors
                 type: string
               observedGeneration:
-                description: ObservedGeneration is the latest generation observed by the controller.
+                description: ObservedGeneration is the latest generation observed
+                  by the controller.
                 format: int64
                 type: integer
               ready:
-                description: Ready indicates the BootstrapData field is ready to be consumed
+                description: Ready indicates the BootstrapData field is ready to be
+                  consumed
                 type: boolean
             type: object
         type: object
@@ -216,13 +272,18 @@ spec:
   - name: v1beta1
     schema:
       openAPIV3Schema:
-        description: MicroK8sConfigTemplate is the Schema for the microk8sconfigtemplates API
+        description: MicroK8sConfigTemplate is the Schema for the microk8sconfigtemplates
+          API
         properties:
           apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
             type: string
           kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
             type: string
           metadata:
             type: object
@@ -235,17 +296,27 @@ spec:
                     description: MicroK8sConfigSpec defines the desired state of MicroK8sConfig
                     properties:
                       clusterConfiguration:
-                        description: InitConfiguration along with ClusterConfiguration are the configurations necessary for the init command
+                        description: InitConfiguration along with ClusterConfiguration
+                          are the configurations necessary for the init command
                         properties:
                           apiVersion:
-                            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+                            description: 'APIVersion defines the versioned schema
+                              of this representation of an object. Servers should
+                              convert recognized schemas to the latest internal value,
+                              and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
                             type: string
                           kind:
-                            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                            description: 'Kind is a string value representing the
+                              REST resource this object represents. Servers may infer
+                              this from the endpoint the client submits requests to.
+                              Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
                             type: string
                           portCompatibilityRemap:
                             default: true
-                            description: PortCompatibilityRemap switches the default ports used by cluster agent (25000) and dqlite (19001) to 30000 and 2379. The default ports are blocked via security groups in several infra providers.
+                            description: PortCompatibilityRemap switches the default
+                              ports used by cluster agent (25000) and dqlite (19001)
+                              to 30000 and 2379. The default ports are blocked via
+                              security groups in several infra providers.
                             type: boolean
                         type: object
                       initConfiguration:
@@ -254,12 +325,16 @@ spec:
                             description: The optional IPinIP configuration
                             type: boolean
                           addons:
-                            description: List of addons to be enabled upon cluster creation
+                            description: List of addons to be enabled upon cluster
+                              creation
                             items:
                               type: string
                             type: array
                           apiVersion:
-                            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+                            description: 'APIVersion defines the versioned schema
+                              of this representation of an object. Servers should
+                              convert recognized schemas to the latest internal value,
+                              and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
                             type: string
                           confinement:
                             description: The confinement (strict or classic) configuration
@@ -268,14 +343,17 @@ spec:
                             - strict
                             type: string
                           extraKubeletArgs:
-                            description: ExtraKubeletArgs is a list of extra arguments to add to the kubelet.
+                            description: ExtraKubeletArgs is a list of extra arguments
+                              to add to the kubelet.
                             items:
                               type: string
                             type: array
                           extraWriteFiles:
-                            description: ExtraWriteFiles is a list of extra files to inject with cloud-init.
+                            description: ExtraWriteFiles is a list of extra files
+                              to inject with cloud-init.
                             items:
-                              description: CloudInitWriteFile is a file that will be injected by cloud-init
+                              description: CloudInitWriteFile is a file that will
+                                be injected by cloud-init
                               properties:
                                 content:
                                   description: Content of the file to create.
@@ -287,7 +365,8 @@ spec:
                                   description: Path where the file should be created.
                                   type: string
                                 permissions:
-                                  description: Permissions of the file to create, e.g. "0600"
+                                  description: Permissions of the file to create,
+                                    e.g. "0600"
                                   type: string
                               required:
                               - content
@@ -304,24 +383,43 @@ spec:
                             type: string
                           joinTokenTTLInSecs:
                             default: 315569260
-                            description: The join token will expire after the specified seconds, defaults to 10 years
+                            description: The join token will expire after the specified
+                              seconds, defaults to 10 years
                             format: int64
                             minimum: 1
                             type: integer
                           kind:
-                            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+                            description: 'Kind is a string value representing the
+                              REST resource this object represents. Servers may infer
+                              this from the endpoint the client submits requests to.
+                              Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
                             type: string
                           noProxy:
                             description: The optional no proxy configuration
                             type: string
                           riskLevel:
                             default: stable
-                            description: The risk-level (stable, candidate, beta, or edge) for the snaps
+                            description: The risk-level (stable, candidate, beta,
+                              or edge) for the snaps
                             enum:
                             - stable
                             - candidate
                             - beta
                             - edge
+                            type: string
+                          snapstoreHTTPProxy:
+                            description: Optional http proxy configuration for the
+                              snap store
+                            type: string
+                          snapstoreHTTPSProxy:
+                            description: Optional https proxy configuration for the
+                              snap store
+                            type: string
+                          snapstoreProxyDomain:
+                            description: The snap store proxy domain
+                            type: string
+                          snapstoreProxyId:
+                            description: The snap store proxy ID
                             type: string
                         type: object
                     type: object
@@ -330,7 +428,8 @@ spec:
             - template
             type: object
           status:
-            description: MicroK8sConfigTemplateStatus defines the observed state of MicroK8sConfigTemplate
+            description: MicroK8sConfigTemplateStatus defines the observed state of
+              MicroK8sConfigTemplate
             type: object
         type: object
     served: true
@@ -598,7 +697,7 @@ spec:
         - --leader-elect
         command:
         - /manager
-        image: docker.io/cdkbot/capi-bootstrap-provider-microk8s:0.5.0
+        image: docker.io/cdkbot/capi-bootstrap-provider-microk8s:0.6.0
         livenessProbe:
           httpGet:
             path: /healthz

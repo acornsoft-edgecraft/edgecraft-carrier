@@ -59,6 +59,8 @@ Kubernetes Ingress Controller는 클러스터 내에서 실행 중인 소프트�
 - Prometheus Metrics: 메트릭 정보 수집
 - Ingress Admission Webhooks: 유효성 검사 및 구성에는 TLS를 사용하기 위해 요청이 전송되는 엔드포인트가 필요합니다.
   - controller.admissionWebhooks.certManager.enabled값을 true로 설정하여 cert-manager를 통해 자동 자체 서명 TLS 인증서 프로비저닝을 활성화할 수 있습니다.
+- GitLab Shell 구성 요소는 TCP 트래픽이 포트 22를 통과해야 합니다(기본적으로 변경 가능). Ingress는 TCP 서비스를 직접 지원하지 않으므로 몇 가지 추가 구성이 필요합니다
+  - [참고] https://docs.gitlab.com/charts/advanced/external-nginx/index.html
 
 ```sh
 ## step-1. Add the latest helm repository for the ingress-nginx
@@ -70,6 +72,7 @@ $ helm search repo ingress-nginx
 ### dependencies: cert-manager - admissionWebhooks secret 생성
 ### NodePort 사용
 ### metrics 수집
+### GitLab Shell 구성 요소는 TCP 트래픽이 포트 22를 통과해야 합니다
 helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --install \
     --reset-values \
@@ -82,5 +85,8 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --version ${VERSION} \
     --set controller.admissionWebhooks.certManager.enabled=true \
     --set controller.metrics.enabled=true \
-    --set controller.service.type=NodePort
+    --set controller.service.type=NodePort\
+    --set controller.service.nodePorts.http=30001 \
+    --set controller.service.nodePorts.https=30002 \
+    --set tcp.22="gitlab/mygitlab-gitlab-shell:22"
 ```
