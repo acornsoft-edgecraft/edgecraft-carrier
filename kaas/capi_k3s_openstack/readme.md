@@ -29,21 +29,42 @@
   ```
 
 ## Single Cluster 실행
+- 1. Provider 설정
+```shell
+$ ./1.cluster-init.sh
+```
 
-1. Provider 설정
-   ```shell
-   $ ./1.cluster-init.sh
-   ```
-2. Template에 사용될 변수들 확인
-   ```shell
-   $ ./2.var-list.sh
-   ```
+- 2. Template에 사용될 변수들 확인
+```shell
+$ ./2.var-list.sh
+```
    화면에 출력된 변수들을 `cluster-template-openstack.rc` 파일에 등록 또는 갱신하고 값을 설정한다. (ex. 새로운 Openstack 연결정보 base64 정보 등)
-3. ClusterResourceSet 구성
-   ```shell
-   $ ./3.install-resourceset.sh
-   ```
-   Workload Cluster를 위한 ClusterResourceSet을 구성한다. (Openstack-Cloud-Controller-Manager, Calico)
+
+- 3. ClusterResourceSet 구성
+```sh 
+## ClusterResourceSet(alpha): 사용자가 정의한 리소스 세트(예: CNI/CSI)를 새로 생성된/기존 클러스터와 일치하는 데 자동으로 적용하는 기능 제공
+## 적용방법: Variable name to enable/disable the feature gate: EXP_CLUSTER_RESOURCE_SET
+
+## step-1. ClusterResourceSet 사용을 활성화 한다.
+# 방법-1. - Users can enable/disable features by setting OS environment variables before running clusterctl init
+export EXP_CLUSTER_RESOURCE_SET=true
+
+clusterctl init --infrastructure vsphere
+
+# 방법-2. 기존 관리 클러스터의 기능을 활성화/비활성화하려면 사용자가 해당 컨트롤러 관리자 배포를 편집하면 됩니다.
+kubectl edit -n capi-system deployment.apps/capi-controller-manager
+// Enable/disable available features by modifying Args below.
+    Args:
+      --leader-elect
+      --feature-gates=MachinePool=true,ClusterResourceSet=true
+
+## step-2. Management Cluster에서 ClusterResourceSet 배포.
+## ccm으로 Workload Clusters에 자동으로 배포한 addon들을 컨피그맵으로 생성 한다.
+### Workload Cluster를 위한 ClusterResourceSet을 구성한다. (Openstack-Cloud-Controller-Manager, Calico)
+$ ./9.install-resourceset.sh
+
+```
+
 4. RC 파일 구성 및 cluster manifest 생성
    ```shell
    $ ./4.generate.sh
