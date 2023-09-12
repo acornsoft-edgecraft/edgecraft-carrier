@@ -9,6 +9,7 @@ clusters/
 clusters_kubeconfig/
 clusters_monitoring/
 cluster_upgrade/
+clusters_paas_components/
 
 kubeconfig
 

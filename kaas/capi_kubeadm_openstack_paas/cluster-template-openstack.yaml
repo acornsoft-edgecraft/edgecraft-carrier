@@ -32,6 +32,10 @@ apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
 metadata:
   name: ${CLUSTER_NAME}
+  labels:
+    csiNfsChart: enabled
+    dashboardChart: enabled
+    veleroChart: enabled
 spec:
   clusterNetwork:
     pods:
@@ -140,7 +144,7 @@ metadata:
   name: ${CLUSTER_NAME}
 spec:
   apiServerLoadBalancer:
-    enabled: false
+    enabled: true
   cloudName: ${OPENSTACK_CLOUD}
   dnsNameservers:
   - ${OPENSTACK_DNS_NAMESERVERS}
@@ -158,8 +162,10 @@ metadata:
 spec:
   template:
     spec:
-      securityGroups:
-        - name: edgecraft-nodeport
+      rootVolume:
+        diskSize: ${CPN_OPENSTACK_ROOTVOLUME_DISKSIZE}
+        volumeType: ${CPN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+        availabilityZone: ${CPN_OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       identityRef:
@@ -175,6 +181,10 @@ metadata:
 spec:
   template:
     spec:
+      rootVolume:
+        diskSize: ${WN_OPENSTACK_ROOTVOLUME_DISKSIZE}
+        volumeType: ${WN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+        availabilityZone: ${WN_OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
       identityRef:
