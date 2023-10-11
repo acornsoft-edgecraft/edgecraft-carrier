@@ -99,6 +99,13 @@ if [[ $list_cnt -eq $total_cluster ]]; then
 fi
 }
 
+## 각 클러스터 kubeconfig 가져오기
+function get_kubeconfig() {
+   local kubeconfig=./kubeconfig
+
+    find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs -I %% sh -c '{ clusterctl --kubeconfig=$kubeconfig get kubeconfig %% > clusters_kubeconfig/%%; }'" \; 
+}
+
 ## 시작 시간 구하기
 function start_time_taken() {
 local list=("$@")
@@ -126,4 +133,5 @@ echo $end_time_last
 }
 
 # Main entry point.  Call the main() function
+get_kubeconfig
 main

@@ -8,7 +8,8 @@ RELEASE_NAME="codecentric"
 CHART_NAME="keycloak"
 CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
-KUBECONFIG="../../88apps.kubeconfig"
+KUBECONFIG="/Users/dongmook/github-workspace/edgecraft/edgecraft-carrier/kaas/capi_kubeadm_openstack_paas/clusters_kubeconfig/pass-kubeadm-provisioning-1"
+# KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="keycloak"
 
 # add charts repo

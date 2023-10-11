@@ -21,12 +21,33 @@ spec:
           owner: root
           path: /etc/certs/cacert
           permissions: "0600"
+        - path: /etc/containerd/config.toml
+          content: |
+            version = 2
+            imports = ["/etc/containerd/conf.d/*.toml"]
+            [plugins]
+              [plugins."io.containerd.grpc.v1.cri"]
+                sandbox_image = "registry.k8s.io/pause:3.9"
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+                runtime_type = "io.containerd.runc.v2"
+              [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+                SystemdCgroup = true
+                [plugins."io.containerd.grpc.v1.cri".registry]
+                  config_path = "/etc/containerd/certs.d"
       joinConfiguration:
         nodeRegistration:
           kubeletExtraArgs:
             cloud-provider: external
             provider-id: openstack:///'{{ instance_id }}'
           name: '{{ local_hostname }}'
+      preKubeadmCommands:
+        - mkdir -p /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}
+        - curl -Lk https://${PRIVATE_REGISTRY_IP}/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}/ca.crt
+        - rm -rf /etc/containerd/certs.d
+        - mkdir -p /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}
+        - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}/hosts.toml
+        - mkdir -p /etc/containerd/certs.d/docker.io
+        - echo ${CONTAINERD_DOCKER_IO_HOSTS} | base64 -d > /etc/containerd/certs.d/docker.io/hosts.toml
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: Cluster
@@ -112,6 +133,19 @@ spec:
         owner: root
         path: /etc/kubernetes/cloud.conf
         permissions: "0600"
+      - path: /etc/containerd/config.toml
+        content: |
+          version = 2
+          imports = ["/etc/containerd/conf.d/*.toml"]
+          [plugins]
+            [plugins."io.containerd.grpc.v1.cri"]
+              sandbox_image = "registry.k8s.io/pause:3.9"
+            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc]
+              runtime_type = "io.containerd.runc.v2"
+            [plugins."io.containerd.grpc.v1.cri".containerd.runtimes.runc.options]
+              SystemdCgroup = true
+              [plugins."io.containerd.grpc.v1.cri".registry]
+                config_path = "/etc/containerd/certs.d"
     initConfiguration:
       nodeRegistration:
         kubeletExtraArgs:
@@ -124,6 +158,14 @@ spec:
           cloud-provider: external
           provider-id: openstack:///'{{ instance_id }}'
         name: "{{ local_hostname }}"
+    preKubeadmCommands:
+      - mkdir -p /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}
+      - curl -Lk https://${PRIVATE_REGISTRY_IP}/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/${PRIVATE_REGISTRY_IP}/ca.crt
+      - rm -rf /etc/containerd/certs.d
+      - mkdir -p /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}
+      - echo ${CONTAINERD_PRIVATE_REGISTY_HOSTS} | base64 -d > /etc/containerd/certs.d/${PRIVATE_REGISTRY_IP}/hosts.toml
+      - mkdir -p /etc/containerd/certs.d/docker.io
+      - echo ${CONTAINERD_DOCKER_IO_HOSTS} | base64 -d > /etc/containerd/certs.d/docker.io/hosts.toml
     postKubeadmCommands:
       - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
       - kubectl --kubeconfig=/etc/kubernetes/admin.conf create secret -n kube-system generic cloud-config --from-file=/etc/kubernetes/cloud.conf
@@ -162,10 +204,10 @@ metadata:
 spec:
   template:
     spec:
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${CPN_OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${CPN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${CPN_OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       identityRef:
@@ -181,10 +223,10 @@ metadata:
 spec:
   template:
     spec:
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${WN_OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${WN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${WN_OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
       identityRef:

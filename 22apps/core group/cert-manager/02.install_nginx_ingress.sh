@@ -9,7 +9,6 @@ CHART_NAME="ingress-nginx"
 CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
 KUBECONFIG="../../88apps.kubeconfig"
-# KUBECONFIG="/Users/dongmook/.kube/kubeconfig-openstack-k3lab-live"
 NAMESPACE="ingress-nginx"
 
 # add charts repo
@@ -44,4 +43,4 @@ helm upgrade ${CHART_NAME} ./assets/${CHART_NAME} \
     --set controller.service.type=NodePort \
     --set controller.service.nodePorts.http=30001 \
     --set controller.service.nodePorts.https=30002 \
-    --set tcp.22="gitlab/gitlab-gitlab:22"
+    --set tcp.22="gitlab/gitlab-gitlab-shell:22"

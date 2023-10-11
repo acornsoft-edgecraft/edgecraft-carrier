@@ -14,6 +14,10 @@ kind: Cluster
 metadata:
   name: ${CLUSTER_NAME}
   namespace: default
+  labels:
+    csiNfsChart: enabled
+    dashboardChart: enabled
+    veleroChart: enabled
 spec:
   clusterNetwork:
     pods:
@@ -63,6 +67,7 @@ spec:
       addons:
         - dns
         - ingress
+        - rbac
       httpProxy: "${CONTAINERD_HTTP_PROXY:=}"
       httpsProxy: "${CONTAINERD_HTTPS_PROXY:=}"
       noProxy: "${CONTAINERD_NO_PROXY:=}"
@@ -87,10 +92,10 @@ metadata:
 spec:
   template:
     spec:
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       identityRef:
@@ -132,10 +137,12 @@ metadata:
 spec:
   template:
     spec:
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      securityGroups:
+        - name: edgecraft-nodeport
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
       identityRef:
