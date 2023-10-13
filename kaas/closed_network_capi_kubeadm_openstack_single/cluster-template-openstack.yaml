@@ -198,10 +198,10 @@ spec:
       securityGroups:
         - name: edgecraft-closed
         - name: k8s-cluster-secgroup-controlplane
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       identityRef:
@@ -220,10 +220,10 @@ spec:
       securityGroups:
         - name: edgecraft-closed
         - name: k8s-cluster-secgroup-worker
-      rootVolume:
-        diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
-        volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
-        availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
+      # rootVolume:
+      #   diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
+      #   volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
+      #   availabilityZone: ${OPENSTACK_ROOTVOLUME_AVAILABILITYZONE}
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
       identityRef:

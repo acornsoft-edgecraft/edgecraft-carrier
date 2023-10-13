@@ -8,13 +8,13 @@ err_log_path="./clusters_monitoring/cluster-$total_cluster-err.log"
 
 total_instance=$((($CONTROL_PLANE_MACHINE_COUNT + $WORKER_MACHINE_COUNT) * $total_cluster))
 
-list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
-list_cnt=$(echo "$list" | wc -l)
 time_list=()
 duration_of_time=()
 duration_of_time_list=()
 
 main() {
+list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
+list_cnt=$(echo "$list" | wc -l)
 local cluster_time_list=()
 if [[ $list_cnt -eq $total_cluster ]]; then
     sed -i '' -r -e '15,$d' $log_path

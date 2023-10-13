@@ -8,14 +8,14 @@ err_log_path="./clusters_monitoring/cluster-$total_cluster-err.log"
 
 total_instance=$((($CONTROL_PLANE_MACHINE_COUNT + $WORKER_MACHINE_COUNT) * $total_cluster))
 
-list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
-list_cnt=$(echo "$list" | wc -l)
 time_list=()
 duration_of_time=()
 duration_of_time_list=()
 
 main() {
 local cluster_time_list=()
+list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
+list_cnt=$(echo "$list" | wc -l)
 if [[ $list_cnt -eq $total_cluster ]]; then
     sed -i '' -r -e '15,$d' $log_path
     sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
@@ -103,8 +103,7 @@ fi
 function get_kubeconfig() {
    local kubeconfig=./kubeconfig
 
-    find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs -I %% sh -c '{ clusterctl --kubeconfig=$kubeconfig get kubeconfig %% > clusters_kubeconfig/%%; }'" \; 
-    sleep 2
+    find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs -I %% sh -c '{ clusterctl --kubeconfig=$kubeconfig get kubeconfig %% > clusters_kubeconfig/%%; }'" \;
 }
 
 ## 시작 시간 구하기
