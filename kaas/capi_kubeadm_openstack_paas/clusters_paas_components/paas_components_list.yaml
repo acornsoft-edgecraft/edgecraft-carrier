@@ -4,7 +4,6 @@
 
 ## Default Paas Platform Components - 변경 불가
 # csiNfsChart - requirement
-# veleroChart - requirement
 # dashboardChart - requirement
 
 ## Paas Platform Components list
@@ -30,3 +29,4 @@ nexusChart: enabled
 prometheusChart: enabled
 sparkoperatorChart: enabled
 zabbixChart: enabled
+veleroChart: enabled

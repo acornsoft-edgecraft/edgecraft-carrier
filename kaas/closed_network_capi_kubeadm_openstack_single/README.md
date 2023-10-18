@@ -158,7 +158,7 @@ $ vi cluster-template-openstack.yaml
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: KubeadmConfigTemplate
 metadata:
-  name: ${CLUSTER_NAME}-md-0
+  name: ${CLUSTER_NAME}-worker-node
 spec:
 ...
       preKubeadmCommands:
@@ -281,7 +281,7 @@ spec:
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
 kind: OpenStackMachineTemplate
 metadata:
-  name: ${CLUSTER_NAME}-md-0
+  name: ${CLUSTER_NAME}-worker-node
 spec:
   template:
     spec:

@@ -12,11 +12,6 @@ do
 done
 
 cat <<EOF > "./clusters_monitoring/cluster-$cnt_clusters.log"
-Total_cluster: 
-Total_instance: 
-Current_instance
-    control_plane: 
-    worker_node: 
 Start_Time: $start_time
 End_Time:
 Total_Duration:

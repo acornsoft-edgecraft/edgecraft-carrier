@@ -17,15 +17,15 @@ list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
 list_cnt=$(echo "$list" | wc -l)
 local cluster_time_list=()
 if [[ $list_cnt -eq $total_cluster ]]; then
-    sed -i '' -r -e '15,$d' $log_path
-    sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
-    sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
-    sed -i '' -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
-    sed -i '' -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
-    sed -i '' -r -e "s/Status\:.*$/Status\:/g" $log_path
-    sed -i '' -r -e "s/Min_time\:.*$/Min_time\:/g" $log_path
-    sed -i '' -r -e "s/Max_time\:.*$/Max_time\:/g" $log_path
-    sed -i '' -r -e "s/Average_time\:.*$/Average_time\:/g" $log_path
+    sed -i -r -e '10,$d' $log_path
+    # sed -i -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
+    # sed -i -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
+    sed -i -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
+    sed -i -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
+    sed -i -r -e "s/Status\:.*$/Status\:/g" $log_path
+    sed -i -r -e "s/Min_time\:.*$/Min_time\:/g" $log_path
+    sed -i -r -e "s/Max_time\:.*$/Max_time\:/g" $log_path
+    sed -i -r -e "s/Average_time\:.*$/Average_time\:/g" $log_path
     echo "" >> $log_path
     for i in $list
     do
@@ -52,17 +52,17 @@ if [[ $list_cnt -eq $total_cluster ]]; then
         end_time=$(TZ='Asia/Seoul' date -d $get_last_time "+%s")
         duration_of_time=$(( end_time - start_time ))
         duration_of_time_list+=( $(TZ='Asia/Seoul' date -u -d @${duration_of_time} '+%H:%M:%S') )
-        echo "----- $name ----------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
+        echo "----- $name -------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         echo "Duration of time: $(TZ='Asia/Seoul' date -u -d @${duration_of_time} '+%H:%M:%S')" >> $log_path
         kubectl --kubeconfig=./clusters_kubeconfig/$i get nodes -o wide >> $log_path 
-        echo "----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
+        echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         echo "" >> $log_path
     done
 
     control_plane=$(cat $log_path | grep control-plane- | wc -l)
-    md=$(cat $log_path | grep md- | wc -l)
-    sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
-    sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
+    md=$(cat $log_path | grep worker-node- | wc -l)
+    # sed -i -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
+    # sed -i -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
 
     if [[ $total_instance -eq $(($control_plane + $md)) ]]; then
         result=$(grep "NotReady" $log_path | grep -Ev "Status:" | awk '{printf "%s\n", $1}' | sort -r -n -t- -k4)
@@ -81,21 +81,22 @@ if [[ $list_cnt -eq $total_cluster ]]; then
             sec_total_duration=$(( sec_end_time - sec_total_start_time ))
             total_duration=$(TZ='Asia/Seoul' date -u -d @${sec_total_duration} "+%H:%M:%S")
 
-            sed -i '' -r -e "s/End_Time\:/End_Time\: $end_time/g" $log_path
-            sed -i '' -r -e "s/Total_Duration\:/Total_Duration\: $total_duration/g" $log_path
-            sed -i '' -r -e "s/Status\:/Status\: Ready/g" $log_path
-            sed -i '' -r -e "s/Min_time\:/Min_time\: $min_time/g" $log_path
-            sed -i '' -r -e "s/Max_time\:/Max_time\: $max_time/g" $log_path
-            sed -i '' -r -e "s/Average_time\:/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")/g" $log_path
+            sed -i -r -e "s/End_Time\:/End_Time\: $end_time/g" $log_path
+            sed -i -r -e "s/Total_Duration\:/Total_Duration\: $total_duration/g" $log_path
+            sed -i -r -e "s/Status\:/Status\: Ready/g" $log_path
+            sed -i -r -e "s/Min_time\:/Min_time\: $min_time/g" $log_path
+            sed -i -r -e "s/Max_time\:/Max_time\: $max_time/g" $log_path
+            sed -i -r -e "s/Average_time\:/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")/g" $log_path
         else
-            sed -i '' -r -e "s/Status\:.*/Status\: NotReady/g" $log_path
-            sed -i '' -r -e "s/Average_time\:.*$/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")\nNotReady_Node_List\:/g" $log_path
+            sed -i -r -e "s/Status\:.*/Status\: NotReady/g" $log_path
+            sed -i -r -e "s/Average_time\:.*$/Average_time\: $(TZ='Asia/Seoul' date -u -d @"$average_time" "+%H:%M:%S")\nNotReady_Node_List\:/g" $log_path
             for i in $result
             do
-                sed -i '' -r -e "s/NotReady_Node_List\:.*/NotReady_Node_List\:\n   - $i/g" $log_path
+                sed -i -r -e "s/NotReady_Node_List\:.*/NotReady_Node_List\:\n   - $i/g" $log_path
             done
         fi
     fi
+    print_log
 fi
 }
 
@@ -131,6 +132,12 @@ do
     fi
 done
 echo $end_time_last
+}
+
+## Print log
+function print_log() {
+    cat $log_path | awk 'NR>10'
+    cat $log_path | awk 'NR<10' 
 }
 
 # Main entry point.  Call the main() function

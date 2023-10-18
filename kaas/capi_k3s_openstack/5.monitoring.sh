@@ -17,9 +17,9 @@ list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
 list_cnt=$(echo "$list" | wc -l)
 local cluster_time_list=()
 if [[ $list_cnt -eq $total_cluster ]]; then
-    sed -i '' -r -e '15,$d' $log_path
-    sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
-    sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
+    sed -i '' -r -e '10,$d' $log_path
+    # sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
+    # sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
     sed -i '' -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
     sed -i '' -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
     sed -i '' -r -e "s/Status\:.*$/Status\:/g" $log_path
@@ -60,9 +60,9 @@ if [[ $list_cnt -eq $total_cluster ]]; then
     done
 
     control_plane=$(cat $log_path | grep control-plane- | wc -l)
-    md=$(cat $log_path | grep md- | wc -l)
-    sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
-    sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
+    md=$(cat $log_path | grep worker-node- | wc -l)
+    # sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
+    # sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
 
     if [[ $total_instance -eq $(($control_plane + $md)) ]]; then
         result=$(grep "NotReady" $log_path | grep -Ev "Status:" | awk '{printf "%s\n", $1}' | sort -r -n -t- -k4)
@@ -96,6 +96,7 @@ if [[ $list_cnt -eq $total_cluster ]]; then
             done
         fi
     fi
+    print_log
 fi
 }
 
@@ -130,6 +131,12 @@ do
     fi
 done
 echo $end_time_last
+}
+
+## Print log
+function print_log() {
+    cat $log_path | awk 'NR>10'
+    cat $log_path | awk 'NR<10' 
 }
 
 # Main entry point.  Call the main() function

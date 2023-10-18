@@ -17,9 +17,9 @@ list=$(ls ./clusters_kubeconfig | sort -n -t- -k4)
 list_cnt=$(echo "$list" | wc -l)
 local cluster_time_list=()
 if [[ $list_cnt -eq $total_cluster ]]; then
-    sed -i '' -r -e '15,$d' $log_path
-    sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
-    sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
+    sed -i '' -r -e '10,$d' $log_path
+    # sed -i '' -r -e "s/Total_cluster\:.*/Total_cluster\: $total_cluster/g" $log_path
+    # sed -i '' -r -e "s/Total_instance\:.*/Total_instance\: $total_instance/g" $log_path
     sed -i '' -r -e "s/End_Time\:.*$/End_Time\:/g" $log_path
     sed -i '' -r -e "s/Total_Duration\:.*$/Total_Duration\:/g" $log_path
     sed -i '' -r -e "s/Status\:.*$/Status\:/g" $log_path
@@ -52,17 +52,17 @@ if [[ $list_cnt -eq $total_cluster ]]; then
         end_time=$(TZ='Asia/Seoul' date -d $get_last_time "+%s")
         duration_of_time=$(( end_time - start_time ))
         duration_of_time_list+=( $(TZ='Asia/Seoul' date -u -d @${duration_of_time} '+%H:%M:%S') )
-        echo "----- $name ----------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
+        echo "----- $name -------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         echo "Duration of time: $(TZ='Asia/Seoul' date -u -d @${duration_of_time} '+%H:%M:%S')" >> $log_path
         kubectl --kubeconfig=./clusters_kubeconfig/$i get nodes -o wide >> $log_path 
-        echo "------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
+        echo "-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------" >> $log_path
         echo "" >> $log_path
     done
 
     control_plane=$(cat $log_path | grep control-plane- | wc -l)
-    md=$(cat $log_path | grep md- | wc -l)
-    sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
-    sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
+    md=$(cat $log_path | grep worker-node- | wc -l)
+    # sed -i '' -r -e "s/control_plane\:.*/control_plane\: $control_plane/g" $log_path
+    # sed -i '' -r -e "s/worker_node\:.*/worker_node\: $md/g" $log_path
 
     if [[ $total_instance -eq $(($control_plane + $md)) ]]; then
         result=$(grep "NotReady" $log_path | grep -Ev "Status:" | awk '{printf "%s\n", $1}' | sort -r -n -t- -k4)
@@ -96,6 +96,7 @@ if [[ $list_cnt -eq $total_cluster ]]; then
             done
         fi
     fi
+    print_log
 fi
 }
 
@@ -104,6 +105,7 @@ function get_kubeconfig() {
    local kubeconfig=./kubeconfig
 
     find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs -I %% sh -c '{ clusterctl --kubeconfig=$kubeconfig get kubeconfig %% > clusters_kubeconfig/%%; }'" \; 
+    sleep 2
 }
 
 ## 시작 시간 구하기
@@ -130,6 +132,12 @@ do
     fi
 done
 echo $end_time_last
+}
+
+## Print log
+function print_log() {
+    cat $log_path | awk 'NR>10'
+    cat $log_path | awk 'NR<10' 
 }
 
 # Main entry point.  Call the main() function

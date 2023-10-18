@@ -14,6 +14,10 @@ kind: Cluster
 metadata:
   name: ${CLUSTER_NAME}
   namespace: default
+  labels:
+    csiNfsChart: enabled
+    dashboardChart: enabled
+    veleroChart: enabled
 spec:
   clusterNetwork:
     pods:
@@ -90,7 +94,7 @@ spec:
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment
 metadata:
-  name: ${CLUSTER_NAME}-md-0
+  name: ${CLUSTER_NAME}-worker-node
   namespace: default
 spec:
   clusterName: ${CLUSTER_NAME}
@@ -103,19 +107,19 @@ spec:
         configRef:
           apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
           kind: MicroK8sConfigTemplate
-          name: ${CLUSTER_NAME}-md-0
+          name: ${CLUSTER_NAME}-worker-node
       clusterName: ${CLUSTER_NAME}
       failureDomain: ${OPENSTACK_FAILURE_DOMAIN}
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
         kind: OpenStackMachineTemplate
-        name: ${CLUSTER_NAME}-md-0
+        name: ${CLUSTER_NAME}-worker-node
       version: v${KUBERNETES_VERSION}
 ---
 apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
 kind: OpenStackMachineTemplate
 metadata:
-  name: ${CLUSTER_NAME}-md-0
+  name: ${CLUSTER_NAME}-worker-node
   namespace: default
 spec:
   template:
@@ -131,7 +135,7 @@ spec:
 apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
 kind: MicroK8sConfigTemplate
 metadata:
-  name: ${CLUSTER_NAME}-md-0
+  name: ${CLUSTER_NAME}-worker-node
   namespace: default
 spec:
   template:

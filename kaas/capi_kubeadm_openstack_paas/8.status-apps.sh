@@ -4,6 +4,7 @@ kubeconfig=./kubeconfig
 PAAS_MONITORING_PATH="./clusters_paas_monitoring"
 SUMMARY_LOG_FIlE="00_summary.log"
 SUMMARY_LOG_FIlE_CONTENTS=""
+log_path="$PAAS_MONITORING_PATH/pass-kubeadm-provisioning-1"
 
 main() {
 ## clusters 조회
@@ -38,12 +39,15 @@ do
     local last_transition_time=(`echo "$apps_status" | grep "lastTransitionTime:" | sed "s/lastTransitionTime://g"`)
     local index=0
 
+    apps_namespace=("argocd" "cert-manager" "consul" "efk" "gitlab" "harbor" "istio-system" "jaeger" "jupyterhub" "keycloak" "kong" "kore-board" "kubesphere-system")
+    apps_namespace+=("nexus" "monitoring" "spark-operator" "velero" "zabbix")
+
     for j in "${apps_namespace[@]}"
     do
         local log_file="$PAAS_MONITORING_PATH/$name/$j.log"
         if [[ -z $(find $log_file -type f 2> /dev/null) ]]; then
             echo "####  Components Status  ##################" > $log_file
-            echo "# Component Status:" >> $log_file
+            # echo "# Component Status:" >> $log_file
             echo "# Component Group(namespace):" >> $log_file
             echo "# Component Name: ${owner_references[$index]}" >> $log_file
         else
@@ -150,6 +154,13 @@ function print_summary() {
     sed -i '' -r -e "s/Total Duration\:.*/Total Duration\: $(TZ='Asia/Seoul' date -d @${duration_of_time} '+%H:%M:%S')/g" $PAAS_MONITORING_PATH/$name/$SUMMARY_LOG_FIlE
 }
 
+## 각 클러스터 kubeconfig 가져오기
+function get_kubeconfig() {
+   local kubeconfig=./kubeconfig
+
+    find ./clusters -type f -name '*.yaml' -exec bash -c "basename {} .yaml | xargs -I %% sh -c '{ clusterctl --kubeconfig=$kubeconfig get kubeconfig %% > clusters_kubeconfig/%%; }'" \;
+}
+
 ## 시작 시간 구하기
 function start_time_taken() {
 local list=("$@")
@@ -176,5 +187,12 @@ done
 echo $end_time_last
 }
 
+## Print log
+function print_log() {
+    cat $log_path/*.log | grep -v "csi-driver-nfs-pass" | grep -v "kubernetes-dashboard-pass"
+}
+
 # Main entry point.  Call the main() function
+get_kubeconfig
 main
+print_log
