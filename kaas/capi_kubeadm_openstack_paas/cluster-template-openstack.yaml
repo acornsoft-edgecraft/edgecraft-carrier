@@ -56,7 +56,6 @@ metadata:
   labels:
     csiNfsChart: enabled
     dashboardChart: enabled
-    veleroChart: disable
 spec:
   clusterNetwork:
     pods:
@@ -186,7 +185,7 @@ metadata:
   name: ${CLUSTER_NAME}
 spec:
   apiServerLoadBalancer:
-    enabled: true
+    enabled: false
   cloudName: ${OPENSTACK_CLOUD}
   dnsNameservers:
   - ${OPENSTACK_DNS_NAMESERVERS}
@@ -204,6 +203,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       rootVolume:
         diskSize: ${CPN_OPENSTACK_ROOTVOLUME_DISKSIZE}
         volumeType: ${CPN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}
@@ -223,6 +224,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       rootVolume:
         diskSize: ${WN_OPENSTACK_ROOTVOLUME_DISKSIZE}
         volumeType: ${WN_OPENSTACK_ROOTVOLUME_VOLUMETYPE}

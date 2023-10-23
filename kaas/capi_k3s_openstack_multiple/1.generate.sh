@@ -2,7 +2,7 @@
 rm -f ./clusters/*.yaml
 source ./cluster-template-openstack.rc
 
-FILE_NAME="multiple-mk8s-provisioning"
+FILE_NAME="multiply-k3s-provisioning"
 COUNT=0
 CT=0
 

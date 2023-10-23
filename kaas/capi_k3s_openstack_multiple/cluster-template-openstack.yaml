@@ -18,6 +18,9 @@ metadata:
   labels:
     ccm: external # labels for ccm
     cni: calico # labels for cni
+    csiNfsChart: enabled
+    dashboardChart: enabled
+    veleroChart: enabled
 spec:
   clusterNetwork:
     pods:
@@ -85,6 +88,19 @@ spec:
         owner: root
         path: /etc/certs/cacert
         permissions: "0600"
+      - path: /etc/rancher/k3s/registries.yaml
+        content: |
+          mirrors:
+            docker.io:
+              endpoint:
+                - "https://192.168.88.206"
+          configs:
+            "192.168.88.206":
+              tls:
+                ca_file: /etc/docker/certs.d/192.168.88.206/ca.crt
+    preK3sCommands:
+      - mkdir -p /etc/docker/certs.d/192.168.88.206
+      - curl -Lk https://192.168.88.206/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/192.168.88.206/ca.crt
     #postK3sCommands:
     # using calico against flannel and traefik
     #- kubectl --kubeconfig=/etc/rancher/k3s/k3s.yaml apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/calico.yaml
@@ -99,6 +115,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       image: ${OPENSTACK_IMAGE_NAME}
       sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
@@ -140,6 +158,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       cloudName: ${OPENSTACK_CLOUD}
       identityRef:
         name: ${CLUSTER_NAME}-cloud-config
@@ -158,3 +178,22 @@ spec:
     spec:
       agentConfig:
         nodeName: "{{ ds.meta_data.local_hostname }}"
+      files:
+        - content: ${OPENSTACK_CLOUD_CACERT_B64}
+          encoding: base64
+          owner: root
+          path: /etc/certs/cacert
+          permissions: "0600"
+        - path: /etc/rancher/k3s/registries.yaml
+          content: |
+            mirrors:
+              docker.io:
+                endpoint:
+                  - "https://192.168.88.206"
+            configs:
+              "192.168.88.206":
+                tls:
+                  ca_file: /etc/docker/certs.d/192.168.88.206/ca.crt
+      preK3sCommands:
+        - mkdir -p /etc/docker/certs.d/192.168.88.206
+        - curl -Lk https://192.168.88.206/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/192.168.88.206/ca.crt

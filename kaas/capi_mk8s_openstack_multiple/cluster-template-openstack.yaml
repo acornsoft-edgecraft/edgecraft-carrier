@@ -14,10 +14,10 @@ kind: Cluster
 metadata:
   name: ${CLUSTER_NAME}
   namespace: default
-  labels:
-    csiNfsChart: enabled
-    dashboardChart: enabled
-    veleroChart: enabled
+  # labels:
+  #   csiNfsChart: enabled
+  #   dashboardChart: enabled
+  #   veleroChart: enabled
 spec:
   clusterNetwork:
     pods:
@@ -83,6 +83,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
       identityRef:
@@ -124,6 +126,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       cloudName: ${OPENSTACK_CLOUD}
       flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
       identityRef:

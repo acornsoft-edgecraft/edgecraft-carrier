@@ -92,6 +92,8 @@ metadata:
 spec:
   template:
     spec:
+      securityGroups:
+        - name: edgecraft-nodeport
       # rootVolume:
       #   diskSize: ${OPENSTACK_ROOTVOLUME_DISKSIZE}
       #   volumeType: ${OPENSTACK_ROOTVOLUME_VOLUMETYPE}
