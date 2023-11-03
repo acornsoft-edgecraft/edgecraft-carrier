@@ -1,0 +1,21 @@
+{{- $k8s_status_true := "k8s_status_true:" -}}
+{{- $k8s_status_false := "k8s_status_false:" -}}
+{{- $reason := false -}}
+{{- range .items -}}
+    {{- $reason = false -}}
+    {{- $spec := .spec -}}
+    {{- $metadata := .metadata -}}
+    {{- $status := .status -}}
+    {{- range .status.conditions -}}
+        {{- if and (eq .type "Ready") (eq .status "True") -}}
+            {{- $reason = true -}}
+        {{- else if eq .reason "PodCompleted" -}}
+            {{- $reason = true -}}
+        {{- end -}}
+    {{- end -}}
+    {{- if eq $reason false -}}
+        {{$k8s_status_false}}{{$metadata.namespace}}/{{$status.phase}}{{"\n"}}
+    {{- else -}}
+        {{$k8s_status_true}}{{$metadata.namespace}}/{{$status.phase}}{{"\n"}}
+    {{- end -}}
+{{- end -}}

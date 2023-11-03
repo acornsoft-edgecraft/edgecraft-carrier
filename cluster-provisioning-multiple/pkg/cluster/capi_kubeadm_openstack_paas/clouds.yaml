@@ -1,0 +1,12 @@
+clouds:
+  openstack:
+    auth:
+      auth_url: http://192.168.88.11:5000/v3/
+      username: "edgecraft"
+      password: "Pass0000@"
+      project_id: b2570d12e70949b0ad8bba415e04bf0a
+      project_name: "edgecraft-single"
+      user_domain_name: "Default"
+    region_name: "RegionOne"
+    interface: "public"
+    identity_api_version: 3

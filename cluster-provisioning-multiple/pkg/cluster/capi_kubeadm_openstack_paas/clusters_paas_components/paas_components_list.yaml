@@ -1,0 +1,32 @@
+## Paas Platform Component 활성/비활성화 설정
+## Component 배포: "enabled"로 설정
+## Component 삭제: "disabled"로 설정 또는 (주석/공백)
+
+## Default Paas Platform Components - 변경 불가
+# csiNfsChart - requirement
+# dashboardChart - requirement
+
+## Paas Platform Components list
+argocdChart: enabled
+certmanagerChart: enabled
+consulChart: enabled
+elasticsearchChart: enabled
+fluentbitChart: enabled
+gitlabChart: enabled
+harborChart: enabled
+ingressnginxChart: enabled
+istiobaseChart: enabled
+istiodChart: enabled
+jaegerChart: enabled
+jupyterhubChart: enabled
+keycloakChart: enabled
+kialiChart: enabled
+kibanaChart: enabled
+kongChart: enabled
+koreboardChart: enabled
+kubesphereChart: enabled
+nexusChart: enabled
+prometheusChart: enabled
+sparkoperatorChart: enabled
+zabbixChart: enabled
+veleroChart: enabled

@@ -1,0 +1,13 @@
+{{- range .items -}}
+    {{- $spec := .spec -}}
+    {{- $metadata := .metadata -}}
+    {{- range .status.conditions -}}
+        {{- if and (eq .type "HelmReleaseReady") (ne $spec.namespace "kube-system") -}}
+            {{"namespace:"}}{{$spec.namespace}}{{"\n" -}}
+            {{"ownerReferences:"}}{{ (index $metadata.ownerReferences 0).name }}{{"\n" -}}
+            {{"status:"}}{{.status}}{{"\n" -}}
+            {{"creationTimestamp:"}}{{$metadata.creationTimestamp}}{{"\n" -}}
+            {{"lastTransitionTime:"}}{{.lastTransitionTime}}{{"\n" -}}
+        {{- end -}}
+    {{- end -}}
+{{- end -}}

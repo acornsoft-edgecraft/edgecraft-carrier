@@ -1,0 +1,199 @@
+---
+apiVersion: v1
+data:
+  cacert: ${OPENSTACK_CLOUD_CACERT_B64}
+  clouds.yaml: ${OPENSTACK_CLOUD_YAML_B64}
+kind: Secret
+metadata:
+  labels:
+    clusterctl.cluster.x-k8s.io/move: "true"
+  name: ${CLUSTER_NAME}-cloud-config
+  namespace: default
+---
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  name: ${CLUSTER_NAME}
+  namespace: default
+  labels:
+    ccm: external # labels for ccm
+    cni: calico # labels for cni
+    csiNfsChart: enabled
+    dashboardChart: enabled
+    veleroChart: enabled
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+        - ${POD_CIDR}
+    # services:
+    #   cidrBlocks:
+    #     - ${SVC_CIDR}
+    serviceDomain: cluster.local
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+    kind: OpenStackCluster
+    name: ${CLUSTER_NAME}
+  controlPlaneRef:
+    kind: KThreesControlPlane
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    name: ${CLUSTER_NAME}-control-plane
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+kind: OpenStackCluster
+metadata:
+  name: ${CLUSTER_NAME}
+  namespace: default
+spec:
+  apiServerLoadBalancer:
+    enabled: false
+  cloudName: ${OPENSTACK_CLOUD}
+  # dnsNameservers:
+  #   - ${OPENSTACK_DNS_NAMESERVERS}
+  dnsNameservers: []
+  externalNetworkId: ${OPENSTACK_EXTERNAL_NETWORK_ID}
+  identityRef:
+    name: ${CLUSTER_NAME}-cloud-config
+    kind: Secret
+  managedSecurityGroups: true
+  allowAllInClusterTraffic: true
+  nodeCidr: ${OPENSTACK_NETWORK_CIDR}
+---
+apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+kind: KThreesControlPlane
+metadata:
+  name: ${CLUSTER_NAME}-control-plane
+  namespace: default
+spec:
+  infrastructureTemplate:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+    kind: OpenStackMachineTemplate
+    name: ${CLUSTER_NAME}-control-plane
+  kthreesConfigSpec:
+    serverConfig:
+      disableComponents:
+        - servicelb # not needed since we're using Infrastructure providers ex. load balancer (ccm: external)
+        - traefik
+        - flannel
+    agentConfig:
+      nodeName: "{{ ds.meta_data.local_hostname }}"
+    files:
+      - content: ${OPENSTACK_CLOUD_PROVIDER_CONFIG_B64}
+        encoding: base64
+        owner: root
+        path: /etc/kubernetes/cloud.conf
+        permissions: "0644" # reading permission to other users
+      - content: ${OPENSTACK_CLOUD_CACERT_B64}
+        encoding: base64
+        owner: root
+        path: /etc/certs/cacert
+        permissions: "0600"
+      - path: /etc/rancher/k3s/registries.yaml
+        content: |
+          mirrors:
+            docker.io:
+              endpoint:
+                - "https://192.168.88.206"
+          configs:
+            "192.168.88.206":
+              tls:
+                ca_file: /etc/docker/certs.d/192.168.88.206/ca.crt
+    preK3sCommands:
+      - mkdir -p /etc/docker/certs.d/192.168.88.206
+      - curl -Lk https://192.168.88.206/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/192.168.88.206/ca.crt
+    #postK3sCommands:
+    # using calico against flannel and traefik
+    #- kubectl --kubeconfig=/etc/rancher/k3s/k3s.yaml apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.24.1/manifests/calico.yaml
+  replicas: 1
+  version: v${KUBERNETES_VERSION}
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+kind: OpenStackMachineTemplate
+metadata:
+  name: ${CLUSTER_NAME}-control-plane
+  namespace: default
+spec:
+  template:
+    spec:
+      securityGroups:
+        - name: edgecraft-nodeport
+      flavor: ${OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR}
+      image: ${OPENSTACK_IMAGE_NAME}
+      sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+      cloudName: ${OPENSTACK_CLOUD}
+      identityRef:
+        name: ${CLUSTER_NAME}-cloud-config
+        kind: Secret
+---
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  name: ${CLUSTER_NAME}-worker-node
+  namespace: default
+spec:
+  clusterName: ${CLUSTER_NAME}
+  replicas: ${WORKER_MACHINE_COUNT:=1}
+  selector:
+    matchLabels: null
+  template:
+    spec:
+      clusterName: ${CLUSTER_NAME}
+      version: v${KUBERNETES_VERSION}
+      failureDomain: ${OPENSTACK_FAILURE_DOMAIN:=nova}
+      bootstrap:
+        configRef:
+          name: ${CLUSTER_NAME}-worker-node
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KThreesConfigTemplate
+      infrastructureRef:
+        name: ${CLUSTER_NAME}-worker-node
+        apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+        kind: OpenStackMachineTemplate
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha5
+kind: OpenStackMachineTemplate
+metadata:
+  name: ${CLUSTER_NAME}-worker-node
+  namespace: default
+spec:
+  template:
+    spec:
+      securityGroups:
+        - name: edgecraft-nodeport
+      cloudName: ${OPENSTACK_CLOUD}
+      identityRef:
+        name: ${CLUSTER_NAME}-cloud-config
+        kind: Secret
+      flavor: ${OPENSTACK_NODE_MACHINE_FLAVOR}
+      image: ${OPENSTACK_IMAGE_NAME}
+      sshKeyName: ${OPENSTACK_SSH_KEY_NAME}
+---
+apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+kind: KThreesConfigTemplate
+metadata:
+  name: ${CLUSTER_NAME}-worker-node
+  namespace: default
+spec:
+  template:
+    spec:
+      agentConfig:
+        nodeName: "{{ ds.meta_data.local_hostname }}"
+      files:
+        - content: ${OPENSTACK_CLOUD_CACERT_B64}
+          encoding: base64
+          owner: root
+          path: /etc/certs/cacert
+          permissions: "0600"
+        - path: /etc/rancher/k3s/registries.yaml
+          content: |
+            mirrors:
+              docker.io:
+                endpoint:
+                  - "https://192.168.88.206"
+            configs:
+              "192.168.88.206":
+                tls:
+                  ca_file: /etc/docker/certs.d/192.168.88.206/ca.crt
+      preK3sCommands:
+        - mkdir -p /etc/docker/certs.d/192.168.88.206
+        - curl -Lk https://192.168.88.206/api/v2.0/systeminfo/getcert -o /etc/docker/certs.d/192.168.88.206/ca.crt

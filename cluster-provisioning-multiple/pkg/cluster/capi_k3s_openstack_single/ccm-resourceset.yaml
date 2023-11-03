@@ -1,0 +1,25 @@
+apiVersion: addons.cluster.x-k8s.io/v1beta1
+kind: ClusterResourceSet
+metadata:
+  name: crs-os-ccm
+spec:
+  clusterSelector:
+    matchLabels:
+      ccm: external
+  resources:
+    - kind: ConfigMap
+      name: openstack-ccm-addon
+  strategy: ApplyOnce
+---
+apiVersion: addons.cluster.x-k8s.io/v1beta1
+kind: ClusterResourceSet
+metadata:
+  name: crs-calico
+spec:
+  clusterSelector:
+    matchLabels:
+      cni: calico
+  resources:
+    - kind: ConfigMap
+      name: calico-addon
+  strategy: ApplyOnce

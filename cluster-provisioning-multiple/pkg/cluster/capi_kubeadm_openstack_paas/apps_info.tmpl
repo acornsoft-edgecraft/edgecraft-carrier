@@ -1,0 +1,12 @@
+{{- $cluster_name := "pass-kubeadm-provisioning-1" -}}
+{{- range .items -}}
+    {{ $name := .metadata.name }}
+    {{ $spec := .spec }}
+    {{- range .status.matchingClusters -}}
+        {{- if eq .name $cluster_name -}}
+            {{- range $elem_key, $elem_val := $spec.clusterSelector.matchLabels -}}
+                {{$name}}/{{$elem_key}}/{{$spec.namespace}}
+            {{- end -}}
+        {{- end }}
+    {{- end -}}
+{{- end -}}

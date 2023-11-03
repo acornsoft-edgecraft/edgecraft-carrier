@@ -1,0 +1,21 @@
+*.retry
+.idea
+.history
+.vscode
+test__
+
+## edgecraft
+clusters/
+clusters_kubeconfig/
+clusters_monitoring/
+cluster_upgrade/
+clusters_paas_monitoring/
+*.tar.gz
+
+kubeconfig
+
+.DS_Store
+22apps/.DS_Store
+22apps/dev/.DS_Store
+
+backup-restore/*.kubeconfig

@@ -1,0 +1,44 @@
+# Kubernetes cluster configuration
+export KUBERNETES_VERSION=1.23.3
+export CONTROL_PLANE_MACHINE_COUNT=1
+export WORKER_MACHINE_COUNT=1
+export POD_CIDR=10.10.0.0/12
+export SVC_CIDR=10.20.0.0/12
+
+# OpenStack credentials configuration. No changes needed if you followed the README.
+export OPENSTACK_CLOUD=openstack
+#export OPENSTACK_CLOUD_CONFIG_SECRET_NAME=cloud-config
+#export OPENSTACK_CLOUD_YAML_B64="Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC43Ny4xMS9pZGVudGl0eQogICAgICB1c2VybmFtZTogInN1bm1pIgogICAgICBwYXNzd29yZDogImZrZmZrNDQ4IgogICAgICBwcm9qZWN0X2lkOiA1NDJlN2EwNGY2OTE0ODI5YjQzZTc3ZjllZjEyYjc3OQogICAgICBwcm9qZWN0X25hbWU6ICJlZGdlY3JhZnQiCiAgICAgIHVzZXJfZG9tYWluX25hbWU6ICJEZWZhdWx0IgogICAgcmVnaW9uX25hbWU6ICJSZWdpb25PbmUiCiAgICBpbnRlcmZhY2U6ICJwdWJsaWMiCiAgICBpZGVudGl0eV9hcGlfdmVyc2lvbjogMw=="
+export OPENSTACK_CLOUD_YAML_B64="Y2xvdWRzOgogIG9wZW5zdGFjazoKICAgIGF1dGg6CiAgICAgIGF1dGhfdXJsOiBodHRwOi8vMTkyLjE2OC44OC4xMTo1MDAwL3YzLwogICAgICB1c2VybmFtZTogImVkZ2VjcmFmdCIKICAgICAgcGFzc3dvcmQ6ICJQYXNzMDAwMEAiCiAgICAgIHByb2plY3RfaWQ6IGJlODAyNDBhNGNlYjQyZDA5MjNiODU5MTE1ZGM3ZTNkCiAgICAgIHByb2plY3RfbmFtZTogImVkZ2VjcmFmdC1tdWx0aXBsZSIKICAgICAgdXNlcl9kb21haW5fbmFtZTogIkRlZmF1bHQiCiAgICByZWdpb25fbmFtZTogIlJlZ2lvbk9uZSIKICAgIGludGVyZmFjZTogInB1YmxpYyIKICAgIGlkZW50aXR5X2FwaV92ZXJzaW9uOiAz"
+export OPENSTACK_CLOUD_CACERT_B64="Cg=="
+
+# OpenStack region and network configuration. External network ID is only needed if multiple external networks exist.
+export OPENSTACK_EXTERNAL_NETWORK_ID="fc9dec3f-30f3-476a-8598-56677d27de4d"
+export OPENSTACK_FAILURE_DOMAIN="nova"
+
+# OpenStack machine conifugration
+export OPENSTACK_IMAGE_NAME=edgecraft-microk8s
+export OPENSTACK_CONTROL_PLANE_MACHINE_FLAVOR=m1.small
+export OPENSTACK_NODE_MACHINE_FLAVOR=m1.small
+export OPENSTACK_SSH_KEY_NAME=hostacloud
+
+## OPENSTACK_ROOTVOLUME_DISKSIZE는 GB 단위이다.
+export OPENSTACK_ROOTVOLUME_DISKSIZE=10
+export OPENSTACK_ROOTVOLUME_VOLUMETYPE="nfs"
+export OPENSTACK_ROOTVOLUME_AVAILABILITYZONE="nova"
+
+# OpenStack network configuration
+export OPENSTACK_NETWORK_CIDR=10.11.0.0/24
+export OPENSTACK_DNS_NAMESERVERS=168.126.63.1
+
+# (optional) Containerd HTTP proxy configuration. Leave empty if not required.
+export CONTAINERD_HTTP_PROXY=""
+export CONTAINERD_HTTPS_PROXY=""
+export CONTAINERD_NO_PROXY=""
+
+# (optional) Snap risk level and confinement
+export SNAP_RISKLEVEL="stable"
+export SNAP_CONFINEMENT="classic"
+
+# Upgrade configuration
+export UPGRADE_STRATEGY=SmartUpgrade
