@@ -13,6 +13,7 @@ clusters_paas_monitoring/
 *.tar.gz
 
 kubeconfig
+*.kubeconfig
 
 .DS_Store
 22apps/.DS_Store
