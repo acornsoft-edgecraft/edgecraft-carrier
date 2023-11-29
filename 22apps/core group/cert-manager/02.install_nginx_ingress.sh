@@ -8,7 +8,8 @@ RELEASE_NAME="ingress-nginx"
 CHART_NAME="ingress-nginx"
 CHART_VALUES="./assets/${CHART_NAME}/values.yaml"
 
-KUBECONFIG="../../88apps.kubeconfig"
+KUBECONFIG="/Users/dongmook/.kube/yamero/yamero-capi-cluster"
+# KUBECONFIG="../../88apps.kubeconfig"
 NAMESPACE="ingress-nginx"
 
 # add charts repo
