@@ -1,5 +1,7 @@
 # Edgecraft-Carrier
 
+Edgecraft-Carrier is based on Helm charts, allowing you to configure platform applications according to their mutual dependencies and install them on a Kubernetes cluster.
+
 ## 구성 요소
 - Golang `v1.18.3`
 - go-ansible `v1.1.6`

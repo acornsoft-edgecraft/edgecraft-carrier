@@ -1,36 +1,68 @@
 package utils
 
 import (
-	"github.com/go-playground/validator/v10"
-	"github.com/google/uuid"
+	"bytes"
+	"fmt"
+	"os"
+	"strings"
+
+	"github.com/spf13/cobra"
 )
 
-// NewValidator func for create a new validator for model fields.
-func NewValidator() *validator.Validate {
-	// Create a new validator for a Book model.
-	validate := validator.New()
+func CheckCommand(cmd *cobra.Command) error {
+	cmdCheck := cmd.Commands()
 
-	// Custom validation for uuid.UUID fields.
-	_ = validate.RegisterValidation("uuid", func(fl validator.FieldLevel) bool {
-		field := fl.Field().String()
-		if _, err := uuid.Parse(field); err != nil {
-			return true
-		}
-		return false
-	})
-
-	return validate
-}
-
-// ValidatorErrors func for show validation errors for each invalid fields.
-func ValidatorErrors(err error) map[string]string {
-	// Define fields map.
-	fields := map[string]string{}
-
-	// Make error message for each invalid field.
-	for _, err := range err.(validator.ValidationErrors) {
-		fields[err.Field()] = err.Error()
+	if len(os.Args[1:]) == 0 {
+		fmt.Println("Error: unknown command, Run 'koreonctl --help' for usage.")
+		os.Exit(1)
 	}
 
-	return fields
+	if os.Args[1] == cmd.Name() {
+		if len(os.Args[1:]) < 2 {
+			if cmd.Name() == "init" {
+				return nil
+			}
+			if cmd.Name() == "bastion" {
+				return nil
+			}
+			args := append([]string{"koreonctl"}, os.Args[1:]...)
+			buf := new(bytes.Buffer)
+			cmd.SetErr(buf)
+			fmt.Println("Error: unknown command", args)
+			fmt.Printf("Run 'koreonctl %s --help' for usage.", cmd.Name())
+			os.Exit(1)
+		}
+		subcmd := os.Args[2]
+		for _, cv := range cmdCheck {
+			if cv.Name() == subcmd {
+				return nil
+			}
+		}
+
+		for _, cv := range cmdCheck {
+			if cv.Name() != subcmd && string(subcmd[0]) != "-" {
+				strContains := ""
+				errMessage := ""
+				for _, v := range cmdCheck {
+					if strings.Contains(v.Name(), subcmd) {
+						strContains = v.Name()
+						break
+					}
+				}
+				args := append([]string{"koreonctl"}, os.Args[1:]...)
+				buf := new(bytes.Buffer)
+				cmd.SetErr(buf)
+				fmt.Println("Error: unknown command", args)
+				if strContains != "" {
+					errMessage = fmt.Sprintf("Did you mean this?\n\t%s\n\nRun 'koreonctl %s --help' for usage.", strContains, cmd.Name())
+				} else {
+					errMessage = fmt.Sprintf("Run 'koreonctl %s --help' for usage.", cmd.Name())
+				}
+				fmt.Println(errMessage)
+				os.Exit(1)
+			}
+		}
+	}
+
+	return nil
 }

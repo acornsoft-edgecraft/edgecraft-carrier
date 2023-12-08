@@ -1,0 +1,25 @@
+---
+- include_tasks: generate-inventory.yaml
+  when:
+    - not Kubernetes.GetKubeConfig
+    - not KoreOn.Update
+- include_tasks: generate-get-kubeconfig-inventory.yaml
+  when:
+    - Kubernetes.GetKubeConfig
+- include_tasks: generate-update-inventory.yaml
+  when:
+    - KoreOn.Update
+
+- import_tasks: generate-basic-vars.yaml
+
+- import_tasks: generate-expert-vars.yaml
+
+- name: Include vars of basic.yaml
+  ansible.builtin.include_vars:
+    file: "{{ playbook_dir }}/inventory/group_vars/basic.yaml"
+
+- import_tasks: generate-images-vars.yaml
+
+- import_tasks: generate-packages-vars.yaml
+
+- meta: refresh_inventory

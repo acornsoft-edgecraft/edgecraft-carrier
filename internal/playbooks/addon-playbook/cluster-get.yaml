@@ -1,0 +1,69 @@
+---
+# This playbook deploys a kubernetes cluster with platform applications
+# Init generate inventory and vars
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Init | Configuration
+      ansible.builtin.include_role:
+        name: init
+        apply:
+          tags:
+            - init
+  any_errors_fatal: true
+
+# Clear gathered facts from all currently targeted hosts 
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clear gathered facts
+      meta: clear_facts
+
+# check network.
+- hosts: all
+  become: false
+  gather_facts: true
+  vars_files:
+    - "{{ playbook_dir }}/inventory/group_vars/basic.yaml"
+    - "{{ playbook_dir }}/inventory/group_vars/expert.yaml"
+  tasks:
+    - name: Init | Network check
+      ansible.builtin.include_role:
+        name: init/network
+        apply:
+          tags:
+            - init-network
+  any_errors_fatal: true
+
+# Get
+- hosts: masters
+  become: false
+  gather_facts: false
+  vars_files:
+    - "{{ playbook_dir }}/inventory/group_vars/basic.yaml"
+    - "{{ playbook_dir }}/inventory/group_vars/expert.yaml"
+  tasks:
+    - name: Get Kubeconfig file
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: get-kubeconfig
+        apply:
+          tags:
+            - get-kubeconfig
+      tags:
+        - get-kubeconfig
+      when:
+        - KoreOn.CommandMode in ["get-kubeconfig"]
+    - name: Get installed config file
+      ansible.builtin.include_role:
+        name: kubernetes
+        tasks_from: update-init
+        apply:
+          tags:
+            - update-init
+      tags:
+        - update-init
+      when:
+        - KoreOn.CommandMode in ["update-init"]
+  any_errors_fatal: true

@@ -1,0 +1,52 @@
+---
+# This playbook deploys a kubernetes cluster with platform applications
+# Init generate inventory and vars
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Addon | Configuration
+      ansible.builtin.include_role:
+        name: addon/addon-init
+        apply:
+          tags:
+            - addon-init
+      tags:
+        - addon-init
+  any_errors_fatal: true
+
+# Clear gathered facts from all currently targeted hosts 
+- hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Clear gathered facts
+      meta: clear_facts
+
+# Pre-installation check network.
+- hosts: masters[0]
+  become: false
+  gather_facts: true
+  tasks:
+    - name: Addon | Network check
+      ansible.builtin.include_role:
+        name: init/network
+        apply:
+          tags:
+            - init-network
+  any_errors_fatal: true
+
+# Deployment Addons
+- hosts: masters[0]
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Addon | Deployment Addon in k8s cluster
+      ansible.builtin.include_role:
+        name: addon/addon-deploy/{{ ansible_distribution | lower }}/{{ ansible_distribution | lower }}-{{ansible_distribution_major_version}}
+        # tasks_from: test
+        apply:
+          tags:
+            - addon-deploy
+      tags:
+        - addon-deploy
+  any_errors_fatal: true

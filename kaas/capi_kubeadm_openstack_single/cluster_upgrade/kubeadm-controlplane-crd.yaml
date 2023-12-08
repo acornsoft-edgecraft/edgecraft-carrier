@@ -1,0 +1,83 @@
+---
+apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+kind: KubeadmControlPlane
+metadata:
+  name: single-kubeadm-provisioning-1-control-plane
+  namespace: default
+spec:
+  kubeadmConfigSpec:
+    clusterConfiguration:
+      apiServer:
+        extraArgs:
+          cloud-provider: external
+      controllerManager:
+        extraArgs:
+          cloud-provider: external
+      imageRepository: k8s.gcr.io
+    files:
+    - content: YXBpVmVyc2lvbjogdjEKaXRlbXM6Ci0gYXBpVmVyc2lvbjogcmJhYy5hdXRob3JpemF0aW9uLms4cy5pby92MQogIGtpbmQ6IENsdXN0ZXJSb2xlCiAgbWV0YWRhdGE6CiAgICBuYW1lOiBzeXN0ZW06Y2xvdWQtY29udHJvbGxlci1tYW5hZ2VyCiAgcnVsZXM6CiAgLSBhcGlHcm91cHM6CiAgICAtIGNvb3JkaW5hdGlvbi5rOHMuaW8KICAgIHJlc291cmNlczoKICAgIC0gbGVhc2VzCiAgICB2ZXJiczoKICAgIC0gZ2V0CiAgICAtIGNyZWF0ZQogICAgLSB1cGRhdGUKICAtIGFwaUdyb3VwczoKICAgIC0gIiIKICAgIHJlc291cmNlczoKICAgIC0gZXZlbnRzCiAgICB2ZXJiczoKICAgIC0gY3JlYXRlCiAgICAtIHBhdGNoCiAgICAtIHVwZGF0ZQogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBub2RlcwogICAgdmVyYnM6CiAgICAtICcqJwogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBub2Rlcy9zdGF0dXMKICAgIHZlcmJzOgogICAgLSBwYXRjaAogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBzZXJ2aWNlcwogICAgdmVyYnM6CiAgICAtIGxpc3QKICAgIC0gcGF0Y2gKICAgIC0gdXBkYXRlCiAgICAtIHdhdGNoCiAgLSBhcGlHcm91cHM6CiAgICAtICIiCiAgICByZXNvdXJjZXM6CiAgICAtIHNlcnZpY2VzL3N0YXR1cwogICAgdmVyYnM6CiAgICAtIHBhdGNoCiAgLSBhcGlHcm91cHM6CiAgICAtICIiCiAgICByZXNvdXJjZXM6CiAgICAtIHNlcnZpY2VhY2NvdW50cwogICAgdmVyYnM6CiAgICAtIGNyZWF0ZQogICAgLSBnZXQKICAtIGFwaUdyb3VwczoKICAgIC0gIiIKICAgIHJlc291cmNlczoKICAgIC0gc2VydmljZWFjY291bnRzL3Rva2VuCiAgICB2ZXJiczoKICAgIC0gY3JlYXRlCiAgLSBhcGlHcm91cHM6CiAgICAtICIiCiAgICByZXNvdXJjZXM6CiAgICAtIHBlcnNpc3RlbnR2b2x1bWVzCiAgICB2ZXJiczoKICAgIC0gJyonCiAgLSBhcGlHcm91cHM6CiAgICAtICIiCiAgICByZXNvdXJjZXM6CiAgICAtIGVuZHBvaW50cwogICAgdmVyYnM6CiAgICAtIGNyZWF0ZQogICAgLSBnZXQKICAgIC0gbGlzdAogICAgLSB3YXRjaAogICAgLSB1cGRhdGUKICAtIGFwaUdyb3VwczoKICAgIC0gIiIKICAgIHJlc291cmNlczoKICAgIC0gY29uZmlnbWFwcwogICAgdmVyYnM6CiAgICAtIGdldAogICAgLSBsaXN0CiAgICAtIHdhdGNoCiAgLSBhcGlHcm91cHM6CiAgICAtICIiCiAgICByZXNvdXJjZXM6CiAgICAtIHNlY3JldHMKICAgIHZlcmJzOgogICAgLSBsaXN0CiAgICAtIGdldAogICAgLSB3YXRjaAotIGFwaVZlcnNpb246IHJiYWMuYXV0aG9yaXphdGlvbi5rOHMuaW8vdjEKICBraW5kOiBDbHVzdGVyUm9sZQogIG1ldGFkYXRhOgogICAgbmFtZTogc3lzdGVtOmNsb3VkLW5vZGUtY29udHJvbGxlcgogIHJ1bGVzOgogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBub2RlcwogICAgdmVyYnM6CiAgICAtICcqJwogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBub2Rlcy9zdGF0dXMKICAgIHZlcmJzOgogICAgLSBwYXRjaAogIC0gYXBpR3JvdXBzOgogICAgLSAiIgogICAgcmVzb3VyY2VzOgogICAgLSBldmVudHMKICAgIHZlcmJzOgogICAgLSBjcmVhdGUKICAgIC0gcGF0Y2gKICAgIC0gdXBkYXRlCmtpbmQ6IExpc3QKbWV0YWRhdGE6IHt9Cg==
+      encoding: base64
+      owner: root
+      path: /etc/kubernetes/addon/openstack/cloud-controller-manager-roles.yaml
+      permissions: "0600"
+    - content: YXBpVmVyc2lvbjogdjEKaXRlbXM6Ci0gYXBpVmVyc2lvbjogcmJhYy5hdXRob3JpemF0aW9uLms4cy5pby92MQogIGtpbmQ6IENsdXN0ZXJSb2xlQmluZGluZwogIG1ldGFkYXRhOgogICAgbmFtZTogc3lzdGVtOmNsb3VkLW5vZGUtY29udHJvbGxlcgogIHJvbGVSZWY6CiAgICBhcGlHcm91cDogcmJhYy5hdXRob3JpemF0aW9uLms4cy5pbwogICAga2luZDogQ2x1c3RlclJvbGUKICAgIG5hbWU6IHN5c3RlbTpjbG91ZC1ub2RlLWNvbnRyb2xsZXIKICBzdWJqZWN0czoKICAtIGtpbmQ6IFNlcnZpY2VBY2NvdW50CiAgICBuYW1lOiBjbG91ZC1ub2RlLWNvbnRyb2xsZXIKICAgIG5hbWVzcGFjZToga3ViZS1zeXN0ZW0KLSBhcGlWZXJzaW9uOiByYmFjLmF1dGhvcml6YXRpb24uazhzLmlvL3YxCiAga2luZDogQ2x1c3RlclJvbGVCaW5kaW5nCiAgbWV0YWRhdGE6CiAgICBuYW1lOiBzeXN0ZW06Y2xvdWQtY29udHJvbGxlci1tYW5hZ2VyCiAgcm9sZVJlZjoKICAgIGFwaUdyb3VwOiByYmFjLmF1dGhvcml6YXRpb24uazhzLmlvCiAgICBraW5kOiBDbHVzdGVyUm9sZQogICAgbmFtZTogc3lzdGVtOmNsb3VkLWNvbnRyb2xsZXItbWFuYWdlcgogIHN1YmplY3RzOgogIC0ga2luZDogU2VydmljZUFjY291bnQKICAgIG5hbWU6IGNsb3VkLWNvbnRyb2xsZXItbWFuYWdlcgogICAgbmFtZXNwYWNlOiBrdWJlLXN5c3RlbQpraW5kOiBMaXN0Cm1ldGFkYXRhOiB7fQ==
+      encoding: base64
+      owner: root
+      path: /etc/kubernetes/addon/openstack/cloud-controller-manager-role-bindings.yaml
+      permissions: "0600"
+    - content: LS0tCmFwaVZlcnNpb246IHYxCmtpbmQ6IFNlcnZpY2VBY2NvdW50Cm1ldGFkYXRhOgogIG5hbWU6IGNsb3VkLWNvbnRyb2xsZXItbWFuYWdlcgogIG5hbWVzcGFjZToga3ViZS1zeXN0ZW0KLS0tCmFwaVZlcnNpb246IGFwcHMvdjEKa2luZDogRGFlbW9uU2V0Cm1ldGFkYXRhOgogIG5hbWU6IG9wZW5zdGFjay1jbG91ZC1jb250cm9sbGVyLW1hbmFnZXIKICBuYW1lc3BhY2U6IGt1YmUtc3lzdGVtCiAgbGFiZWxzOgogICAgazhzLWFwcDogb3BlbnN0YWNrLWNsb3VkLWNvbnRyb2xsZXItbWFuYWdlcgpzcGVjOgogIHNlbGVjdG9yOgogICAgbWF0Y2hMYWJlbHM6CiAgICAgIGs4cy1hcHA6IG9wZW5zdGFjay1jbG91ZC1jb250cm9sbGVyLW1hbmFnZXIKICB1cGRhdGVTdHJhdGVneToKICAgIHR5cGU6IFJvbGxpbmdVcGRhdGUKICB0ZW1wbGF0ZToKICAgIG1ldGFkYXRhOgogICAgICBsYWJlbHM6CiAgICAgICAgazhzLWFwcDogb3BlbnN0YWNrLWNsb3VkLWNvbnRyb2xsZXItbWFuYWdlcgogICAgc3BlYzoKICAgICAgbm9kZVNlbGVjdG9yOgogICAgICAgIG5vZGUtcm9sZS5rdWJlcm5ldGVzLmlvL2NvbnRyb2wtcGxhbmU6ICIiCiAgICAgIHNlY3VyaXR5Q29udGV4dDoKICAgICAgICBydW5Bc1VzZXI6IDEwMDEKICAgICAgdG9sZXJhdGlvbnM6CiAgICAgIC0ga2V5OiBub2RlLmNsb3VkcHJvdmlkZXIua3ViZXJuZXRlcy5pby91bmluaXRpYWxpemVkCiAgICAgICAgdmFsdWU6ICJ0cnVlIgogICAgICAgIGVmZmVjdDogTm9TY2hlZHVsZQogICAgICAtIGtleTogbm9kZS1yb2xlLmt1YmVybmV0ZXMuaW8vbWFzdGVyCiAgICAgICAgZWZmZWN0OiBOb1NjaGVkdWxlCiAgICAgIC0ga2V5OiBub2RlLXJvbGUua3ViZXJuZXRlcy5pby9jb250cm9sLXBsYW5lCiAgICAgICAgZWZmZWN0OiBOb1NjaGVkdWxlCiAgICAgIHNlcnZpY2VBY2NvdW50TmFtZTogY2xvdWQtY29udHJvbGxlci1tYW5hZ2VyCiAgICAgIGNvbnRhaW5lcnM6CiAgICAgICAgLSBuYW1lOiBvcGVuc3RhY2stY2xvdWQtY29udHJvbGxlci1tYW5hZ2VyCiAgICAgICAgICBpbWFnZTogcmVnaXN0cnkuazhzLmlvL3Byb3ZpZGVyLW9zL29wZW5zdGFjay1jbG91ZC1jb250cm9sbGVyLW1hbmFnZXI6djEuMjcuMQogICAgICAgICAgYXJnczoKICAgICAgICAgICAgLSAvYmluL29wZW5zdGFjay1jbG91ZC1jb250cm9sbGVyLW1hbmFnZXIKICAgICAgICAgICAgLSAtLXY9MQogICAgICAgICAgICAtIC0tY2x1c3Rlci1uYW1lPSQoQ0xVU1RFUl9OQU1FKQogICAgICAgICAgICAtIC0tY2xvdWQtY29uZmlnPSQoQ0xPVURfQ09ORklHKQogICAgICAgICAgICAtIC0tY2xvdWQtcHJvdmlkZXI9b3BlbnN0YWNrCiAgICAgICAgICAgIC0gLS11c2Utc2VydmljZS1hY2NvdW50LWNyZWRlbnRpYWxzPXRydWUKICAgICAgICAgICAgLSAtLWJpbmQtYWRkcmVzcz0xMjcuMC4wLjEKICAgICAgICAgIHZvbHVtZU1vdW50czoKICAgICAgICAgICAgLSBtb3VudFBhdGg6IC9ldGMva3ViZXJuZXRlcy9wa2kKICAgICAgICAgICAgICBuYW1lOiBrOHMtY2VydHMKICAgICAgICAgICAgICByZWFkT25seTogdHJ1ZQogICAgICAgICAgICAtIG1vdW50UGF0aDogL2V0Yy9zc2wvY2VydHMKICAgICAgICAgICAgICBuYW1lOiBjYS1jZXJ0cwogICAgICAgICAgICAgIHJlYWRPbmx5OiB0cnVlCiAgICAgICAgICAgIC0gbW91bnRQYXRoOiAvZXRjL2NvbmZpZwogICAgICAgICAgICAgIG5hbWU6IGNsb3VkLWNvbmZpZy12b2x1bWUKICAgICAgICAgICAgICByZWFkT25seTogdHJ1ZQogICAgICAgICAgcmVzb3VyY2VzOgogICAgICAgICAgICByZXF1ZXN0czoKICAgICAgICAgICAgICBjcHU6IDIwMG0KICAgICAgICAgIGVudjoKICAgICAgICAgICAgLSBuYW1lOiBDTE9VRF9DT05GSUcKICAgICAgICAgICAgICB2YWx1ZTogL2V0Yy9jb25maWcvY2xvdWQuY29uZgogICAgICAgICAgICAtIG5hbWU6IENMVVNURVJfTkFNRQogICAgICAgICAgICAgIHZhbHVlOiBrdWJlcm5ldGVzCiAgICAgIGhvc3ROZXR3b3JrOiB0cnVlCiAgICAgIHZvbHVtZXM6CiAgICAgIC0gaG9zdFBhdGg6CiAgICAgICAgICBwYXRoOiAvZXRjL2t1YmVybmV0ZXMvcGtpCiAgICAgICAgICB0eXBlOiBEaXJlY3RvcnlPckNyZWF0ZQogICAgICAgIG5hbWU6IGs4cy1jZXJ0cwogICAgICAtIGhvc3RQYXRoOgogICAgICAgICAgcGF0aDogL2V0Yy9zc2wvY2VydHMKICAgICAgICAgIHR5cGU6IERpcmVjdG9yeU9yQ3JlYXRlCiAgICAgICAgbmFtZTogY2EtY2VydHMKICAgICAgLSBuYW1lOiBjbG91ZC1jb25maWctdm9sdW1lCiAgICAgICAgc2VjcmV0OgogICAgICAgICAgc2VjcmV0TmFtZTogY2xvdWQtY29uZmln
+      encoding: base64
+      owner: root
+      path: /etc/kubernetes/addon/openstack/openstack-cloud-controller-manager-ds.yaml
+      permissions: "0600"
+    - content: W0dsb2JhbF0KYXV0aC11cmw9aHR0cDovLzE5Mi4xNjguODguMTE6NTAwMC92My8KdXNlcm5hbWU9ImVkZ2VjcmFmdCIKcGFzc3dvcmQ9IlBhc3MwMDAwQCIKdGVuYW50LWlkPSJiMjU3MGQxMmU3MDk0OWIwYWQ4YmJhNDE1ZTA0YmYwYSIKdGVuYW50LW5hbWU9ImVkZ2VjcmFmdC1zaW5nbGUiCmRvbWFpbi1uYW1lPSJEZWZhdWx0IgpyZWdpb249IlJlZ2lvbk9uZSIK
+      encoding: base64
+      owner: root
+      path: /etc/kubernetes/cloud.conf
+      permissions: "0600"
+    initConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+          provider-id: openstack:///'{{ instance_id }}'
+        name: '{{ local_hostname }}'
+    joinConfiguration:
+      nodeRegistration:
+        kubeletExtraArgs:
+          cloud-provider: external
+          provider-id: openstack:///'{{ instance_id }}'
+        name: '{{ local_hostname }}'
+    postKubeadmCommands:
+    - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.25.1/manifests/calico.yaml
+    - kubectl --kubeconfig=/etc/kubernetes/admin.conf create secret -n kube-system
+      generic cloud-config --from-file=/etc/kubernetes/cloud.conf
+    - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/cloud-controller-manager-roles.yaml
+    - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/cloud-controller-manager-role-bindings.yaml
+    - kubectl --kubeconfig=/etc/kubernetes/admin.conf apply -f /etc/kubernetes/addon/openstack/openstack-cloud-controller-manager-ds.yaml
+  machineTemplate:
+    infrastructureRef:
+      apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
+      kind: OpenStackMachineTemplate
+      name: single-kubeadm-provisioning-1-control-plane-v1-24-5
+  replicas: 3
+  version: v1.24.5
+---
+apiVersion: infrastructure.cluster.x-k8s.io/v1alpha6
+kind: OpenStackMachineTemplate
+metadata:
+  name: single-kubeadm-provisioning-1-control-plane-v1-24-5
+  namespace: default
+spec:
+  template:
+    spec:
+      cloudName: openstack
+      flavor: m1.medium
+      identityRef:
+        kind: Secret
+        name: single-kubeadm-provisioning-1-cloud-config
+      image: edgecraft-kube-v1.24.5
+      rootVolume:
+        availabilityZone: nova
+        diskSize: 20
+        volumeType: nfs
+      sshKeyName: hostacloud
